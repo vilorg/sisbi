@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sisbi/constants.dart';
+import 'package:sisbi/ui/pages/login/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,11 +24,62 @@ class MyApp extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: const MaterialApp(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'SISBI',
-        // theme: getTheme(),
-        home: Scaffold(),
+        theme: ThemeData(
+          primaryColor: colorAccentDarkBlue,
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: "ProximaNova",
+          textTheme: const TextTheme(
+            headline1: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.w700,
+              color: colorText,
+            ),
+            headline3: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: colorText,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: colorText,
+            ),
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            focusColor: colorAccentLightBlue,
+            filled: true,
+            fillColor: colorInput,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: const BorderSide(
+                color: colorAccentLightBlue,
+                width: 1.5,
+              ),
+            ),
+          ),
+        ),
+        builder: (context, child) =>
+            ScrollConfiguration(behavior: MyBehavior(), child: child!),
+        routes: {
+          LoginPage.nameRoute: (context) => LoginPage.create(),
+        },
+        initialRoute: LoginPage.nameRoute,
       ),
     );
+  }
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
   }
 }

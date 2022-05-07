@@ -1,6 +1,8 @@
-// colors
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+// colors
 // accent colors
 const Color colorAccentBlack = Color(0xFF283244);
 const Color colorAccentDarkBlue = Color(0xFF575FCC);
@@ -34,3 +36,14 @@ const Color colorInputError = Color(0xFFFF6D3B);
 // divider & border colors
 const Color colorBorder = Color(0xFFE0E1E6);
 const Color colorDivider = Color(0xFFECEDF0);
+
+// padding and radius
+const double defaultPadding = 15.0;
+const double borderRadius = 10.0;
+
+// mask Fomatter
+final TextInputFormatter phoneMask = MaskTextInputFormatter(
+  mask: '+#  │  ### - ### - ## - ##',
+  filter: {"#": RegExp(r'[0-9]')},
+  type: MaskAutoCompletionType.lazy,
+);
