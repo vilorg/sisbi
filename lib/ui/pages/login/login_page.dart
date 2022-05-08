@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 
@@ -12,7 +11,7 @@ class _ViewModelState {
   final String phone;
   final bool isAuthInProcess;
   final bool error;
-  final String textError;
+  final String? textError;
   final bool visible;
   _ViewModelAuthButtonState get authButtonState {
     if (isAuthInProcess) {
@@ -25,10 +24,10 @@ class _ViewModelState {
   }
 
   _ViewModelState({
+    this.textError,
     this.phone = "",
     this.isAuthInProcess = false,
     this.error = false,
-    this.textError = "",
     this.visible = true,
   });
 
@@ -70,7 +69,8 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   void onSaved() {
-    _state = _state.copyWith(textError: "123");
+    _state = _state.copyWith(
+        textError: "*Пользователь с таким номером не существует");
     print("123");
     notifyListeners();
   }
@@ -100,7 +100,15 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: [
               const LoginStartHeader(),
-              LoginPhoneField(model: model, isValue: state.phone.isNotEmpty),
+              LoginPhoneField(
+                model: model,
+                isValue: state.phone.isNotEmpty,
+                textError: state.textError,
+              ),
+              ElevatedButton(
+                onPressed: model.onSaved,
+                child: Text("123"),
+              ),
             ],
           ),
         ),

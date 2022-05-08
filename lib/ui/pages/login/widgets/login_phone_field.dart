@@ -5,10 +5,12 @@ import 'package:sisbi/ui/pages/login/login_page.dart';
 
 class LoginPhoneField extends StatefulWidget {
   final bool isValue;
+  final String? textError;
   final LoginViewModel model;
   const LoginPhoneField({
     Key? key,
     required this.isValue,
+    required this.textError,
     required this.model,
   }) : super(key: key);
 
@@ -30,7 +32,7 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
           padding: const EdgeInsets.all(defaultPadding * 0.8),
           child: SvgPicture.asset(
             "assets/icons/login_phone.svg",
-            color: colorInputContent,
+            color: widget.textError == null ? colorText : colorInputError,
           ),
         ),
         suffixIcon: widget.isValue
@@ -43,16 +45,24 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
                   padding: const EdgeInsets.all(defaultPadding * 0.8),
                   child: SvgPicture.asset(
                     "assets/icons/login_clear.svg",
-                    color: colorAccentLightBlue,
+                    color: widget.textError == null
+                        ? colorAccentLightBlue
+                        : colorInputError,
                   ),
                 ),
               )
             : null,
         hintText: "+7  │  Номер телефона",
+        errorText: widget.textError,
+        errorStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+              color: colorInputError,
+            ),
       ),
       keyboardType: TextInputType.number,
       inputFormatters: [phoneMask],
-      style: Theme.of(context).textTheme.bodyText1,
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+            color: widget.textError == null ? colorText : colorInputError,
+          ),
       onChanged: widget.model.setPhone,
       onSaved: (v) => widget.model.onSaved(),
     );

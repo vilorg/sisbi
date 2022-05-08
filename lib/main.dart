@@ -30,6 +30,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: colorAccentDarkBlue,
           scaffoldBackgroundColor: Colors.white,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(),
+          ),
           fontFamily: "ProximaNova",
           textTheme: const TextTheme(
             headline1: TextStyle(
@@ -47,12 +50,17 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: colorText,
             ),
+            bodyText2: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w400,
+              color: colorText,
+            ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             focusColor: colorAccentLightBlue,
             filled: true,
             fillColor: colorInput,
-            border: OutlineInputBorder(
+            enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide.none,
             ),
@@ -60,6 +68,20 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: const BorderSide(
                 color: colorAccentLightBlue,
+                width: 1.5,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: const BorderSide(
+                color: colorInputError,
+                width: 1.5,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(borderRadius),
+              borderSide: const BorderSide(
+                color: colorInputError,
                 width: 1.5,
               ),
             ),
