@@ -30,8 +30,22 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primaryColor: colorAccentDarkBlue,
           scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            color: colorAccentDarkBlue,
+            elevation: 0,
+          ),
           elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(),
+            style: ElevatedButton.styleFrom(
+              // onSurface: colorButton,
+              primary: colorButton,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  borderRadius,
+                ),
+              ),
+              elevation: 0,
+              shadowColor: Colors.transparent,
+            ),
           ),
           fontFamily: "ProximaNova",
           textTheme: const TextTheme(
@@ -45,6 +59,16 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w700,
               color: colorText,
             ),
+            subtitle1: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: colorTextContrast,
+            ),
+            subtitle2: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: colorText,
+            ),
             bodyText1: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w400,
@@ -54,6 +78,11 @@ class MyApp extends StatelessWidget {
               fontSize: 13,
               fontWeight: FontWeight.w400,
               color: colorText,
+            ),
+            button: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: colorTextContrast,
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(

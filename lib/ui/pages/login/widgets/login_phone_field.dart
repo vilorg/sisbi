@@ -5,7 +5,7 @@ import 'package:sisbi/ui/pages/login/login_page.dart';
 
 class LoginPhoneField extends StatefulWidget {
   final bool isValue;
-  final String? textError;
+  final String textError;
   final LoginViewModel model;
   const LoginPhoneField({
     Key? key,
@@ -23,6 +23,10 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
 
   @override
   Widget build(BuildContext context) {
+    String? textError;
+
+    if (widget.textError != "") textError = widget.textError;
+
     return TextFormField(
       cursorColor: colorText,
       cursorWidth: 1,
@@ -32,7 +36,7 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
           padding: const EdgeInsets.all(defaultPadding * 0.8),
           child: SvgPicture.asset(
             "assets/icons/login_phone.svg",
-            color: widget.textError == null ? colorText : colorInputError,
+            color: widget.textError.isEmpty ? colorText : colorInputError,
           ),
         ),
         suffixIcon: widget.isValue
@@ -45,15 +49,15 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
                   padding: const EdgeInsets.all(defaultPadding * 0.8),
                   child: SvgPicture.asset(
                     "assets/icons/login_clear.svg",
-                    color: widget.textError == null
+                    color: widget.textError.isEmpty
                         ? colorAccentLightBlue
                         : colorInputError,
                   ),
                 ),
               )
             : null,
-        hintText: "+7  │  Номер телефона",
-        errorText: widget.textError,
+        hintText: "+7 │ Номер телефона",
+        errorText: textError,
         errorStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
               color: colorInputError,
             ),
@@ -61,10 +65,10 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
       keyboardType: TextInputType.number,
       inputFormatters: [phoneMask],
       style: Theme.of(context).textTheme.bodyText1!.copyWith(
-            color: widget.textError == null ? colorText : colorInputError,
+            color: widget.textError.isEmpty ? colorText : colorInputError,
           ),
       onChanged: widget.model.setPhone,
-      onSaved: (v) => widget.model.onSaved(),
+      onSaved: (v) => widget.model.onAuthButtonPressed(),
     );
   }
 }

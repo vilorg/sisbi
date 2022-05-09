@@ -39,11 +39,19 @@ const Color colorDivider = Color(0xFFECEDF0);
 
 // padding and radius
 const double defaultPadding = 15.0;
-const double borderRadius = 10.0;
+const double defaultButtonPadding = 20.0;
+const double borderRadius = 16.0;
+const double borderRadiusPage = 24.0;
 
 // mask Fomatter
 final TextInputFormatter phoneMask = MaskTextInputFormatter(
-  mask: '+#  │  ### - ### - ## - ##',
+  mask: '+# │ ###-###-##-##',
   filter: {"#": RegExp(r'[0-9]')},
   type: MaskAutoCompletionType.lazy,
 );
+
+// uris
+const String baseUri = "http://51.250.102.217:3000/v1/";
+const String registerUri = baseUri + "user";
+const String loginUri = baseUri + "users_sms";
+const String getTokenUri = baseUri + "auth/user_token";

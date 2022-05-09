@@ -4,7 +4,10 @@ import 'package:sisbi/constants.dart';
 class LoginStartHeader extends StatelessWidget {
   const LoginStartHeader({
     Key? key,
+    required this.isLogin,
   }) : super(key: key);
+
+  final bool isLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,9 @@ class LoginStartHeader extends StatelessWidget {
         ),
         const SizedBox(height: defaultPadding / 2),
         Text(
-          "Авторизуйтесь, чтобы начать",
+          isLogin
+              ? "Авторизуйтесь, чтобы начать"
+              : "Зарегистрируйтесь, чтобы начать",
           style: Theme.of(context).textTheme.headline3,
           textAlign: TextAlign.center,
         ),
