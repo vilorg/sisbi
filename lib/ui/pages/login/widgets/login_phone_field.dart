@@ -68,7 +68,6 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
             color: widget.textError.isEmpty ? colorText : colorInputError,
           ),
       onChanged: widget.model.setPhone,
-      onSaved: (v) => widget.model.onAuthButtonPressed(),
     );
   }
 }

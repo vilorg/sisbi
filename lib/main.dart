@@ -61,8 +61,8 @@ class MyApp extends StatelessWidget {
             ),
             subtitle1: TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: colorTextContrast,
+              fontWeight: FontWeight.w400,
+              color: colorText,
             ),
             subtitle2: TextStyle(
               fontSize: 18,
@@ -115,6 +115,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
+          dividerColor: colorDivider,
         ),
         builder: (context, child) =>
             ScrollConfiguration(behavior: MyBehavior(), child: child!),

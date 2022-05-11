@@ -9,7 +9,14 @@ class AuthService {
     return false;
   }
 
-  Future<void> getLoginCode(bool isLogin, String phone) async {
-    return await _authApiProvider.getLoginCode(isLogin, phone);
+  Future<void> getLoginCode(bool isEmployer, String phone) async {
+    return await _authApiProvider.getLoginCode(isEmployer, phone);
+  }
+
+  Future<void> checkLoginCode(
+      bool isEmployer, String phone, String code) async {
+    String token = await _authApiProvider.checkSmsCode(isEmployer, phone, code);
+    print(token);
+    // return await _sessionDataProvider.saveToken(token);
   }
 }

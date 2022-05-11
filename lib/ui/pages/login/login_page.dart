@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/data_providers/auth_api_provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
 import 'package:sisbi/ui/pages/login/login_code_input_page.dart';
+import 'package:sisbi/ui/register/register_page.dart';
 
 import 'widgets/login_phone_field.dart';
 import 'widgets/login_start_header.dart';
@@ -15,7 +17,6 @@ class _ViewModelState {
   final bool isAuthInProcess;
   final String textError;
   final bool visible;
-  final bool isLogin;
   _ViewModelAuthButtonState get authButtonState {
     if (isAuthInProcess) {
       return _ViewModelAuthButtonState.authProcess;
@@ -31,7 +32,6 @@ class _ViewModelState {
     this.phone = "",
     this.isAuthInProcess = false,
     this.visible = true,
-    this.isLogin = true,
   });
 
   _ViewModelState copyWith({
@@ -39,14 +39,12 @@ class _ViewModelState {
     bool? isAuthInProcess,
     String? textError,
     bool? visible,
-    bool? isLogin,
   }) {
     return _ViewModelState(
       phone: phone ?? this.phone,
       isAuthInProcess: isAuthInProcess ?? this.isAuthInProcess,
       textError: textError ?? this.textError,
       visible: visible ?? this.visible,
-      isLogin: isLogin ?? this.isLogin,
     );
   }
 }
@@ -76,19 +74,19 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onAuthButtonPressed() async {
+  void onAuthButtonPressed(bool isEmployer) async {
     _state = _state.copyWith(isAuthInProcess: true);
     notifyListeners();
     bool isOk = false;
     try {
-      await _authService.getLoginCode(_state.isLogin, _state.phone);
+      await _authService.getLoginCode(isEmployer, _state.phone);
       isOk = true;
     } on AuthFetchDataError {
       _state = _state.copyWith(textError: "Произошла ошибка на сервере");
     } on AuthUnknownUserError {
       _state = _state.copyWith(textError: "Пользователь не зарегистрирован");
-    } on AuthBusyUserError {
-      _state = _state.copyWith(textError: "Пользователь уже зарегистрирован");
+    } on AuthUnknownEmployerError {
+      _state = _state.copyWith(textError: "Работадатель не зарегистрирован");
     } catch (e) {
       _state = _state.copyWith(textError: "Неизвестная ошибка");
     }
@@ -98,14 +96,10 @@ class LoginViewModel extends ChangeNotifier {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginCodeInputPage(),
+            builder: (context) =>
+                LoginCodeInputPage.create(_state.phone, isEmployer),
           ));
     }
-  }
-
-  void onRegisterButtonPressed() {
-    _state = _state.copyWith(isLogin: !_state.isLogin);
-    notifyListeners();
   }
 }
 
@@ -132,16 +126,18 @@ class LoginPage extends StatelessWidget {
                 3 * defaultPadding,
             child: Column(
               children: [
-                LoginStartHeader(isLogin: state.isLogin),
+                const LoginStartHeader(),
                 LoginPhoneField(
                   model: model,
                   isValue: state.phone.isNotEmpty,
                   textError: state.textError,
                 ),
                 const SizedBox(height: defaultPadding),
-                _LoginButton(model: model, isLogin: state.isLogin),
+                _LoginButton(model: model, isEmployer: false),
+                const SizedBox(height: defaultPadding),
+                _LoginButton(model: model, isEmployer: true),
                 const Spacer(),
-                _RegisterButton(model: model, isLogin: state.isLogin),
+                _RegisterButton(model: model),
               ],
             ),
           ),
@@ -152,14 +148,9 @@ class LoginPage extends StatelessWidget {
 }
 
 class _RegisterButton extends StatelessWidget {
-  const _RegisterButton({
-    Key? key,
-    required this.model,
-    required this.isLogin,
-  }) : super(key: key);
+  const _RegisterButton({Key? key, required this.model}) : super(key: key);
 
   final LoginViewModel model;
-  final bool isLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -171,11 +162,15 @@ class _RegisterButton extends StatelessWidget {
                 colorButtonSecondary,
               ),
             ),
-        onPressed: model.onRegisterButtonPressed,
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => RegisterPage.create(),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(defaultButtonPadding),
           child: Text(
-            isLogin ? 'Создать аккаунт' : 'Воспользоваться входом',
+            'Создать аккаунт',
             style: Theme.of(context).textTheme.button!.copyWith(
                   color: colorTextSecondary,
                   fontWeight: FontWeight.w600,
@@ -191,11 +186,11 @@ class _LoginButton extends StatelessWidget {
   const _LoginButton({
     Key? key,
     required this.model,
-    required this.isLogin,
+    required this.isEmployer,
   }) : super(key: key);
 
   final LoginViewModel model;
-  final bool isLogin;
+  final bool isEmployer;
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +198,7 @@ class _LoginButton extends StatelessWidget {
         context.select((LoginViewModel value) => value.state.authButtonState);
 
     final onPressed = authButtonState == _ViewModelAuthButtonState.canSubmit
-        ? model.onAuthButtonPressed
+        ? () => model.onAuthButtonPressed(isEmployer)
         : null;
 
     final child = authButtonState == _ViewModelAuthButtonState.authProcess
@@ -219,7 +214,7 @@ class _LoginButton extends StatelessWidget {
               ),
               const SizedBox(width: defaultPadding),
               Text(
-                isLogin ? "Войти..." : "Зарегистрироваться...",
+                "Войти...",
                 style: Theme.of(context).textTheme.button!.copyWith(
                       color: colorTextContrast,
                     ),
@@ -227,7 +222,7 @@ class _LoginButton extends StatelessWidget {
             ],
           )
         : Text(
-            isLogin ? "Войти" : "Зарегистрироваться",
+            isEmployer ? "Войти как работадатель" : "Войти как соискатель",
             style: Theme.of(context).textTheme.button!.copyWith(
                   color: authButtonState == _ViewModelAuthButtonState.canSubmit
                       ? colorTextContrast
