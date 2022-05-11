@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:sisbi/constants.dart';
 
 class RegisterTarget extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) changeSelectedIndex;
   const RegisterTarget({
     Key? key,
+    required this.selectedIndex,
+    required this.changeSelectedIndex,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Image.asset("assets/images/register_top_circle.png",
-                width: double.infinity),
-            Padding(
-                padding: const EdgeInsets.only(bottom: 3 * defaultPadding),
-                child: Image.asset("assets/images/register_target.png")),
-          ],
-        ),
+        const _Header(),
         Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
@@ -33,51 +29,85 @@ class RegisterTarget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: defaultPadding),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius),
-                  color: colorInputActive,
-                ),
-                padding: const EdgeInsets.all(defaultPadding * 1.3),
-                child: Row(
-                  children: [
-                    Text(
-                      "Я ищу работу",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: colorTextContrast,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    const Spacer(),
-                    SvgPicture.asset("assets/icons/register_done.svg"),
-                  ],
-                ),
+              _SwitchTargetItem(
+                title: "Я ищу работу",
+                isSelect: selectedIndex == 0,
+                setIndex: () => changeSelectedIndex(0),
               ),
               const SizedBox(height: defaultPadding / 2),
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius),
-                  border: Border.all(color: colorTextContrast),
-                ),
-                padding: const EdgeInsets.all(defaultPadding * 1.3),
-                child: Row(
-                  children: [
-                    Text(
-                      "Я ищу сотрудников",
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: colorTextContrast,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
+              _SwitchTargetItem(
+                title: "Я ищу сотрудников",
+                isSelect: selectedIndex == 1,
+                setIndex: () => changeSelectedIndex(1),
               ),
             ],
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _SwitchTargetItem extends StatelessWidget {
+  final String title;
+  final bool isSelect;
+  final VoidCallback setIndex;
+
+  const _SwitchTargetItem({
+    Key? key,
+    required this.title,
+    required this.isSelect,
+    required this.setIndex,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: setIndex,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: isSelect ? colorInputActive : null,
+            border: Border.all(
+                color: isSelect ? colorInputActive : colorTextContrast)),
+        padding: const EdgeInsets.all(defaultPadding * 1.3),
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast, fontWeight: FontWeight.w600),
+            ),
+            const Spacer(),
+            isSelect
+                ? SvgPicture.asset(
+                    "assets/icons/register_done.svg",
+                    width: 18,
+                  )
+                : const SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Image.asset("assets/images/register_top_circle.png",
+            width: double.infinity),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 3 * defaultPadding),
+            child: Image.asset("assets/images/register_target.png")),
       ],
     );
   }

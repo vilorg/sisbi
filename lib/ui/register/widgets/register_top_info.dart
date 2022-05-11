@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:sisbi/constants.dart';
 
 class RegisterTopInfo extends StatelessWidget {
+  final Function(bool) setSelectedIndex;
+
   const RegisterTopInfo({
     Key? key,
+    required this.setSelectedIndex,
   }) : super(key: key);
 
   @override
@@ -28,7 +32,7 @@ class RegisterTopInfo extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => setSelectedIndex(true),
                   child: Text(
                     "Выйти",
                     style: Theme.of(context).textTheme.button,
@@ -47,7 +51,7 @@ class RegisterTopInfo extends StatelessWidget {
                 SizedBox(
                   width: buttonWidth,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => setSelectedIndex(false),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: defaultButtonPadding),
