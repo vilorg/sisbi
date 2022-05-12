@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
 
 class RegisterTopInfo extends StatelessWidget {
+  final int selecterIndex;
   final Function(bool) setSelectedIndex;
 
   const RegisterTopInfo({
     Key? key,
+    required this.selecterIndex,
     required this.setSelectedIndex,
   }) : super(key: key);
 
@@ -29,6 +31,24 @@ class RegisterTopInfo extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(borderRadius),
+                  ),
+                  padding: const EdgeInsets.all(3),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        flex: selecterIndex + 1,
+                        child: Container(
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(borderRadius),
+                              color: colorAccentDarkBlue),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 10 - selecterIndex,
+                        child: const SizedBox(),
+                      ),
+                    ],
                   ),
                 ),
                 TextButton(

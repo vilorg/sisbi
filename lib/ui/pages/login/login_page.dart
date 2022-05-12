@@ -4,7 +4,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/data_providers/auth_api_provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
 import 'package:sisbi/ui/pages/login/login_code_input_page.dart';
-import 'package:sisbi/ui/register/register_page.dart';
+import 'package:sisbi/ui/pages/register/register_page.dart';
 
 import 'widgets/login_phone_field.dart';
 import 'widgets/login_start_header.dart';
