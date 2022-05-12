@@ -51,7 +51,7 @@ class RegisterTopInfo extends StatelessWidget {
                 SizedBox(
                   width: buttonWidth,
                   child: ElevatedButton(
-                    onPressed: () => setSelectedIndex(false),
+                    onPressed: () => setSelectedIndex(true),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: defaultButtonPadding),
@@ -73,7 +73,7 @@ class RegisterTopInfo extends StatelessWidget {
                 SizedBox(
                   width: buttonWidth,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => setSelectedIndex(false),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: defaultButtonPadding),

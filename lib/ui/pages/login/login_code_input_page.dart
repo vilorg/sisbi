@@ -58,12 +58,9 @@ class _ViewModel extends ChangeNotifier {
           isEmployer, phone, _state.smsCode.join());
     } on AuthIncorrectCode {
       _state = _state.copyWith(isError: true);
-      print("exc 1");
     } on Exception {
       _state = _state.copyWith(isError: true);
-      print("exc 2");
     }
-    print("success");
     notifyListeners();
   }
 }

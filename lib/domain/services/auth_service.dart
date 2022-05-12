@@ -16,7 +16,6 @@ class AuthService {
   Future<void> checkLoginCode(
       bool isEmployer, String phone, String code) async {
     String token = await _authApiProvider.checkSmsCode(isEmployer, phone, code);
-    print(token);
     // return await _sessionDataProvider.saveToken(token);
   }
 }

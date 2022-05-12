@@ -48,15 +48,45 @@ class _RegisterPageState extends State<RegisterPage> {
         body: Stack(
           children: [
             AnimatedSwitcher(
-              transitionBuilder: (child, animation) => SlideTransition(
-                position:
-                    Tween<Offset>(begin: Offset(1.2, 0), end: Offset(0, 0))
-                        .animate(animation),
-                child: child,
-              ),
-              duration: const Duration(seconds: 1),
-              child: widgets[selectedIndex],
-            ),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  final inAnimation = Tween<Offset>(
+                          begin: const Offset(1.0, 0.0),
+                          end: const Offset(0.0, 0.0))
+                      .animate(animation);
+                  final outAnimation = Tween<Offset>(
+                          begin: const Offset(-1.0, 0.0),
+                          end: const Offset(0.0, 0.0))
+                      .animate(animation);
+
+                  if (child.key == ValueKey(selectedIndex)) {
+                    return ClipRect(
+                      child: SlideTransition(
+                        position: inAnimation,
+                        child: child,
+                      ),
+                    );
+                  } else {
+                    return ClipRect(
+                      child: SlideTransition(
+                        position: outAnimation,
+                        child: child,
+                      ),
+                    );
+                  }
+                },
+                duration: const Duration(seconds: 1),
+                child: widgets[selectedIndex],
+                layoutBuilder:
+                    (Widget? currentChild, List<Widget> previousChildren) {
+                  List<Widget> children = previousChildren;
+                  if (currentChild != null) {
+                    children = children.toList()..add(currentChild);
+                  }
+                  return Stack(
+                    children: children,
+                    alignment: Alignment.center,
+                  );
+                }),
             RegisterTopInfo(
               setSelectedIndex: (bool isLow) {
                 if (isLow && (selectedIndex - 1) >= 0) {
