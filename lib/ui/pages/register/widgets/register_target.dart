@@ -4,12 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sisbi/constants.dart';
 
 class RegisterTarget extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) changeSelectedIndex;
+  final bool isUser;
+  final Function(bool) changeIsUser;
   const RegisterTarget({
     Key? key,
-    required this.selectedIndex,
-    required this.changeSelectedIndex,
+    required this.isUser,
+    required this.changeIsUser,
   }) : super(key: key);
 
   @override
@@ -31,14 +31,14 @@ class RegisterTarget extends StatelessWidget {
               const SizedBox(height: defaultPadding),
               _SwitchTargetItem(
                 title: "Я ищу работу",
-                isSelect: selectedIndex == 0,
-                setIndex: () => changeSelectedIndex(0),
+                isSelect: isUser,
+                setIndex: () => changeIsUser(true),
               ),
               const SizedBox(height: defaultPadding / 2),
               _SwitchTargetItem(
                 title: "Я ищу сотрудников",
-                isSelect: selectedIndex == 1,
-                setIndex: () => changeSelectedIndex(1),
+                isSelect: !isUser,
+                setIndex: () => changeIsUser(false),
               ),
             ],
           ),

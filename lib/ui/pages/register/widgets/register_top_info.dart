@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:sisbi/constants.dart';
 
@@ -52,7 +53,11 @@ class RegisterTopInfo extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => setSelectedIndex(true),
+                  onPressed: () {
+                    SystemChrome.setSystemUIOverlayStyle(
+                        SystemUiOverlayStyle.dark);
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "Выйти",
                     style: Theme.of(context).textTheme.button,
