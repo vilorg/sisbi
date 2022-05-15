@@ -3,13 +3,13 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
 
-class RegisterTarget extends StatelessWidget {
-  final bool isUser;
-  final Function(bool) changeIsUser;
-  const RegisterTarget({
+class RegisterGender extends StatelessWidget {
+  final bool isMale;
+  final Function(bool) changeIsMale;
+  const RegisterGender({
     Key? key,
-    required this.isUser,
-    required this.changeIsUser,
+    required this.isMale,
+    required this.changeIsMale,
   }) : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class RegisterTarget extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "Какая у вас цель?",
+                "Выберите ваш пол",
                 style: Theme.of(context).textTheme.headline1!.copyWith(
                       color: colorTextContrast,
                     ),
@@ -30,15 +30,15 @@ class RegisterTarget extends StatelessWidget {
               ),
               const SizedBox(height: defaultPadding),
               _SwitchTargetItem(
-                title: "Я ищу работу",
-                isSelect: isUser,
-                setIndex: () => changeIsUser(true),
+                title: "Мужской",
+                isSelect: isMale,
+                setIndex: () => changeIsMale(true),
               ),
               const SizedBox(height: defaultPadding / 2),
               _SwitchTargetItem(
-                title: "Я ищу сотрудников",
-                isSelect: !isUser,
-                setIndex: () => changeIsUser(false),
+                title: "Женский",
+                isSelect: !isMale,
+                setIndex: () => changeIsMale(false),
               ),
             ],
           ),
@@ -108,8 +108,8 @@ class _Header extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.only(bottom: 3 * defaultPadding),
             child: Image.asset(
-              "assets/images/register_target.png",
-              width: MediaQuery.of(context).size.width / 2,
+              "assets/images/register_legs.png",
+              width: MediaQuery.of(context).size.width / 1.5,
             )),
       ],
     );

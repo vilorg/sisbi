@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/ui/pages/register/register_view_model.dart';
 
-class RegisterPhone extends StatelessWidget {
-  const RegisterPhone({Key? key}) : super(key: key);
+class RegisterEmail extends StatelessWidget {
+  const RegisterEmail({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class RegisterPhone extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Введите номер телефона",
+                  "Введите ваш email-адрес",
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         color: colorTextContrast,
                       ),
@@ -48,19 +48,10 @@ class RegisterPhone extends StatelessWidget {
                   cursorWidth: 1,
                   controller: model.controller,
                   decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(defaultPadding * 0.8),
-                      child: SvgPicture.asset(
-                        "assets/icons/login_phone.svg",
-                        color: state.phoneError.isEmpty
-                            ? colorText
-                            : colorInputError,
-                      ),
-                    ),
-                    suffixIcon: state.phone != ""
+                    suffixIcon: state.email != ""
                         ? InkWell(
                             onTap: () {
-                              model.clearPhone();
+                              model.clearEmail();
                               model.controller.clear();
                             },
                             child: Padding(
@@ -68,27 +59,26 @@ class RegisterPhone extends StatelessWidget {
                                   const EdgeInsets.all(defaultPadding * 0.8),
                               child: SvgPicture.asset(
                                   "assets/icons/login_clear.svg",
-                                  color: state.phoneError.isEmpty
+                                  color: state.emailError.isEmpty
                                       ? colorAccentLightBlue
                                       : colorInputError),
                             ),
                           )
                         : null,
-                    hintText: "+7 │ Номер телефона",
+                    hintText: "example@mail.com",
                     errorText:
-                        state.phoneError.isEmpty ? null : state.phoneError,
+                        state.emailError.isEmpty ? null : state.emailError,
                     errorStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
                           color: colorInputError,
                         ),
                   ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [phoneMask],
+                  keyboardType: TextInputType.emailAddress,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: state.phoneError.isEmpty
+                        color: state.emailError.isEmpty
                             ? colorText
                             : colorInputError,
                       ),
-                  onChanged: model.setPhone,
+                  onChanged: model.setEmail,
                 ),
               ],
             ),

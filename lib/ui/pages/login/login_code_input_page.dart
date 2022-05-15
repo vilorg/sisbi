@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/data_providers/auth_api_provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
+import 'package:sisbi/ui/widgets/code_input_fields.dart';
 
 class _ViewModelState {
   final List<String> smsCode;
@@ -77,6 +79,31 @@ class LoginCodeInputPage extends StatefulWidget {
 }
 
 class _LoginCodeInputPageState extends State<LoginCodeInputPage> {
+  late Timer _timer;
+  bool _isResentAvaible = false;
+  bool _isResent = false;
+  int _countDown = 120;
+
+  @override
+  void initState() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_countDown == 0) {
+        _timer.cancel();
+        _isResentAvaible = true;
+      } else {
+        _countDown -= 1;
+      }
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var phone = context.read<_ViewModel>().phone;
@@ -90,6 +117,7 @@ class _LoginCodeInputPageState extends State<LoginCodeInputPage> {
         phone.split('')[16] +
         phone.split('')[17];
 
+    var model = context.read<_ViewModel>();
     var state = context.select((_ViewModel model) => model.state);
 
     return Scaffold(
@@ -116,91 +144,34 @@ class _LoginCodeInputPageState extends State<LoginCodeInputPage> {
             padding: const EdgeInsets.all(defaultPadding),
             child: Column(
               children: [
-                Image.asset("assets/images/login_bird.png"),
+                Image.asset("assets/images/login_bird.png",
+                    width: MediaQuery.of(context).size.width / 1.5),
                 const SizedBox(height: defaultPadding),
                 Text(
                   "Мы отправили код подтверждения на указанный номер $textPhone",
                   style: Theme.of(context).textTheme.subtitle2,
                   textAlign: TextAlign.center,
                 ),
-                _InputFields(isError: state.isError),
+                CodeInputFields(
+                  isError: state.isError,
+                  setSmsValue: model.setSmsValue,
+                  validateSmsValue: model.validateSmsCode,
+                ),
+                const SizedBox(height: defaultPadding),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    "Выслать код повторно через ${_countDown ~/ 60}:${_countDown % 60}",
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: colorTextContrast,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _InputFields extends StatelessWidget {
-  final bool isError;
-
-  const _InputFields({
-    Key? key,
-    required this.isError,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: defaultPadding * 2),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _InputField(index: 0, isError: isError),
-          _InputField(index: 1, isError: isError),
-          _InputField(index: 2, isError: isError),
-          _InputField(index: 3, isError: isError),
-        ],
-      ),
-    );
-  }
-}
-
-class _InputField extends StatelessWidget {
-  final int index;
-  final bool isError;
-
-  const _InputField({
-    Key? key,
-    required this.index,
-    required this.isError,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var model = context.read<_ViewModel>();
-    return SizedBox(
-      height: 68,
-      width: 64,
-      child: TextField(
-        autofocus: index == 0 ? true : false,
-        decoration: InputDecoration(
-          errorText: isError ? "" : null,
-          hintText: "0",
-          errorStyle: const TextStyle(
-            height: 0,
-            fontSize: 0,
-          ),
-        ),
-        onChanged: (v) {
-          model.setSmsValue(index, v);
-          if (v.length == 1 && index != 3) {
-            FocusScope.of(context).nextFocus();
-          } else if (v.isEmpty && index != 0) {
-            FocusScope.of(context).previousFocus();
-          } else if (v.length == 1 && index == 3) {
-            model.validateSmsCode();
-          }
-        },
-        style: Theme.of(context).textTheme.subtitle1,
-        keyboardType: TextInputType.number,
-        textAlign: TextAlign.center,
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(1),
-          FilteringTextInputFormatter.digitsOnly,
-        ],
       ),
     );
   }

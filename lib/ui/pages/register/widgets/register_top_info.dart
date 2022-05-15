@@ -4,11 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:sisbi/constants.dart';
 
 class RegisterTopInfo extends StatelessWidget {
+  final int length;
   final int selecterIndex;
   final Function(bool) setSelectedIndex;
 
   const RegisterTopInfo({
     Key? key,
+    required this.length,
     required this.selecterIndex,
     required this.setSelectedIndex,
   }) : super(key: key);
@@ -22,7 +24,7 @@ class RegisterTopInfo extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(defaultPadding),
+            padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -46,7 +48,7 @@ class RegisterTopInfo extends StatelessWidget {
                         ),
                       ),
                       Flexible(
-                        flex: 10 - selecterIndex,
+                        flex: length - selecterIndex - 1,
                         child: const SizedBox(),
                       ),
                     ],
@@ -67,57 +69,86 @@ class RegisterTopInfo extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          const Divider(),
+          selecterIndex == (length - 1) ? const SizedBox() : const Divider(),
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: buttonWidth,
-                  child: ElevatedButton(
-                    onPressed: () => setSelectedIndex(true),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: defaultButtonPadding),
-                      child: Text(
-                        "Назад",
-                        style: Theme.of(context).textTheme.button,
-                      ),
-                    ),
-                    style:
-                        Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                              side: MaterialStateProperty.all<BorderSide>(
-                                const BorderSide(color: colorButtonSecondary),
+            child: selecterIndex == (length - 1)
+                ? SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: setSelectedIndex(true),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: defaultButtonPadding),
+                        child: Text(
+                          "Искать работу",
+                          style: Theme.of(context).textTheme.button!.copyWith(
+                                color: colorAccentDarkBlue,
                               ),
-                            ),
-                  ),
-                ),
-                SizedBox(
-                  width: buttonWidth,
-                  child: ElevatedButton(
-                    onPressed: () => setSelectedIndex(false),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: defaultButtonPadding),
-                      child: Text(
-                        "Продолжить",
-                        style: Theme.of(context).textTheme.button!.copyWith(
-                              color: colorAccentDarkBlue,
-                            ),
+                        ),
                       ),
+                      style: Theme.of(context)
+                          .elevatedButtonTheme
+                          .style!
+                          .copyWith(
+                            backgroundColor:
+                                MaterialStateProperty.all(colorTextContrast),
+                          ),
                     ),
-                    style:
-                        Theme.of(context).elevatedButtonTheme.style!.copyWith(
-                              backgroundColor:
-                                  MaterialStateProperty.all(colorTextContrast),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: buttonWidth,
+                        child: ElevatedButton(
+                          onPressed: setSelectedIndex(true),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: defaultButtonPadding),
+                            child: Text(
+                              "Назад",
+                              style: Theme.of(context).textTheme.button,
                             ),
+                          ),
+                          style: Theme.of(context)
+                              .elevatedButtonTheme
+                              .style!
+                              .copyWith(
+                                backgroundColor: MaterialStateProperty.all(
+                                    Colors.transparent),
+                                side: MaterialStateProperty.all<BorderSide>(
+                                  const BorderSide(color: colorButtonSecondary),
+                                ),
+                              ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: buttonWidth,
+                        child: ElevatedButton(
+                          onPressed: setSelectedIndex(false),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: defaultButtonPadding),
+                            child: Text(
+                              "Продолжить",
+                              style:
+                                  Theme.of(context).textTheme.button!.copyWith(
+                                        color: colorAccentDarkBlue,
+                                      ),
+                            ),
+                          ),
+                          style: Theme.of(context)
+                              .elevatedButtonTheme
+                              .style!
+                              .copyWith(
+                                backgroundColor: MaterialStateProperty.all(
+                                    colorTextContrast),
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

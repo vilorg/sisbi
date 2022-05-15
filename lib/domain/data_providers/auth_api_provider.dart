@@ -11,32 +11,42 @@ class AuthUnknownEmployerError {}
 
 class AuthBusyUserError {}
 
+class AuthBusyEmployerError {}
+
 class AuthIncorrectCode {}
 
 class AuthApiProvider {
+  Future<void> registerUser(bool isEmployer, String phone) async {
+    Uri uri;
+    if (isEmployer) {
+      uri = Uri.parse(registerUriEmployer);
+    } else {
+      uri = Uri.parse(registerUriUser);
+    }
+    final response = await http.post(uri,
+        body: jsonEncode({
+          "user": {"phone": phone}
+        }),
+        headers: {"Content-Type": "application/json"});
+    if (response.statusCode != 201 && response.statusCode != 422) {
+      throw AuthFetchDataError();
+    }
+    var decoded = jsonDecode(response.body);
+    var resultCode = decoded["result_code"];
+    var messagesData = decoded["messages"];
+    var errorData = decoded["errors"];
+
+    if (resultCode == null && messagesData != null && errorData != null) {
+      if (isEmployer) {
+        throw AuthBusyEmployerError();
+      }
+      throw AuthBusyUserError();
+    } else if (resultCode != "ok") {
+      throw Exception();
+    }
+  }
+
   Future<void> getLoginCode(bool isEmployer, String phone) async {
-    // if (!isLogin) {
-    //   Uri uri = Uri.parse(registerUri);
-    // final response = await http.post(uri,
-    //     body: jsonEncode({
-    //       "user": {"phone": phone}
-    //     }),
-    //     headers: {"Content-Type": "application/json"});
-    //   if (response.statusCode != 201 && response.statusCode != 422) {
-    //     throw AuthFetchDataError();
-    //   }
-    //   var decoded = jsonDecode(response.body);
-    //   var resultCode = decoded["result_code"];
-    //   var messagesData = decoded["messages"];
-    //   var errorData = decoded["errors"];
-
-    //   if (resultCode == null && messagesData != null && errorData != null) {
-    //     throw AuthBusyUserError();
-    //   } else if (resultCode != "ok") {
-    //     throw Exception();
-    //   }
-    // }
-
     Uri uri;
     if (isEmployer) {
       uri = Uri.parse(getSmsEmployer);

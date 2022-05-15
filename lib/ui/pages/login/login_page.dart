@@ -87,7 +87,7 @@ class LoginViewModel extends ChangeNotifier {
     } on AuthUnknownEmployerError {
       _state = _state.copyWith(textError: "Работадатель не зарегистрирован");
     } catch (e) {
-      _state = _state.copyWith(textError: "Неизвестная ошибка");
+      _state = _state.copyWith(textError: "Проверьте подключение к интернету");
     }
     _state = _state.copyWith(isAuthInProcess: false);
     notifyListeners();

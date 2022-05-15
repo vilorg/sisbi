@@ -9,7 +9,9 @@ class LoginStartHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Center(child: Image.asset("assets/images/login_man.png")),
+        Center(
+            child: Image.asset("assets/images/login_man.png",
+                width: MediaQuery.of(context).size.width / 1.5)),
         const SizedBox(height: defaultPadding),
         Text(
           "Привет!",

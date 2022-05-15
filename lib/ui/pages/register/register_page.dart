@@ -3,96 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/domain/services/auth_service.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_birthday.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_code.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_email.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_finish.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_gender.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_graph.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_name.dart';
 import 'package:sisbi/ui/pages/register/widgets/register_phone.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_skills.dart';
 
+import 'register_view_model.dart';
 import 'widgets/register_slide_animation.dart';
 import 'widgets/register_target.dart';
 import 'widgets/register_top_info.dart';
 
-class _ViewModelState {
-  final bool isUser;
-  final String phone;
-  final String phoneError;
-  final List<String> code;
-  final String codeError;
-  final String email;
-  final bool isMale;
-  final String firstName;
-  final String surName;
-  final DateTime? birthDay;
-  final String skills;
-  final int experience;
-
-  _ViewModelState({
-    this.isUser = true,
-    this.phone = "",
-    this.phoneError = "",
-    this.code = const ["", "", "", ""],
-    this.codeError = "",
-    this.email = "",
-    this.isMale = true,
-    this.firstName = "",
-    this.surName = "",
-    this.birthDay,
-    this.skills = "",
-    this.experience = 0,
-  });
-
-  _ViewModelState copyWith({
-    bool? isUser,
-    String? phone,
-    String? phoneError,
-    List<String>? code,
-    String? codeError,
-    String? email,
-    bool? isMale,
-    String? firstName,
-    String? surName,
-    DateTime? birthDay,
-    String? skills,
-    int? experience,
-  }) {
-    return _ViewModelState(
-      isUser: isUser ?? this.isUser,
-      phone: phone ?? this.phone,
-      phoneError: phoneError ?? this.phoneError,
-      code: code ?? this.code,
-      codeError: codeError ?? this.codeError,
-      email: email ?? this.email,
-      isMale: isMale ?? this.isMale,
-      firstName: firstName ?? this.firstName,
-      surName: surName ?? this.surName,
-      birthDay: birthDay ?? this.birthDay,
-      skills: skills ?? this.skills,
-      experience: experience ?? this.experience,
-    );
-  }
-}
-
-class RegisterViewModel extends ChangeNotifier {
-  final AuthService _authService = AuthService();
-  _ViewModelState _state = _ViewModelState();
-
-  _ViewModelState get state => _state;
-
-  void setIsUser(bool isUser) {
-    _state = _state.copyWith(isUser: isUser);
-    notifyListeners();
-  }
-
-  void clearPhone() {
-    _state = _state.copyWith(phone: "", phoneError: "");
-    notifyListeners();
-  }
-
-  void setPhone(String v) {
-    _state = _state.copyWith(phone: v, phoneError: "");
-    notifyListeners();
-  }
-}
-
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
@@ -101,20 +27,12 @@ class RegisterPage extends StatefulWidget {
       );
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-  int lastIndex = 0;
-  int selectedIndex = 0;
-  int selectedItem1 = 0;
-
-  TextEditingController controller = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
     var state = context.select((RegisterViewModel model) => model.state);
     var model = context.read<RegisterViewModel>();
+
+    int selectedIndex = state.selectedIndex;
+    int lastIndex = state.lastIndex;
 
     List<Widget> widgets = [
       RegisterTarget(
@@ -122,14 +40,19 @@ class _RegisterPageState extends State<RegisterPage> {
         isUser: state.isUser,
         changeIsUser: model.setIsUser,
       ),
-      RegisterPhone(
-        key: const ValueKey(1),
-        model: model,
-        controller: controller,
-        clearControllerValue: controller.clear,
-        isValue: state.phone != "",
-        textError: state.phoneError,
+      const RegisterPhone(key: ValueKey(1)),
+      const RegisterCode(key: ValueKey(2)),
+      const RegisterEmail(key: ValueKey(3)),
+      RegisterGender(
+        key: const ValueKey(4),
+        isMale: state.isMale,
+        changeIsMale: model.setIsMale,
       ),
+      const RegisterName(key: ValueKey(5)),
+      const RegisterBirthday(key: ValueKey(6)),
+      const RegisterSkills(key: ValueKey(7)),
+      const RegisterGraph(key: ValueKey(8)),
+      const RegisterFinish(key: ValueKey(9)),
     ];
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -149,18 +72,24 @@ class _RegisterPageState extends State<RegisterPage> {
               widgets: widgets,
             ),
             RegisterTopInfo(
+              length: widgets.length,
               selecterIndex: selectedIndex,
               setSelectedIndex: (bool isLow) {
                 if (isLow && (selectedIndex - 1) >= 0) {
-                  setState(() {
-                    lastIndex = selectedIndex;
-                    selectedIndex -= 1;
-                  });
-                } else if (!isLow && (selectedIndex + 1) <= 1) {
-                  setState(() {
-                    lastIndex = selectedIndex;
-                    selectedIndex += 1;
-                  });
+                  return model.previousPage;
+                } else if (!isLow && (selectedIndex + 1) < widgets.length) {
+                  if (selectedIndex == 1) {
+                    return model.onSubmitPhoneButton;
+                  } else if (selectedIndex == 2) {
+                    return null;
+                  } else if (selectedIndex == 3) {
+                    return model.validateEmail;
+                  } else if (selectedIndex == 5) {
+                    return model.validateName;
+                  } else if (selectedIndex == 7) {
+                    return model.validateSkills;
+                  }
+                  return model.nextPage;
                 }
               },
             ),

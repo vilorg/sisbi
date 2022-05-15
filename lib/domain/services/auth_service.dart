@@ -18,4 +18,9 @@ class AuthService {
     String token = await _authApiProvider.checkSmsCode(isEmployer, phone, code);
     // return await _sessionDataProvider.saveToken(token);
   }
+
+  Future<void> registerUser(bool isEmployer, String phone) async {
+    await _authApiProvider.registerUser(isEmployer, phone);
+    return await _authApiProvider.getLoginCode(isEmployer, phone);
+  }
 }
