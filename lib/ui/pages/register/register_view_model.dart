@@ -16,6 +16,7 @@ class _ViewModelState {
   final bool isMale;
   final String firstName;
   final String surName;
+  final String companyName;
   final DateTime? birthDay;
   final String skills;
   final int experience;
@@ -35,6 +36,7 @@ class _ViewModelState {
     this.isMale = true,
     this.firstName = "",
     this.surName = "",
+    this.companyName = "",
     this.birthDay,
     this.skills = "",
     this.experience = 0,
@@ -55,6 +57,7 @@ class _ViewModelState {
     bool? isMale,
     String? firstName,
     String? surName,
+    String? companyName,
     DateTime? birthDay,
     String? skills,
     int? experience,
@@ -74,6 +77,7 @@ class _ViewModelState {
       isMale: isMale ?? this.isMale,
       firstName: firstName ?? this.firstName,
       surName: surName ?? this.surName,
+      companyName: companyName ?? this.companyName,
       birthDay: birthDay ?? this.birthDay,
       skills: skills ?? this.skills,
       experience: experience ?? this.experience,
@@ -142,7 +146,6 @@ class RegisterViewModel extends ChangeNotifier {
     } catch (e) {
       _state = _state.copyWith(phoneError: "Проверьте подключение к интернету");
     }
-    return nextPage();
     notifyListeners();
   }
 
@@ -216,6 +219,16 @@ class RegisterViewModel extends ChangeNotifier {
     }
   }
 
+  void setCompanyName(String value) {
+    _state = _state.copyWith(companyName: value);
+  }
+
+  void validateCompanyName() {
+    if (_state.companyName != "") {
+      return nextPage();
+    }
+  }
+
   void setBirthday(DateTime value) {
     _state = _state.copyWith(birthDay: value);
   }
@@ -268,5 +281,9 @@ class RegisterViewModel extends ChangeNotifier {
     if (key) data.add(i);
     _state = _state.copyWith(schedules: data);
     notifyListeners();
+  }
+
+  void saveUser() async {
+    // await _authService.saveUser(_state.isUser, _state.)
   }
 }

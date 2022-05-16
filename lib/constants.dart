@@ -53,7 +53,7 @@ final TextInputFormatter phoneMask = MaskTextInputFormatter(
 // uris
 const String baseUri = "http://51.250.102.217:3000/v1/";
 const String registerUriUser = baseUri + "user";
-const String registerUriEmployer = baseUri + "user";
+const String registerUriEmployer = baseUri + "employer/profile";
 const String getSmsUser = baseUri + "users_sms";
 const String getSmsEmployer = baseUri + "employer/employers_sms";
 const String getUserTokenUri = baseUri + "auth/user_token";

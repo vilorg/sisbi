@@ -10,6 +10,7 @@ import 'package:sisbi/ui/pages/register/widgets/register_finish.dart';
 import 'package:sisbi/ui/pages/register/widgets/register_gender.dart';
 import 'package:sisbi/ui/pages/register/widgets/register_graph.dart';
 import 'package:sisbi/ui/pages/register/widgets/register_name.dart';
+import 'package:sisbi/ui/pages/register/widgets/register_name_company.dart';
 import 'package:sisbi/ui/pages/register/widgets/register_phone.dart';
 import 'package:sisbi/ui/pages/register/widgets/register_skills.dart';
 
@@ -33,6 +34,7 @@ class RegisterPage extends StatelessWidget {
 
     int selectedIndex = state.selectedIndex;
     int lastIndex = state.lastIndex;
+    bool isUser = state.isUser;
 
     List<Widget> widgets = [
       RegisterTarget(
@@ -54,6 +56,20 @@ class RegisterPage extends StatelessWidget {
       const RegisterGraph(key: ValueKey(8)),
       const RegisterFinish(key: ValueKey(9)),
     ];
+    if (!isUser) {
+      widgets = [
+        RegisterTarget(
+          key: const ValueKey(0),
+          isUser: state.isUser,
+          changeIsUser: model.setIsUser,
+        ),
+        const RegisterPhone(key: ValueKey(1)),
+        const RegisterCode(key: ValueKey(2)),
+        const RegisterEmail(key: ValueKey(3)),
+        const RegisterNameCompany(key: ValueKey(4)),
+        const RegisterFinish(key: ValueKey(5)),
+      ];
+    }
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
@@ -84,10 +100,12 @@ class RegisterPage extends StatelessWidget {
                     return null;
                   } else if (selectedIndex == 3) {
                     return model.validateEmail;
-                  } else if (selectedIndex == 5) {
+                  } else if (selectedIndex == 5 && isUser) {
                     return model.validateName;
-                  } else if (selectedIndex == 7) {
+                  } else if (selectedIndex == 7 && isUser) {
                     return model.validateSkills;
+                  } else if (selectedIndex == 4 && !isUser) {
+                    return model.validateCompanyName;
                   }
                   return model.nextPage;
                 }

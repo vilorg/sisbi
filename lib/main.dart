@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/ui/pages/home/home_page.dart';
 import 'package:sisbi/ui/pages/login/login_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -128,6 +129,7 @@ class MyApp extends StatelessWidget {
             ScrollConfiguration(behavior: MyBehavior(), child: child!),
         routes: {
           LoginPage.nameRoute: (context) => LoginPage.create(),
+          HomePage.nameRoute: (context) => HomePage.create(),
         },
         initialRoute: LoginPage.nameRoute,
       ),

@@ -25,7 +25,7 @@ class AuthApiProvider {
     }
     final response = await http.post(uri,
         body: jsonEncode({
-          "user": {"phone": phone}
+          isEmployer ? "employer" : "user": {"phone": phone}
         }),
         headers: {"Content-Type": "application/json"});
     if (response.statusCode != 201 && response.statusCode != 422) {
