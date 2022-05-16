@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/ui/pages/register/register_view_model.dart';
 
 class RegisterTopInfo extends StatelessWidget {
   final int length;
-  final int selecterIndex;
   final Function(bool) setSelectedIndex;
 
   const RegisterTopInfo({
     Key? key,
     required this.length,
-    required this.selecterIndex,
     required this.setSelectedIndex,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var model = context.read<RegisterViewModel>();
+    var state = context.select((RegisterViewModel model) => model.state);
+
+    var selectedIndex = state.selectedIndex;
+
     var buttonWidth =
         (MediaQuery.of(context).size.width - 3 * defaultPadding) / 2;
 
@@ -39,7 +44,7 @@ class RegisterTopInfo extends StatelessWidget {
                   child: Row(
                     children: [
                       Flexible(
-                        flex: selecterIndex + 1,
+                        flex: selectedIndex + 1,
                         child: Container(
                           height: double.infinity,
                           decoration: BoxDecoration(
@@ -48,7 +53,7 @@ class RegisterTopInfo extends StatelessWidget {
                         ),
                       ),
                       Flexible(
-                        flex: length - selecterIndex - 1,
+                        flex: length - selectedIndex - 1,
                         child: const SizedBox(),
                       ),
                     ],
@@ -69,14 +74,14 @@ class RegisterTopInfo extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          selecterIndex == (length - 1) ? const SizedBox() : const Divider(),
+          selectedIndex == (length - 1) ? const SizedBox() : const Divider(),
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
-            child: selecterIndex == (length - 1)
+            child: selectedIndex == (length - 1)
                 ? SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: setSelectedIndex(true),
+                      onPressed: model.saveUser,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: defaultButtonPadding),

@@ -23,7 +23,7 @@ class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => RegisterViewModel(),
+        create: (context) => RegisterViewModel(context),
         child: const RegisterPage(),
       );
 
@@ -89,7 +89,6 @@ class RegisterPage extends StatelessWidget {
             ),
             RegisterTopInfo(
               length: widgets.length,
-              selecterIndex: selectedIndex,
               setSelectedIndex: (bool isLow) {
                 if (isLow && (selectedIndex - 1) >= 0) {
                   return model.previousPage;

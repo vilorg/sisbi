@@ -58,12 +58,24 @@ class _ViewModel extends ChangeNotifier {
     try {
       await _authService.checkLoginCode(
           isEmployer, phone, _state.smsCode.join());
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(NameRoutes.home, (route) => false);
+      return;
     } on AuthIncorrectCode {
       _state = _state.copyWith(isError: true);
     } on Exception {
       _state = _state.copyWith(isError: true);
     }
     notifyListeners();
+  }
+
+  void resendSmsCode() async {
+    try {
+      await _authService.getLoginCode(isEmployer, phone);
+    } catch (e) {
+      _state = _state.copyWith(isError: true);
+      notifyListeners();
+    }
   }
 }
 
@@ -157,13 +169,28 @@ class _LoginCodeInputPageState extends State<LoginCodeInputPage> {
                   setSmsValue: model.setSmsValue,
                   validateSmsValue: model.validateSmsCode,
                 ),
-                const SizedBox(height: defaultPadding),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: _isResentAvaible & !_isResent
+                      ? () {
+                          try {
+                            model.resendSmsCode();
+                            _isResentAvaible = false;
+                            _isResent = true;
+                            setState(() {});
+                          } catch (e) {
+                            _isResentAvaible = true;
+                            _isResent = false;
+                          }
+                        }
+                      : null,
                   child: Text(
-                    "Выслать код повторно через ${_countDown ~/ 60}:${_countDown % 60}",
+                    _isResent
+                        ? "Код был повторно выслан"
+                        : _isResentAvaible
+                            ? "Отправить код снова?"
+                            : "Выслать код повторно через ${_countDown ~/ 60}:${_countDown % 60}",
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: colorTextContrast,
+                          color: colorLink,
                           fontWeight: FontWeight.w600,
                         ),
                   ),

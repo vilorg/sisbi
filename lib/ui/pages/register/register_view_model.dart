@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sisbi/constants.dart';
 
 import 'package:sisbi/domain/data_providers/auth_api_provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
@@ -88,10 +89,14 @@ class _ViewModelState {
 }
 
 class RegisterViewModel extends ChangeNotifier {
+  final BuildContext context;
+  RegisterViewModel(this.context);
+
   final AuthService _authService = AuthService();
   _ViewModelState _state = _ViewModelState();
 
   TextEditingController controller = TextEditingController();
+
   _ViewModelState get state => _state;
 
   void nextPage() {
@@ -284,6 +289,20 @@ class RegisterViewModel extends ChangeNotifier {
   }
 
   void saveUser() async {
-    // await _authService.saveUser(_state.isUser, _state.)
+    await _authService.saveUser(
+      birthDay: _state.birthDay ?? DateTime.now(),
+      comanyName: _state.companyName,
+      email: _state.email,
+      experience: _state.experience,
+      firstName: _state.firstName,
+      isMale: _state.isMale,
+      isUser: _state.isUser,
+      schedules: _state.schedules,
+      skills: _state.skills,
+      surName: _state.surName,
+      typeEmployments: _state.typeEmployments,
+    );
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(NameRoutes.home, (route) => false);
   }
 }

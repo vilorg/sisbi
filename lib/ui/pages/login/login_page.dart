@@ -105,8 +105,6 @@ class LoginViewModel extends ChangeNotifier {
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
-  static String nameRoute = "/login";
-
   static Widget create() => ChangeNotifierProvider(
       create: (context) => LoginViewModel(context), child: const LoginPage());
 

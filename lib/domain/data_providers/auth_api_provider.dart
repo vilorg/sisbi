@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:sisbi/constants.dart';
@@ -96,5 +97,66 @@ class AuthApiProvider {
     if (token == null) throw Exception();
 
     return token;
+  }
+
+  Future<void> saveUser(
+    String token,
+    bool isUser,
+    String firstName,
+    String surName,
+    String comanyName,
+    String email,
+    DateTime birthDay,
+    bool isMale,
+    int experience,
+  ) async {
+    Uri uri;
+    if (isUser) {
+      uri = Uri.parse(registerUriUser);
+    } else {
+      uri = Uri.parse(registerUriEmployer);
+    }
+    var response = await http.put(uri,
+        body: isUser
+            ? jsonEncode({
+                "user": {
+                  "first_name": firstName,
+                  "surname": surName,
+                  "birthday": DateFormat("dd.MM.yyyy").format(birthDay),
+                  "gender": isMale ? "male" : "female",
+                  "experience": experience,
+                }
+              })
+            : jsonEncode({
+                "employer": {"name": comanyName, "email": email}
+              }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+    if (response.statusCode != 200 ||
+        jsonDecode(response.body)["result_code"] != "ok") throw Exception();
+    return;
+  }
+
+  Future<void> saveSchedules(String token, List<int> schedules) async {
+    Uri uri = Uri.parse(setSchedulesUri);
+    await http
+        .put(uri, body: jsonEncode({"schedules": "$schedules"}), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+  }
+
+  Future<void> saveTypeEmployments(
+      String token, List<int> typeEmployments) async {
+    Uri uri = Uri.parse(setTypeEmploymentsUri);
+    await http.put(uri,
+        body: jsonEncode({"type_employments": "$typeEmployments"}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
   }
 }

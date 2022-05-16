@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+// name routes
+class NameRoutes {
+  static String home = "/";
+  static String login = "/login";
+  static String loader = "/loader";
+}
+
 // colors
 // accent colors
 const Color colorAccentBlack = Color(0xFF283244);
@@ -58,3 +65,5 @@ const String getSmsUser = baseUri + "users_sms";
 const String getSmsEmployer = baseUri + "employer/employers_sms";
 const String getUserTokenUri = baseUri + "auth/user_token";
 const String getEmployerTokenUri = baseUri + "auth/employer_token";
+const String setSchedulesUri = baseUri + "user/add_schedules";
+const String setTypeEmploymentsUri = baseUri + "user/add_type_employments";
