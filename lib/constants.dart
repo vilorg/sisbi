@@ -4,7 +4,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 // name routes
 class NameRoutes {
-  static String home = "/";
+  static String homeEmployee = "/home_employee";
+  static String homeEmployer = "/home_employer";
   static String login = "/login";
   static String loader = "/loader";
 }

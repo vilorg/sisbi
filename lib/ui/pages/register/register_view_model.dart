@@ -302,7 +302,9 @@ class RegisterViewModel extends ChangeNotifier {
       surName: _state.surName,
       typeEmployments: _state.typeEmployments,
     );
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(NameRoutes.home, (route) => false);
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      _state.isUser ? NameRoutes.homeEmployee : NameRoutes.homeEmployer,
+      (route) => false,
+    );
   }
 }

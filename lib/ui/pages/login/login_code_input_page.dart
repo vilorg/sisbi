@@ -58,8 +58,10 @@ class _ViewModel extends ChangeNotifier {
     try {
       await _authService.checkLoginCode(
           isEmployer, phone, _state.smsCode.join());
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(NameRoutes.home, (route) => false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        isEmployer ? NameRoutes.homeEmployer : NameRoutes.homeEmployee,
+        (route) => false,
+      );
       return;
     } on AuthIncorrectCode {
       _state = _state.copyWith(isError: true);

@@ -24,8 +24,14 @@ class _ViewModel {
         NameRoutes.login,
         (route) => false,
       );
-  void _goToAppScreen() => Navigator.of(context)
-      .pushNamedAndRemoveUntil(NameRoutes.home, (route) => false);
+
+  void _goToAppScreen() async {
+    final bool isUser = await _authService.checkIsUser();
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      isUser ? NameRoutes.homeEmployee : NameRoutes.homeEmployer,
+      (route) => false,
+    );
+  }
 }
 
 class LoaderPage extends StatelessWidget {

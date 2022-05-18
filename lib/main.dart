@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/ui/pages/home/home_page.dart';
+import 'package:sisbi/ui/pages/employee/home_employee_page.dart';
+import 'package:sisbi/ui/pages/employer/home_employer_page.dart';
 import 'package:sisbi/ui/pages/loader_page.dart';
 import 'package:sisbi/ui/pages/login/login_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -60,6 +61,11 @@ class MyApp extends StatelessWidget {
           textTheme: const TextTheme(
             headline1: TextStyle(
               fontSize: 40,
+              fontWeight: FontWeight.w700,
+              color: colorText,
+            ),
+            headline2: TextStyle(
+              fontSize: 32,
               fontWeight: FontWeight.w700,
               color: colorText,
             ),
@@ -125,13 +131,26 @@ class MyApp extends StatelessWidget {
             ),
           ),
           dividerColor: colorDivider,
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Colors.white,
+            selectedItemColor: colorAccentRed,
+            unselectedItemColor: colorIconSecondary,
+            selectedLabelStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+            unselectedLabelStyle:
+                Theme.of(context).textTheme.bodyText2!.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+          ),
         ),
         builder: (context, child) =>
             ScrollConfiguration(behavior: MyBehavior(), child: child!),
         routes: {
           NameRoutes.loader: (context) => LoaderPage.create(),
           NameRoutes.login: (context) => LoginPage.create(),
-          NameRoutes.home: (context) => HomePage.create(),
+          NameRoutes.homeEmployee: (context) => HomeEmployeePage.create(),
+          NameRoutes.homeEmployer: (context) => HomeEmployerPage.create(),
         },
         initialRoute: NameRoutes.loader,
       ),

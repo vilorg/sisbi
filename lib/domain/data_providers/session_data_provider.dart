@@ -16,6 +16,11 @@ class SessionDataProvider {
     return await storage.read(key: keyToken) != null;
   }
 
+  Future<bool> checkIsUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(keyIsUser) ?? true;
+  }
+
   Future<String> getUserToken() async {
     return await storage.read(key: keyToken) ?? "";
   }
