@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancy_page.dart';
+import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+
+import 'package:sisbi/ui/pages/home/cards_switcher_page.dart';
 
 class _ViewModelState {
   final int selectedIndex;
@@ -45,11 +48,15 @@ class HomeEmployeePage extends StatelessWidget {
     int selectedIndex = state.selectedIndex;
 
     List<Widget> pages = [
-      VacancyPage.create(),
+      CardsSwitcherPage.create(),
     ];
 
     return Scaffold(
-      body: pages[0],
+      body: HomeInheritedWidget(
+        child: pages[0],
+        verticalPadding: MediaQuery.of(context).padding.vertical,
+        isEmployer: false,
+      ),
       bottomNavigationBar: SizedBox(
         height: 60,
         child: BottomNavigationBar(

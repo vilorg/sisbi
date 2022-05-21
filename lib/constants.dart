@@ -59,7 +59,7 @@ final TextInputFormatter phoneMask = MaskTextInputFormatter(
 );
 
 // uris
-const String baseUri = "http://51.250.102.217:3000/v1/";
+const String baseUri = "https://api.sisbi.ru/v1/";
 const String registerUriUser = baseUri + "user";
 const String registerUriEmployer = baseUri + "employer/profile";
 const String getSmsUser = baseUri + "users_sms";

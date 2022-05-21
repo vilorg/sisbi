@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancy_page.dart';
+import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 
 import 'card_action_buttons.dart';
 import 'wrap_cards.dart';
@@ -12,11 +13,12 @@ class CardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height -
-          MediaQuery.of(context).padding.vertical -
+          HomeInheritedWidget.of(context)!.verticalPadding -
           VacancyInheritedWidget.of(context)!.appBarHeight -
           60,
       decoration: const BoxDecoration(
         color: colorAccentDarkBlue,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(borderRadius)),
       ),
       child: Stack(
         children: [

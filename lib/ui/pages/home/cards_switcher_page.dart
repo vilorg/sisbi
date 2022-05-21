@@ -4,36 +4,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 import 'package:sisbi/ui/pages/home/user_card.dart';
 
-class VacancyInheritedWidget extends InheritedWidget {
-  const VacancyInheritedWidget({
-    Key? key,
-    required this.appBarHeight,
-    required Widget child,
-  }) : super(key: key, child: child);
-
-  final double appBarHeight;
-
-  static VacancyInheritedWidget? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<VacancyInheritedWidget>();
+class CardsSwitcherViewModel extends ChangeNotifier {
+  CardsSwitcherViewModel(this.context) {
+    isEmployer = HomeInheritedWidget.of(context)!.isEmployer;
   }
 
-  @override
-  bool updateShouldNotify(VacancyInheritedWidget oldWidget) {
-    if (oldWidget.appBarHeight != appBarHeight) return true;
-    return false;
-  }
+  final BuildContext context;
+  late bool isEmployer;
 }
 
-class _ViewModel extends ChangeNotifier {}
-
-class VacancyPage extends StatelessWidget {
-  const VacancyPage({Key? key}) : super(key: key);
+class CardsSwitcherPage extends StatelessWidget {
+  const CardsSwitcherPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => _ViewModel(),
-        child: const VacancyPage(),
+        create: (context) => CardsSwitcherViewModel(context),
+        child: const CardsSwitcherPage(),
       );
 
   @override
@@ -71,11 +60,15 @@ class VacancyPage extends StatelessWidget {
       appBar: appBar,
       body: VacancyInheritedWidget(
         appBarHeight: appBar.preferredSize.height,
-        child: const ClipRRect(
-          borderRadius: BorderRadius.vertical(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(borderRadius),
           ),
-          child: UserCard(),
+          child: Stack(
+            children: const [
+              UserCard(),
+            ],
+          ),
         ),
       ),
     );
