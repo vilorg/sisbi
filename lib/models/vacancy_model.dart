@@ -124,6 +124,7 @@ class VacancyModel {
     List<int> schedules = [];
     for (var i in json['schedules']) {
       schedules.add(i['id'] as int);
+      //hellojhbk hbh
     }
 
     List<int> typeEmployments = [];
