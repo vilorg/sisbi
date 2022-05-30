@@ -9,11 +9,12 @@ class VacancyModel {
   final String phone;
   final String email;
   final String experience;
+  final int salary;
   final String createdAt;
   final String jobCategoryName;
   final int jobCategoryId;
-  final List<int> schedules;
-  final List<int> typeEmployments;
+  final List<String> schedules;
+  final List<String> typeEmployments;
   final int employerId;
   final String employerName;
   final String employerAvatar;
@@ -22,6 +23,7 @@ class VacancyModel {
   final String employerAbout;
   final int cityId;
   final String cityName;
+
   VacancyModel({
     required this.id,
     required this.title,
@@ -31,6 +33,7 @@ class VacancyModel {
     required this.phone,
     required this.email,
     required this.experience,
+    required this.salary,
     required this.createdAt,
     required this.jobCategoryName,
     required this.jobCategoryId,
@@ -55,11 +58,12 @@ class VacancyModel {
     String? phone,
     String? email,
     String? experience,
+    int? salary,
     String? createdAt,
     String? jobCategoryName,
     int? jobCategoryId,
-    List<int>? schedules,
-    List<int>? typeEmployments,
+    List<String>? schedules,
+    List<String>? typeEmployments,
     int? employerId,
     String? employerName,
     String? employerAvatar,
@@ -78,6 +82,7 @@ class VacancyModel {
       phone: phone ?? this.phone,
       email: email ?? this.email,
       experience: experience ?? this.experience,
+      salary: salary ?? this.salary,
       createdAt: createdAt ?? this.createdAt,
       jobCategoryName: jobCategoryName ?? this.jobCategoryName,
       jobCategoryId: jobCategoryId ?? this.jobCategoryId,
@@ -104,6 +109,7 @@ class VacancyModel {
       'phone': phone,
       'email': email,
       'experience': experience,
+      'salary': salary,
       'createdAt': createdAt,
       'jobCategoryName': jobCategoryName,
       'jobCategoryId': jobCategoryId,
@@ -121,15 +127,15 @@ class VacancyModel {
   }
 
   factory VacancyModel.fromMap(Map<String, dynamic> json) {
-    List<int> schedules = [];
+    List<String> schedules = [];
     for (var i in json['schedules']) {
-      schedules.add(i['id'] as int);
+      schedules.add(i['name'] as String);
       //hellojhbk hbh
     }
 
-    List<int> typeEmployments = [];
+    List<String> typeEmployments = [];
     for (var i in json['type_employments']) {
-      typeEmployments.add(i['id'] as int);
+      typeEmployments.add(i['name'] as String);
     }
 
     return VacancyModel(
@@ -141,6 +147,7 @@ class VacancyModel {
       phone: json['phone'] as String,
       email: json['email'] as String,
       experience: json['experience'] as String,
+      salary: json['salary'] as int,
       createdAt: json['created_at'] as String,
       jobCategoryName: json['job_category']['name'] as String,
       jobCategoryId: json['job_category']['id'] as int,
@@ -157,13 +164,13 @@ class VacancyModel {
     );
   }
 
-  String toJson() => jsonEncode(toMap());
+  String toJson() => json.encode(toMap());
 
   factory VacancyModel.fromJson(String source) =>
       VacancyModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'VacancyModel(id: $id, title: $title, description: $description, fullName: $fullName, avatar: $avatar, phone: $phone, email: $email, experience: $experience, createdAt: $createdAt, jobCategoryName: $jobCategoryName, jobCategoryId: $jobCategoryId, schedules: $schedules, typeEmployments: $typeEmployments, employerId: $employerId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, employerAbout: $employerAbout, cityId: $cityId, cityName: $cityName)';
+    return 'VacancyModel(id: $id, title: $title, description: $description, fullName: $fullName, avatar: $avatar, phone: $phone, email: $email, experience: $experience, salary: $salary, createdAt: $createdAt, jobCategoryName: $jobCategoryName, jobCategoryId: $jobCategoryId, schedules: $schedules, typeEmployments: $typeEmployments, employerId: $employerId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, employerAbout: $employerAbout, cityId: $cityId, cityName: $cityName)';
   }
 }

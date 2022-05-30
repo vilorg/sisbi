@@ -2,32 +2,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sisbi/domain/services/auth_service.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 
 import 'package:sisbi/ui/pages/home/cards_switcher_page.dart';
 
-class _ViewModelState {
-  final int selectedIndex;
-
-  _ViewModelState({
-    this.selectedIndex = 0,
-  });
-
-  _ViewModelState copyWith({
-    int? selectedIndex,
-  }) {
-    return _ViewModelState(
-      selectedIndex: selectedIndex ?? this.selectedIndex,
-    );
-  }
-}
-
 class _ViewModel extends ChangeNotifier {
-  _ViewModelState _state = _ViewModelState();
-  _ViewModelState get state => _state;
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
+
+  String _token = "";
+  String get token => _token;
+
+  final AuthService _authService = AuthService();
+
+  _ViewModel() {
+    _init();
+  }
+
+  Future<void> _init() async {
+    _token = await _authService.getUserToken();
+    notifyListeners();
+  }
 
   void setSelectedIndex(int index) {
-    _state = _state.copyWith(selectedIndex: index);
+    _selectedIndex = index;
     notifyListeners();
   }
 }
@@ -42,10 +41,9 @@ class HomeEmployeePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var model = context.read<_ViewModel>();
-    var state = context.select((_ViewModel model) => model.state);
+    var model = Provider.of<_ViewModel>(context);
 
-    int selectedIndex = state.selectedIndex;
+    int selectedIndex = model.selectedIndex;
 
     List<Widget> pages = [
       CardsSwitcherPage.create(),
@@ -54,6 +52,8 @@ class HomeEmployeePage extends StatelessWidget {
     return Scaffold(
       body: HomeInheritedWidget(
         child: pages[0],
+        token: model.token,
+        size: MediaQuery.of(context).size,
         verticalPadding: MediaQuery.of(context).padding.vertical,
         isEmployer: false,
       ),

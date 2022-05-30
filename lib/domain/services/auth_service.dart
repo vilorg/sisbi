@@ -13,6 +13,10 @@ class AuthService {
     return await _sessionDataProvider.checkIsUser();
   }
 
+  Future<String> getUserToken() async {
+    return await _sessionDataProvider.getUserToken();
+  }
+
   Future<void> getLoginCode(bool isEmployer, String phone) async {
     return await _authApiProvider.getLoginCode(isEmployer, phone);
   }

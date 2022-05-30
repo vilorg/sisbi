@@ -20,9 +20,9 @@ class AuthApiProvider {
   Future<void> registerUser(bool isEmployer, String phone) async {
     Uri uri;
     if (isEmployer) {
-      uri = Uri.parse(registerUriEmployer);
+      uri = Uri.parse(getEmployerUri);
     } else {
-      uri = Uri.parse(registerUriUser);
+      uri = Uri.parse(getUserUri);
     }
     final response = await http.post(uri,
         body: jsonEncode({
@@ -50,9 +50,9 @@ class AuthApiProvider {
   Future<void> getLoginCode(bool isEmployer, String phone) async {
     Uri uri;
     if (isEmployer) {
-      uri = Uri.parse(getSmsEmployer);
+      uri = Uri.parse(getSmsEmployerUri);
     } else {
-      uri = Uri.parse(getSmsUser);
+      uri = Uri.parse(getSmsUserUri);
     }
     final response = await http.post(uri,
         body: jsonEncode({"phone": phone}),
@@ -112,9 +112,9 @@ class AuthApiProvider {
   ) async {
     Uri uri;
     if (isUser) {
-      uri = Uri.parse(registerUriUser);
+      uri = Uri.parse(getUserUri);
     } else {
-      uri = Uri.parse(registerUriEmployer);
+      uri = Uri.parse(getEmployerUri);
     }
     var response = await http.put(uri,
         body: isUser

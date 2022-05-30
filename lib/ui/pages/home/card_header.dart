@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 
@@ -7,7 +9,9 @@ import 'card_action_buttons.dart';
 import 'wrap_cards.dart';
 
 class CardHeader extends StatelessWidget {
-  const CardHeader({Key? key}) : super(key: key);
+  const CardHeader({Key? key, required this.vacancy}) : super(key: key);
+
+  final VacancyModel vacancy;
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +22,17 @@ class CardHeader extends StatelessWidget {
           60,
       decoration: const BoxDecoration(
         color: colorAccentDarkBlue,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(borderRadius)),
       ),
       child: Stack(
         children: [
-          Image.asset(
-            "assets/images/сard_preview.png",
+          Image.network(
+            vacancy.avatar,
             fit: BoxFit.cover,
             width: double.infinity,
+            height: MediaQuery.of(context).size.height -
+                HomeInheritedWidget.of(context)!.verticalPadding -
+                VacancyInheritedWidget.of(context)!.appBarHeight -
+                60,
             alignment: Alignment.center,
           ),
           Container(
@@ -52,13 +59,16 @@ class CardHeader extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image.asset(
-                        "assets/images/logo.png",
-                        width: 25,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(300),
+                        child: Image.network(
+                          vacancy.employerAvatar,
+                          width: 25,
+                        ),
                       ),
                       const SizedBox(width: defaultPadding / 2),
                       Text(
-                        'Рич Фэмили',
+                        vacancy.fullName,
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               color: colorTextContrast,
                               fontWeight: FontWeight.w600,
@@ -68,20 +78,20 @@ class CardHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: defaultPadding),
                   Text(
-                    'UI/UX дизайнер',
+                    vacancy.title,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: colorTextContrast,
                         ),
                   ),
                   const SizedBox(height: defaultPadding),
                   Text(
-                    'от 45 000 до 65 000 руб ',
+                    "От ${vacancy.salary}  руб.",
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: colorTextContrast,
                         ),
                   ),
                   const SizedBox(height: defaultPadding),
-                  const WrapCards(),
+                  WrapCards(vacancy: vacancy),
                   const SizedBox(height: 2 * defaultPadding),
                   const CardActionButtons(),
                 ],

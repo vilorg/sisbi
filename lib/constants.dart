@@ -60,11 +60,14 @@ final TextInputFormatter phoneMask = MaskTextInputFormatter(
 
 // uris
 const String baseUri = "https://api.sisbi.ru/v1/";
-const String registerUriUser = baseUri + "user";
-const String registerUriEmployer = baseUri + "employer/profile";
-const String getSmsUser = baseUri + "users_sms";
-const String getSmsEmployer = baseUri + "employer/employers_sms";
+const String getUserUri = baseUri + "user";
+const String getEmployerUri = baseUri + "employer/profile";
+const String getSmsUserUri = baseUri + "users_sms";
+const String getSmsEmployerUri = baseUri + "employer/employers_sms";
 const String getUserTokenUri = baseUri + "auth/user_token";
 const String getEmployerTokenUri = baseUri + "auth/employer_token";
 const String setSchedulesUri = baseUri + "user/add_schedules";
 const String setTypeEmploymentsUri = baseUri + "user/add_type_employments";
+const String getVacancyUri = baseUri + "vacancies";
+const String starVacancyUri = baseUri + "favorite_vacancies";
+const String respondVacancyUri = baseUri + "responses";
