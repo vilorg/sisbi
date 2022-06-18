@@ -71,3 +71,5 @@ const String setTypeEmploymentsUri = baseUri + "user/add_type_employments";
 const String getVacancyUri = baseUri + "vacancies";
 const String starVacancyUri = baseUri + "favorite_vacancies";
 const String respondVacancyUri = baseUri + "responses";
+const String getCitiesUri = baseUri + "cities?page=1";
+const String getJobCategoriesUri = baseUri + "job_categories";

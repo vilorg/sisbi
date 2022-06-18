@@ -5,11 +5,11 @@ import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 
-import 'card_action_buttons.dart';
-import 'wrap_cards.dart';
+import 'vacancy_action_buttons.dart';
+import 'wrap_vacancy_cards.dart';
 
-class CardHeader extends StatelessWidget {
-  const CardHeader({Key? key, required this.vacancy}) : super(key: key);
+class VacancyHeader extends StatelessWidget {
+  const VacancyHeader({Key? key, required this.vacancy}) : super(key: key);
 
   final VacancyModel vacancy;
 
@@ -91,9 +91,9 @@ class CardHeader extends StatelessWidget {
                         ),
                   ),
                   const SizedBox(height: defaultPadding),
-                  WrapCards(vacancy: vacancy),
+                  WrapVacancyCards(vacancy: vacancy),
                   const SizedBox(height: 2 * defaultPadding),
-                  const CardActionButtons(),
+                  const VacancyActionButtons(),
                 ],
               ),
             ),

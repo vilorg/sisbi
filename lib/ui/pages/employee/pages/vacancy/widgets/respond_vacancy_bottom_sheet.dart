@@ -29,7 +29,7 @@ class _RespondVacancyBottomSheetState extends State<RespondVacancyBottomSheet> {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Container(
-        height: 430,
+        height: 445.5,
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
@@ -57,6 +57,7 @@ class _RespondVacancyBottomSheetState extends State<RespondVacancyBottomSheet> {
               child: Text(
                 "${widget.vacancy.title}, зарплата от ${widget.vacancy.salary} руб.",
                 style: Theme.of(context).textTheme.bodyText1,
+                maxLines: 2,
               ),
             ),
             const SizedBox(height: defaultPadding / 2),
@@ -98,7 +99,7 @@ class _RespondVacancyBottomSheetState extends State<RespondVacancyBottomSheet> {
               minLines: 6,
               maxLines: 6,
             ),
-            const SizedBox(height: defaultPadding),
+            const Spacer(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

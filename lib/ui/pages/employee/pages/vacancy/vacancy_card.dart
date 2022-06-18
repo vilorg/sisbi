@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
-import 'card_header.dart';
-import 'cards_switcher_page.dart';
+import 'vacancuies_switcher_view_model.dart';
+import 'widgets/vacancy_header.dart';
 
-class UserCard extends StatelessWidget {
-  const UserCard({
+class VacancyCard extends StatelessWidget {
+  const VacancyCard({
     Key? key,
     required this.isFront,
     required this.vacancy,
@@ -22,7 +22,7 @@ class UserCard extends StatelessWidget {
       isFront ? _buildFrontCard(context) : _buildCard(context);
 
   Widget _buildFrontCard(BuildContext context) => Builder(builder: (context) {
-        final model = Provider.of<CardsSwitcherViewModel>(context);
+        final model = Provider.of<VacanciesSwitcherViewModel>(context);
         final position = model.position;
         final isDragging = model.isDragging;
         final milliseconds = isDragging ? 0 : 400;
@@ -42,18 +42,18 @@ class UserCard extends StatelessWidget {
           child: GestureDetector(
             child: _buildCard(context),
             onPanStart: (details) {
-              final model =
-                  Provider.of<CardsSwitcherViewModel>(context, listen: false);
+              final model = Provider.of<VacanciesSwitcherViewModel>(context,
+                  listen: false);
               model.startPosition(details);
             },
             onPanUpdate: (details) {
-              final model =
-                  Provider.of<CardsSwitcherViewModel>(context, listen: false);
+              final model = Provider.of<VacanciesSwitcherViewModel>(context,
+                  listen: false);
               model.updatePosition(details);
             },
             onPanEnd: (details) {
-              final provider =
-                  Provider.of<CardsSwitcherViewModel>(context, listen: false);
+              final provider = Provider.of<VacanciesSwitcherViewModel>(context,
+                  listen: false);
               provider.endPosition();
             },
           ),
@@ -71,7 +71,7 @@ class UserCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CardHeader(vacancy: vacancy),
+              VacancyHeader(vacancy: vacancy),
               Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Column(

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/vacancy_model.dart';
-import 'package:sisbi/ui/pages/home/cards_switcher_page.dart';
+import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 
-class WrapCards extends StatelessWidget {
-  const WrapCards({
+class WrapVacancyCards extends StatelessWidget {
+  const WrapVacancyCards({
     Key? key,
     required this.vacancy,
   }) : super(key: key);
@@ -16,7 +17,7 @@ class WrapCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<CardsSwitcherViewModel>(context);
+    final model = Provider.of<VacanciesSwitcherViewModel>(context);
     bool isAvaibleIsSelect = model.userData != null;
     List<Container> data = [];
 
@@ -24,7 +25,8 @@ class WrapCards extends StatelessWidget {
       context,
       _stringExp(vacancy.experience),
       isAvaibleIsSelect
-          ? _isExpierence(model.userData!.experience, vacancy.experience)
+          ? _isExpierence(
+              model.userData!.experience.toString(), vacancy.experience)
           : false,
     ));
 
@@ -32,14 +34,21 @@ class WrapCards extends StatelessWidget {
         context,
         vacancy.cityName,
         isAvaibleIsSelect
-            ? (vacancy.cityName == model.userData!.city)
+            ? (vacancy.cityName == model.userData!.region.value)
             : false));
 
-    List<String> _userSchedules =
+    List<ObjectId> _userSchedules =
         isAvaibleIsSelect ? model.userData!.schedules : [];
 
     for (String i in vacancy.schedules) {
-      data.add(_buildWrapCard(context, i, _userSchedules.contains(i)));
+      var key = false;
+      for (var j in _userSchedules) {
+        if (j.value == i) {
+          key = true;
+          break;
+        }
+      }
+      data.add(_buildWrapCard(context, i, key));
     }
 
     return Wrap(
@@ -89,7 +98,7 @@ class WrapCards extends StatelessWidget {
       case "more_6":
         return 3;
     }
-    return 0;
+    return -1;
   }
 
   String _stringExp(String experience) {

@@ -4,8 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/pages/employee/pages/favourite/favourite_page.dart';
 
-import 'package:sisbi/ui/pages/home/cards_switcher_page.dart';
+import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancies_switcher_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   int _selectedIndex = 0;
@@ -47,11 +48,12 @@ class HomeEmployeePage extends StatelessWidget {
 
     List<Widget> pages = [
       CardsSwitcherPage.create(),
+      FavouritePage.create(),
     ];
 
     return Scaffold(
       body: HomeInheritedWidget(
-        child: pages[0],
+        child: pages[selectedIndex],
         token: model.token,
         size: MediaQuery.of(context).size,
         verticalPadding: MediaQuery.of(context).padding.vertical,

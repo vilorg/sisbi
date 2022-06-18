@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sisbi/constants.dart';
+import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 
-import 'cards_switcher_page.dart';
-
-class CardActionButtons extends StatelessWidget {
-  const CardActionButtons({
+class VacancyActionButtons extends StatelessWidget {
+  const VacancyActionButtons({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<CardsSwitcherViewModel>(context);
+    final model = Provider.of<VacanciesSwitcherViewModel>(context);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,7 +23,21 @@ class CardActionButtons extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: model.nextCard,
+          onTap: () {
+            model.nextCard();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: colorAccentRed,
+                content: Text(
+                  "Вакансия пропущена",
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                        color: colorTextContrast,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),
+            );
+          },
           child: SvgPicture.asset(
             "assets/icons/action_skip.svg",
           ),

@@ -1,23 +1,20 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_service.dart';
-import 'package:sisbi/models/user_graph_model.dart';
+import 'package:sisbi/models/filter_vacancy_model.dart';
+import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
-import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/respond_vacancy_bottom_sheet.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/show_contacts_vacancy.dart';
-import 'package:sisbi/ui/pages/home/user_card.dart';
 
-enum CardStatus { like, dislike }
+import 'widgets/respond_vacancy_bottom_sheet.dart';
+import 'widgets/show_contacts_vacancy.dart';
 
-class CardsSwitcherViewModel extends ChangeNotifier {
-  CardsSwitcherViewModel(this.context) {
+enum _CardStatus { like, dislike }
+
+class VacanciesSwitcherViewModel extends ChangeNotifier {
+  VacanciesSwitcherViewModel(this.context) {
     resetCards();
   }
   final BuildContext context;
@@ -27,9 +24,16 @@ class CardsSwitcherViewModel extends ChangeNotifier {
   List<VacancyModel> get vacancyes => _vacancyes;
 
   VacancyModel? _lastVacancy;
+  FilterVacancyModel _filter = FilterVacancyModel.deffault();
+  FilterVacancyModel get filter => _filter;
 
-  UserGraphModel? _userData;
-  UserGraphModel? get userData => _userData;
+  void setFilter(FilterVacancyModel filter) {
+    _filter = filter;
+    notifyListeners();
+  }
+
+  UserDataModel _userData = UserDataModel.deffault();
+  UserDataModel? get userData => _userData;
 
   Offset _position = Offset.zero;
   Offset get position => _position;
@@ -66,10 +70,10 @@ class CardsSwitcherViewModel extends ChangeNotifier {
     final status = getCardStatus();
 
     switch (status) {
-      case CardStatus.like:
+      case _CardStatus.like:
         like();
         break;
-      case CardStatus.dislike:
+      case _CardStatus.dislike:
         dislike();
         break;
       default:
@@ -85,15 +89,15 @@ class CardsSwitcherViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  CardStatus? getCardStatus() {
+  _CardStatus? getCardStatus() {
     final x = _position.dx;
 
     const delta = 100;
 
     if (x >= delta) {
-      return CardStatus.like;
+      return _CardStatus.like;
     } else if (x <= -delta) {
-      return CardStatus.dislike;
+      return _CardStatus.dislike;
     }
     return null;
   }
@@ -113,7 +117,18 @@ class CardsSwitcherViewModel extends ChangeNotifier {
   Future starVacancy() async {
     String token = HomeInheritedWidget.of(context)!.token;
     await _cardService.starVacancy(token, vacancyes.last.id);
-    nextCard();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: colorAccentDarkBlue,
+        content: Text(
+          "Вакансия успешно добавлена в изрбранное!",
+          style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: colorTextContrast,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ),
+    );
   }
 
   Future nextCard() async {
@@ -135,16 +150,48 @@ class CardsSwitcherViewModel extends ChangeNotifier {
     _vacancyes.add(_lastVacancy!);
     _lastVacancy = null;
     resetPosition();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: colorAccentSoftGold,
+        content: Text(
+          "Вакансия восстановлена!",
+          style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: colorTextSecondary,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ),
+    );
   }
 
-  void resetCards() async {
-    _userData = await _cardService.getUserGraph();
+  Future<void> init() async {
     try {
-      _vacancyes =
-          (await _cardService.getActualVacancyList(1)).reversed.toList();
+      _userData = await _cardService.getUserGraph();
+      _filter = _filter.copyWith(
+        coast: _userData.coast,
+        expierence: _userData.experience,
+        post: _userData.post,
+        region: _userData.region,
+        schedules: _userData.schedules,
+        typeEmployments: _userData.typeEmployments,
+      );
+    } catch (e) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        NameRoutes.login,
+        (route) => false,
+      );
+    }
+    await resetCards();
+  }
+
+  Future<void> resetCards() async {
+    try {
+      _vacancyes = (await _cardService.getActualVacancyList(1, _filter))
+          .reversed
+          .toList();
       notifyListeners();
     } catch (e) {
-      notifyListeners();
+      _vacancyes = [];
     }
   }
 
@@ -197,69 +244,5 @@ class CardsSwitcherViewModel extends ChangeNotifier {
           return RespondVacancyBottomSheet(
               vacancy: vacancyes.last, sendMessage: sendMessage);
         });
-  }
-}
-
-class CardsSwitcherPage extends StatelessWidget {
-  const CardsSwitcherPage({Key? key}) : super(key: key);
-
-  static Widget create() => ChangeNotifierProvider(
-        create: (context) => CardsSwitcherViewModel(context),
-        child: const CardsSwitcherPage(),
-      );
-
-  @override
-  Widget build(BuildContext context) {
-    var appBar = AppBar(
-      title: Row(
-        children: [
-          TextButton(
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/icons/history_watch.svg"),
-                const SizedBox(width: defaultPadding / 2),
-                Text(
-                  "Открыть историю просмотров",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                        color: colorTextContrast,
-                      ),
-                ),
-              ],
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      actions: [
-        IconButton(
-          icon: SvgPicture.asset("assets/icons/search.svg"),
-          onPressed: () {},
-        ),
-      ],
-    );
-
-    return Scaffold(
-      backgroundColor: colorAccentDarkBlue,
-      appBar: appBar,
-      body: VacancyInheritedWidget(
-        appBarHeight: appBar.preferredSize.height,
-        child: ClipRRect(
-          borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(borderRadius)),
-          child: _buildCards(context),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCards(BuildContext context) {
-    final model = Provider.of<CardsSwitcherViewModel>(context);
-    final vacancyes = model.vacancyes;
-
-    return Stack(
-      children: vacancyes.map((VacancyModel vacancy) {
-        return UserCard(isFront: vacancyes.last == vacancy, vacancy: vacancy);
-      }).toList(),
-    );
   }
 }
