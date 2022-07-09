@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/domain/services/card_service.dart';
+import 'package:sisbi/domain/services/card_employee_service.dart';
 import 'package:sisbi/models/filter_vacancy_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
@@ -18,7 +18,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     resetCards();
   }
   final BuildContext context;
-  final CardService _cardService = CardService();
+  final CardEmployeeService _cardService = CardEmployeeService();
 
   List<VacancyModel> _vacancyes = [];
   List<VacancyModel> get vacancyes => _vacancyes;
@@ -175,13 +175,13 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         schedules: _userData.schedules,
         typeEmployments: _userData.typeEmployments,
       );
+      await resetCards();
     } catch (e) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         NameRoutes.login,
         (route) => false,
       );
     }
-    await resetCards();
   }
 
   Future<void> resetCards() async {
@@ -189,6 +189,11 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
       _vacancyes = (await _cardService.getActualVacancyList(1, _filter))
           .reversed
           .toList();
+    } catch (e) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
+    }
+    try {
       notifyListeners();
     } catch (e) {
       _vacancyes = [];

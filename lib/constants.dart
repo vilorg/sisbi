@@ -69,7 +69,53 @@ const String getEmployerTokenUri = baseUri + "auth/employer_token";
 const String setSchedulesUri = baseUri + "user/add_schedules";
 const String setTypeEmploymentsUri = baseUri + "user/add_type_employments";
 const String getVacancyUri = baseUri + "vacancies";
-const String starVacancyUri = baseUri + "favorite_vacancies";
+const String getFavouriteVacancyUri = baseUri + "favorite_vacancies";
 const String respondVacancyUri = baseUri + "responses";
 const String getCitiesUri = baseUri + "cities?page=1";
 const String getJobCategoriesUri = baseUri + "job_categories";
+const String getAllChatsUri = baseUri + "chats";
+const String getMessagesUri = baseUri + "messages";
+
+String getRusMonthString(DateTime date) {
+  String ans = "";
+  int month = date.month;
+  switch (month) {
+    case 1:
+      ans = "января";
+      break;
+    case 2:
+      ans = "февраля";
+      break;
+    case 3:
+      ans = "марта";
+      break;
+    case 4:
+      ans = "апреля";
+      break;
+    case 5:
+      ans = "мая";
+      break;
+    case 6:
+      ans = "июня";
+      break;
+    case 7:
+      ans = "июля";
+      break;
+    case 8:
+      ans = "августа";
+      break;
+    case 9:
+      ans = "сентября";
+      break;
+    case 10:
+      ans = "октября";
+      break;
+    case 11:
+      ans = "ноября";
+      break;
+    case 12:
+      ans = "декабря";
+      break;
+  }
+  return ans;
+}

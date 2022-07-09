@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:sisbi/domain/services/chat_service.dart';
+import 'package:sisbi/models/chat_preview_model.dart';
+
+class ChatViewModel extends ChangeNotifier {
+  ChatViewModel(this._context) {
+    _init();
+  }
+
+  final BuildContext _context;
+  late String _token;
+  final ChatService _service = ChatService();
+
+  List<ChatPreviewModel> _chatList = [];
+  List<ChatPreviewModel> get chatList => _chatList;
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+  // set chatId(int s) => _chatId = s;
+
+  Future<void> _init() async {
+    _token = await _service.getUserToken();
+    _chatList = await _service.getAllChats(_token);
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> reloadChats() async {
+    _isLoading = true;
+    notifyListeners();
+    _chatList = await _service.getAllChats(_token);
+    _isLoading = false;
+    notifyListeners();
+  }
+}

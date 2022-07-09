@@ -126,15 +126,6 @@ class JobCategoriesSearchPage extends StatelessWidget {
                               contentPadding: EdgeInsets.zero,
                               title: Row(
                                 children: [
-                                  // ClipRRect(
-                                  //   borderRadius:
-                                  //       BorderRadius.circular(defaultPadding),
-                                  //   child: Container(
-                                  //     width: 10,
-                                  //     height: 10,
-                                  //     color: colorAccentDarkBlue,
-                                  //   ),
-                                  // ),
                                   SizedBox(
                                     width: 40,
                                     child: Align(

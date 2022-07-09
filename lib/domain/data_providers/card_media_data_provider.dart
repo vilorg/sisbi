@@ -9,7 +9,7 @@ import 'package:sisbi/models/vacancy_model.dart';
 
 class CardMediaDataProvider {
   Future<List<VacancyModel>> getActualVacancyList(
-      int page, FilterVacancyModel filter) async {
+      int page, FilterVacancyModel filter, String token) async {
     String uriString = getVacancyUri + "?";
     List<String> params = [];
 
@@ -44,7 +44,10 @@ class CardMediaDataProvider {
     params.add("page=$page");
 
     Uri uri = Uri.parse(uriString + params.join("&"));
-    var response = await http.get(uri);
+    var response = await http.get(
+      uri,
+      headers: {'Authorization': 'Bearer $token'},
+    );
 
     if (response.statusCode != 200) throw Exception();
 
@@ -59,8 +62,28 @@ class CardMediaDataProvider {
     return data;
   }
 
+  Future<List<VacancyModel>> getFavouriteVacancyList(String token) async {
+    String uriString = getFavouriteVacancyUri;
+    Uri uri = Uri.parse(uriString);
+    var response = await http.get(
+      uri,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode != 200) throw Exception();
+
+    List dirtyData = jsonDecode(response.body)["payload"];
+    List<VacancyModel> data = [];
+
+    for (var i in dirtyData) {
+      VacancyModel vacancy = VacancyModel.fromMap(i);
+      data.add(vacancy);
+    }
+    return data;
+  }
+
   Future<void> starVacancy(String token, int vacancyId) async {
-    Uri uri = Uri.parse(starVacancyUri);
+    Uri uri = Uri.parse(getFavouriteVacancyUri);
     await http.post(uri,
         headers: {
           'Content-Type': 'application/json',
@@ -69,6 +92,11 @@ class CardMediaDataProvider {
         body: jsonEncode({
           "favorite_vacancy": {"vacancy_id": vacancyId}
         }));
+  }
+
+  Future<void> unstarVacancy(String token, int vacancyId) async {
+    Uri uri = Uri.parse("$getFavouriteVacancyUri/$vacancyId");
+    await http.delete(uri, headers: {'Authorization': 'Bearer $token'});
   }
 
   Future respondVacancy(String token, int vacancyId, String text) async {
