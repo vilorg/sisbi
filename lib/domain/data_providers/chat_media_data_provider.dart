@@ -25,8 +25,9 @@ class ChatMediaDataProvider {
     return data;
   }
 
-  Future<List<MessageModel>> getAllMessages(String token, int chatId) async {
-    Uri uri = Uri.parse("$getMessagesUri/$chatId/");
+  Future<List<MessageModel>> getAllMessages(
+      String token, int chatId, int page) async {
+    Uri uri = Uri.parse("$getMessagesUri/$chatId/?page=$page");
     var response = await http.get(uri, headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',

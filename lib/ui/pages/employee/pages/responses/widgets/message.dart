@@ -2,17 +2,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:sisbi/constants.dart';
 
+import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/message_model.dart';
 
 class Message extends StatelessWidget {
   final bool isUser;
   final MessageModel message;
+  final Duration timeDifference;
   const Message({
     Key? key,
     required this.isUser,
     required this.message,
+    required this.timeDifference,
   }) : super(key: key);
 
   @override
@@ -63,7 +65,8 @@ class Message extends StatelessWidget {
                     : const SizedBox(),
                 const SizedBox(height: defaultPadding / 8),
                 Text(
-                  DateFormat('HH:mm').format(message.createdAt),
+                  DateFormat('HH:mm')
+                      .format(message.createdAt.add(timeDifference)),
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: colorTextSecondary,
                       ),

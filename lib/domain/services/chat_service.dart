@@ -15,8 +15,9 @@ class ChatService {
     return await _mediaProvider.getAllChats(token);
   }
 
-  Future<List<MessageModel>> getAllMessages(String token, int chatId) async {
-    return await _mediaProvider.getAllMessages(token, chatId);
+  Future<List<MessageModel>> getMessages(
+      String token, int chatId, int page) async {
+    return await _mediaProvider.getAllMessages(token, chatId, page);
   }
 
   Future<bool> sendMessage(String token, int chatId, String message) async {

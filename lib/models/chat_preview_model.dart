@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class ChatPreviewModel {
   final int id;
@@ -82,6 +83,13 @@ class ChatPreviewModel {
         (map['last_message']['created_at'] as String).substring(0, 10);
     final DateTime dateTime = DateTime.parse(dateString);
 
+    String? seenAtString = map['last_message']['seen_at'];
+    DateTime? seenAt;
+    if (seenAtString != null) {
+      seenAtString = seenAtString.substring(0, 19);
+      seenAt = DateFormat('yyyy-MM-ddTHH:mm:ss').parse(seenAtString);
+    }
+
     return ChatPreviewModel(
       id: map['id'] as int,
       employerName: map['employer']['name'] as String,
@@ -91,7 +99,7 @@ class ChatPreviewModel {
       isEmployerLastMessage: map['last_message']['sender_type'] != "User",
       isSeen: map['last_message']['seen'] as bool,
       title: map['vacancy']['title'] as String,
-      // seenAt: map['seenAt'] != null ? DateTime.fromMillisecondsSinceEpoch(map['seenAt'] as int) : null,
+      seenAt: seenAt,
       userFirstName: map['user']['first_name'] as String,
       userSurname: map['user']['surname'] as String,
       userAvatar: map['user']['avatar'] as String,

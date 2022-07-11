@@ -44,6 +44,7 @@ class ResponsesEmployeePage extends StatelessWidget {
                       ? "${chat.userFirstName} ${chat.userSurname}"
                       : chat.employerName,
                   chat.title,
+                  HomeInheritedWidget.of(context)!.timeDifference,
                 ),
               ),
             );

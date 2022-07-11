@@ -44,7 +44,8 @@ class HomeEmployeePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var model = Provider.of<_ViewModel>(context);
-
+    final Duration timeDifference =
+        DateTime.now().timeZoneOffset - const Duration(hours: 3);
     int selectedIndex = model.selectedIndex;
 
     List<Widget> pages = [
@@ -56,10 +57,11 @@ class HomeEmployeePage extends StatelessWidget {
     return Scaffold(
       body: HomeInheritedWidget(
         child: pages[selectedIndex],
-        token: model.token,
         size: MediaQuery.of(context).size,
         verticalPadding: MediaQuery.of(context).padding.vertical,
         isEmployer: false,
+        timeDifference: timeDifference,
+        token: model.token,
       ),
       bottomNavigationBar: SizedBox(
         height: 60,
