@@ -5,10 +5,10 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
 import 'vacancuies_switcher_view_model.dart';
-import 'widgets/vacancy_header.dart';
+import 'widgets/vacancy_switcher_header.dart';
 
-class VacancyCard extends StatelessWidget {
-  const VacancyCard({
+class VacancySwitcherCard extends StatelessWidget {
+  const VacancySwitcherCard({
     Key? key,
     required this.isFront,
     required this.vacancy,
@@ -71,7 +71,7 @@ class VacancyCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VacancyHeader(vacancy: vacancy),
+              VacancySwitcherHeader(vacancy: vacancy),
               Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Column(

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 
-import 'vacancy_action_buttons.dart';
 import 'wrap_vacancy_cards.dart';
 
-class VacancyHeader extends StatelessWidget {
-  const VacancyHeader({Key? key, required this.vacancy}) : super(key: key);
+class VacancyStaticHeader extends StatelessWidget {
+  const VacancyStaticHeader({
+    Key? key,
+    required this.vacancy,
+    required this.userData,
+  }) : super(key: key);
 
   final VacancyModel vacancy;
+  final UserDataModel userData;
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +96,11 @@ class VacancyHeader extends StatelessWidget {
                         ),
                   ),
                   const SizedBox(height: defaultPadding),
-                  WrapVacancyCards(vacancy: vacancy),
+                  WrapVacancyCards(
+                    vacancy: vacancy,
+                    userData: userData,
+                  ),
                   const SizedBox(height: 2 * defaultPadding),
-                  const VacancyActionButtons(),
                 ],
               ),
             ),

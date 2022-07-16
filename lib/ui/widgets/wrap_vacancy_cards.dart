@@ -1,32 +1,31 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/object_id.dart';
+import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 
 class WrapVacancyCards extends StatelessWidget {
   const WrapVacancyCards({
     Key? key,
     required this.vacancy,
+    required this.userData,
   }) : super(key: key);
 
   final VacancyModel vacancy;
+  final UserDataModel? userData;
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<VacanciesSwitcherViewModel>(context);
-    bool isAvaibleIsSelect = model.userData != null;
+    bool isAvaibleIsSelect = userData != null;
     List<Container> data = [];
 
     data.add(_buildWrapCard(
       context,
       _stringExp(vacancy.experience),
       isAvaibleIsSelect
-          ? _isExpierence(
-              model.userData!.experience.toString(), vacancy.experience)
+          ? _isExpierence(userData!.experience.toString(), vacancy.experience)
           : false,
     ));
 
@@ -34,11 +33,11 @@ class WrapVacancyCards extends StatelessWidget {
         context,
         vacancy.cityName,
         isAvaibleIsSelect
-            ? (vacancy.cityName == model.userData!.region.value)
+            ? (vacancy.cityName == userData!.region.value)
             : false));
 
     List<ObjectId> _userSchedules =
-        isAvaibleIsSelect ? model.userData!.schedules : [];
+        isAvaibleIsSelect ? userData!.schedules : [];
 
     for (String i in vacancy.schedules) {
       var key = false;

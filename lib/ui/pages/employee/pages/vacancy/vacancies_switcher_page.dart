@@ -6,7 +6,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancy_card.dart';
+import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancy_switcher_card.dart';
 
 import 'vacancuies_switcher_view_model.dart';
 
@@ -88,7 +88,7 @@ class CardsSwitcherPage extends StatelessWidget {
 
     return Stack(
       children: vacancyes.map((VacancyModel vacancy) {
-        return VacancyCard(
+        return VacancySwitcherCard(
             isFront: vacancyes.last == vacancy, vacancy: vacancy);
       }).toList(),
     );

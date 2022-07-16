@@ -21,14 +21,22 @@ class ChatViewModel extends ChangeNotifier {
     _token = await _service.getUserToken();
     _chatList = await _service.getAllChats(_token);
     _isLoading = false;
-    notifyListeners();
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+    }
   }
 
   Future<void> reloadChats() async {
-    _isLoading = true;
-    notifyListeners();
-    _chatList = await _service.getAllChats(_token);
-    _isLoading = false;
-    notifyListeners();
+    try {
+      _isLoading = true;
+      notifyListeners();
+      _chatList = await _service.getAllChats(_token);
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+    }
   }
 }

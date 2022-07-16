@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/favourite/favourite_vacancy_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/responses_employee_page.dart';
+import 'package:sisbi/ui/pages/employee/pages/responses/responses_page.dart';
 
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancies_switcher_page.dart';
 
@@ -51,7 +51,7 @@ class HomeEmployeePage extends StatelessWidget {
     List<Widget> pages = [
       CardsSwitcherPage.create(),
       FavouriteVacancyPage.create(),
-      ResponsesEmployeePage.create(),
+      ChatPage.create(),
     ];
 
     return Scaffold(

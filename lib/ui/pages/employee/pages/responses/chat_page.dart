@@ -10,12 +10,12 @@ import 'package:sisbi/ui/pages/employee/pages/responses/widgets/chat_preview.dar
 
 import 'widgets/header_responses_employee.dart';
 
-class ResponsesEmployeePage extends StatelessWidget {
-  const ResponsesEmployeePage({Key? key}) : super(key: key);
+class ChatPage extends StatelessWidget {
+  const ChatPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
         create: (context) => ChatViewModel(context),
-        child: const ResponsesEmployeePage(),
+        child: const ChatPage(),
       );
 
   @override
@@ -37,7 +37,7 @@ class ResponsesEmployeePage extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => DialogPage.create(
-                  chat.id,
+                  chat.chatId,
                   isUser,
                   model.reloadChats,
                   !isUser

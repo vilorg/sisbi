@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class ChatPreviewModel {
-  final int id;
+  final int chatId;
   final String employerName;
   final String employerAvatar;
   final String lastMessage;
@@ -16,7 +16,7 @@ class ChatPreviewModel {
   final String userSurname;
   final String userAvatar;
   ChatPreviewModel({
-    required this.id,
+    required this.chatId,
     required this.employerName,
     required this.employerAvatar,
     required this.lastMessage,
@@ -45,7 +45,7 @@ class ChatPreviewModel {
     String? userAvatar,
   }) {
     return ChatPreviewModel(
-      id: id ?? this.id,
+      chatId: id ?? this.chatId,
       employerName: employerName ?? this.employerName,
       employerAvatar: employerAvatar ?? this.employerAvatar,
       lastMessage: lastMessage ?? this.lastMessage,
@@ -63,7 +63,7 @@ class ChatPreviewModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'id': chatId,
       'employerName': employerName,
       'employerAvatar': employerAvatar,
       'lastMessage': lastMessage,
@@ -91,7 +91,7 @@ class ChatPreviewModel {
     }
 
     return ChatPreviewModel(
-      id: map['id'] as int,
+      chatId: map['id'] as int,
       employerName: map['employer']['name'] as String,
       employerAvatar: map['employer']['avatar'] as String,
       lastMessage: map['last_message']['content'] as String,
@@ -113,7 +113,7 @@ class ChatPreviewModel {
 
   @override
   String toString() {
-    return 'ChatPreviewModel(id: $id, employerName: $employerName, employerAvatar: $employerAvatar, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar)';
+    return 'ChatPreviewModel(id: $chatId, employerName: $employerName, employerAvatar: $employerAvatar, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar)';
   }
 
   @override
@@ -121,7 +121,7 @@ class ChatPreviewModel {
     if (identical(this, other)) return true;
 
     return other is ChatPreviewModel &&
-        other.id == id &&
+        other.chatId == chatId &&
         other.employerName == employerName &&
         other.employerAvatar == employerAvatar &&
         other.lastMessage == lastMessage &&
@@ -137,7 +137,7 @@ class ChatPreviewModel {
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return chatId.hashCode ^
         employerName.hashCode ^
         employerAvatar.hashCode ^
         lastMessage.hashCode ^
