@@ -31,7 +31,7 @@ class ChatPreviewModel {
   });
 
   ChatPreviewModel copyWith({
-    int? id,
+    int? chatId,
     String? employerName,
     String? employerAvatar,
     String? lastMessage,
@@ -45,7 +45,7 @@ class ChatPreviewModel {
     String? userAvatar,
   }) {
     return ChatPreviewModel(
-      chatId: id ?? this.chatId,
+      chatId: chatId ?? this.chatId,
       employerName: employerName ?? this.employerName,
       employerAvatar: employerAvatar ?? this.employerAvatar,
       lastMessage: lastMessage ?? this.lastMessage,
