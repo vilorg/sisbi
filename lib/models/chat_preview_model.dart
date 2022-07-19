@@ -1,29 +1,38 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:intl/intl.dart';
 
 class ChatPreviewModel {
   final int chatId;
+  final int vacancyId;
   final String employerName;
   final String employerAvatar;
+  final String employerPhone;
+  final String employerEmail;
   final String lastMessage;
   final DateTime lastMessageSenAt;
   final bool isEmployerLastMessage;
   final bool isSeen;
   final String title;
+  final String description;
   final DateTime? seenAt;
   final String userFirstName;
   final String userSurname;
   final String userAvatar;
   ChatPreviewModel({
     required this.chatId,
+    required this.vacancyId,
     required this.employerName,
     required this.employerAvatar,
+    required this.employerPhone,
+    required this.employerEmail,
     required this.lastMessage,
     required this.lastMessageSenAt,
     required this.isEmployerLastMessage,
     required this.isSeen,
     required this.title,
+    required this.description,
     this.seenAt,
     required this.userFirstName,
     required this.userSurname,
@@ -32,13 +41,17 @@ class ChatPreviewModel {
 
   ChatPreviewModel copyWith({
     int? chatId,
+    int? vacancyId,
     String? employerName,
     String? employerAvatar,
+    String? employerPhone,
+    String? employerEmail,
     String? lastMessage,
     DateTime? lastMessageSenAt,
     bool? isEmployerLastMessage,
     bool? isSeen,
     String? title,
+    String? description,
     DateTime? seenAt,
     String? userFirstName,
     String? userSurname,
@@ -46,14 +59,18 @@ class ChatPreviewModel {
   }) {
     return ChatPreviewModel(
       chatId: chatId ?? this.chatId,
+      vacancyId: vacancyId ?? this.vacancyId,
       employerName: employerName ?? this.employerName,
       employerAvatar: employerAvatar ?? this.employerAvatar,
+      employerPhone: employerPhone ?? this.employerPhone,
+      employerEmail: employerEmail ?? this.employerEmail,
       lastMessage: lastMessage ?? this.lastMessage,
       lastMessageSenAt: lastMessageSenAt ?? this.lastMessageSenAt,
       isEmployerLastMessage:
           isEmployerLastMessage ?? this.isEmployerLastMessage,
       isSeen: isSeen ?? this.isSeen,
       title: title ?? this.title,
+      description: description ?? this.description,
       seenAt: seenAt ?? this.seenAt,
       userFirstName: userFirstName ?? this.userFirstName,
       userSurname: userSurname ?? this.userSurname,
@@ -92,13 +109,17 @@ class ChatPreviewModel {
 
     return ChatPreviewModel(
       chatId: map['id'] as int,
+      vacancyId: map['vacancy']['id'] as int,
       employerName: map['employer']['name'] as String,
       employerAvatar: map['employer']['avatar'] as String,
+      employerEmail: map['employer']['email'] as String,
+      employerPhone: map['employer']['phone'] as String,
       lastMessage: map['last_message']['content'] as String,
       lastMessageSenAt: dateTime,
       isEmployerLastMessage: map['last_message']['sender_type'] != "User",
       isSeen: map['last_message']['seen'] as bool,
       title: map['vacancy']['title'] as String,
+      description: map['vacancy']['description'] as String,
       seenAt: seenAt,
       userFirstName: map['user']['first_name'] as String,
       userSurname: map['user']['surname'] as String,

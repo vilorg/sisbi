@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
 import 'package:sisbi/ui/pages/employee/pages/responses/widgets/message.dart';
 
@@ -19,16 +20,20 @@ class DialogPage extends StatelessWidget {
     required this.timeDifference,
   }) : super(key: key);
 
-  static Widget create(int chatId, bool isUser, VoidCallback onClose,
-          String parthnerName, String title, Duration timeDifference) =>
-      ChangeNotifierProvider(
-        create: (context) =>
-            DialogViewModel(context, chatId, isUser, onClose, context),
-        child: DialogPage(
-            parthnerName: parthnerName,
-            title: title,
-            timeDifference: timeDifference),
-      );
+  static Widget create(ChatPreviewModel chat, bool isUser, VoidCallback onClose,
+      Duration timeDifference) {
+    String parthnerName = isUser
+        ? chat.employerName
+        : "${chat.userFirstName} ${chat.userSurname}";
+    return ChangeNotifierProvider(
+      create: (context) =>
+          DialogViewModel(context, chat, isUser, onClose, context),
+      child: DialogPage(
+          parthnerName: parthnerName,
+          title: chat.title,
+          timeDifference: timeDifference),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

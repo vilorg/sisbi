@@ -37,13 +37,9 @@ class ChatPage extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => DialogPage.create(
-                  chat.chatId,
+                  chat,
                   isUser,
                   model.reloadChats,
-                  !isUser
-                      ? "${chat.userFirstName} ${chat.userSurname}"
-                      : chat.employerName,
-                  chat.title,
                   HomeInheritedWidget.of(context)!.timeDifference,
                 ),
               ),
