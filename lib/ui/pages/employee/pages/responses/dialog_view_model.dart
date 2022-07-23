@@ -6,6 +6,7 @@ import 'package:sisbi/domain/services/chat_service.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
 import 'package:intl/intl.dart';
+import 'package:sisbi/ui/pages/employee/pages/responses/widgets/actions_message.dart';
 import 'package:web_socket_channel/io.dart';
 
 class DialogViewModel extends ChangeNotifier {
@@ -153,7 +154,7 @@ class DialogViewModel extends ChangeNotifier {
           borderRadius:
               BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
       context: context,
-      builder: (context) => const SizedBox(),
+      builder: (context) => ActionsMessage(chat: chat, isUser: isUser),
       // ActionsMessage(vacancy: ,)
     );
   }

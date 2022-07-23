@@ -1,29 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/models/vacancy_model.dart';
-import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
-import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
-
-import 'wrap_vacancy_cards.dart';
+import 'package:sisbi/models/chat_preview_model.dart';
 
 class VacancyStaticHeader extends StatelessWidget {
   const VacancyStaticHeader({
     Key? key,
-    required this.vacancy,
-    required this.userData,
+    required this.chat,
+    required this.isUser,
   }) : super(key: key);
 
-  final VacancyModel vacancy;
-  final UserDataModel userData;
+  final ChatPreviewModel chat;
+  final bool isUser;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height -
-          HomeInheritedWidget.of(context)!.verticalPadding -
-          VacancyInheritedWidget.of(context)!.appBarHeight -
+          MediaQuery.of(context).padding.vertical -
           60,
       decoration: const BoxDecoration(
         color: colorAccentDarkBlue,
@@ -31,12 +26,12 @@ class VacancyStaticHeader extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            vacancy.avatar,
+            chat.employerAvatar,
             fit: BoxFit.cover,
             width: double.infinity,
             height: MediaQuery.of(context).size.height -
-                HomeInheritedWidget.of(context)!.verticalPadding -
-                VacancyInheritedWidget.of(context)!.appBarHeight -
+                MediaQuery.of(context).padding.vertical -
+                // VacancyInheritedWidget.of(context)!.appBarHeight -
                 60,
             alignment: Alignment.center,
           ),
@@ -67,13 +62,13 @@ class VacancyStaticHeader extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(300),
                         child: Image.network(
-                          vacancy.employerAvatar,
+                          chat.employerAvatar,
                           width: 25,
                         ),
                       ),
                       const SizedBox(width: defaultPadding / 2),
                       Text(
-                        vacancy.fullName,
+                        chat.employerName,
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               color: colorTextContrast,
                               fontWeight: FontWeight.w600,
@@ -83,23 +78,23 @@ class VacancyStaticHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: defaultPadding),
                   Text(
-                    vacancy.title,
+                    chat.title,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: colorTextContrast,
                         ),
                   ),
                   const SizedBox(height: defaultPadding),
                   Text(
-                    "От ${vacancy.salary}  руб.",
+                    "От ${chat.salary} руб.",
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: colorTextContrast,
                         ),
                   ),
-                  const SizedBox(height: defaultPadding),
-                  WrapVacancyCards(
-                    vacancy: vacancy,
-                    userData: userData,
-                  ),
+                  // const SizedBox(height: defaultPadding),
+                  // WrapVacancyCards(
+                  //   vacancy: vacancy,
+                  //   userData: userData,
+                  // ),
                   const SizedBox(height: 2 * defaultPadding),
                 ],
               ),
