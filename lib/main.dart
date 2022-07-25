@@ -100,6 +100,15 @@ class MyApp extends StatelessWidget {
               color: colorTextContrast,
             ),
           ),
+          textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.all(defaultPadding)),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(borderRadius))),
+            ),
+          ),
           inputDecorationTheme: InputDecorationTheme(
             focusColor: colorAccentLightBlue,
             filled: true,

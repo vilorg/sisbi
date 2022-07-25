@@ -146,6 +146,13 @@ class CardMediaDataProvider {
       }
 
       return UserDataModel(
+        firstName: _decoded['first_name'],
+        surname: _decoded['surname'],
+        avatar: _decoded['avatar'],
+        birthday: DateTime.now(),
+        isMale: _decoded['gender'] == "male",
+        email: _decoded["email"] ?? "",
+        phone: _decoded["phone"],
         experience: Expierence.values
             .firstWhere((e) => e.toString() == "Expierence." + experience),
         schedules: schedules,

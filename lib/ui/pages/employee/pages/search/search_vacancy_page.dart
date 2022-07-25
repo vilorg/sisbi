@@ -10,6 +10,7 @@ import 'package:sisbi/ui/pages/employee/pages/search/coast_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/post_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/region_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
+import 'package:sisbi/ui/widgets/select_card.dart';
 
 import 'widgets/fields_of_activity_tabs.dart';
 import 'widgets/wrap_expierence_tabs.dart';
@@ -162,7 +163,7 @@ class SearchVacancyPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: defaultPadding),
                   child: Column(
                     children: [
-                      GestureDetector(
+                      SelectCard(
                         onTap: () => Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder:
@@ -184,41 +185,39 @@ class SearchVacancyPage extends StatelessWidget {
                             },
                           ),
                         ),
-                        child: _buildSelectCard(context, "Должность",
-                            model.filter.post != "" ? model.filter.post : null),
+                        title: "Должность",
+                        value:
+                            model.filter.post != "" ? model.filter.post : null,
                       ),
                       const SizedBox(height: defaultPadding / 2),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    RegionSearchPage.create(model),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              const begin = Offset(1.0, 0.0);
-                              const end = Offset.zero;
-                              const curve = Curves.ease;
+                      SelectCard(
+                          onTap: () => Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      RegionSearchPage.create(model),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    const begin = Offset(1.0, 0.0);
+                                    const end = Offset.zero;
+                                    const curve = Curves.ease;
 
-                              var tween = Tween(begin: begin, end: end)
-                                  .chain(CurveTween(curve: curve));
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
 
-                              return SlideTransition(
-                                position: animation.drive(tween),
-                                child: child,
-                              );
-                            },
-                          ),
-                        ),
-                        child: _buildSelectCard(
-                            context,
-                            "Регион",
-                            model.filter.region.value == ""
-                                ? null
-                                : model.filter.region.value),
-                      ),
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              ),
+                          title: "Регион",
+                          value: model.filter.region.value == ""
+                              ? null
+                              : model.filter.region.value),
                       const SizedBox(height: defaultPadding / 2),
-                      GestureDetector(
+                      SelectCard(
                         onTap: () => Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder:
@@ -240,12 +239,10 @@ class SearchVacancyPage extends StatelessWidget {
                             },
                           ),
                         ),
-                        child: _buildSelectCard(
-                            context,
-                            "Зарплата, от",
-                            model.filter.coast != 0
-                                ? "${model.filter.coast.toString().substring(0, model.filter.coast.toString().length - 3)} ${model.filter.coast.toString().substring(model.filter.coast.toString().length - 3)} руб."
-                                : null),
+                        title: "Зарплата, от",
+                        value: model.filter.coast != 0
+                            ? "${model.filter.coast.toString().substring(0, model.filter.coast.toString().length - 3)} ${model.filter.coast.toString().substring(model.filter.coast.toString().length - 3)} руб."
+                            : null,
                       ),
                       FieldsOfActivityTabs(model: model),
                       WrapExpierenceTabs(model: model),
@@ -294,50 +291,6 @@ class SearchVacancyPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSelectCard(BuildContext context, String title, String? value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: colorInput,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        padding: const EdgeInsets.all(defaultButtonPadding),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: colorInputContent,
-                  ),
-            ),
-            value != null
-                ? Row(
-                    children: [
-                      Text(
-                        value,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              color: colorText,
-                            ),
-                      ),
-                      SvgPicture.asset(
-                        "assets/icons/arrow_right.svg",
-                        color: colorText,
-                      ),
-                    ],
-                  )
-                : SvgPicture.asset(
-                    "assets/icons/arrow_right.svg",
-                    color: colorIconSecondary,
-                  ),
-          ],
         ),
       ),
     );

@@ -3,6 +3,13 @@ import 'package:sisbi/models/filter_vacancy_model.dart';
 import 'package:sisbi/models/object_id.dart';
 
 class UserDataModel {
+  final String firstName;
+  final String surname;
+  final bool isMale;
+  final DateTime birthday;
+  final String phone;
+  final String email;
+  final String avatar;
   final Expierence experience;
   final List<ObjectId> schedules;
   final List<ObjectId> typeEmployments;
@@ -10,6 +17,13 @@ class UserDataModel {
   final String post;
   final int coast;
   UserDataModel({
+    required this.firstName,
+    required this.surname,
+    required this.isMale,
+    required this.birthday,
+    required this.phone,
+    required this.email,
+    required this.avatar,
     required this.experience,
     required this.schedules,
     required this.typeEmployments,
@@ -19,6 +33,13 @@ class UserDataModel {
   });
 
   UserDataModel copyWith({
+    String? firstName,
+    String? surname,
+    bool? isMale,
+    DateTime? birthday,
+    String? phone,
+    String? email,
+    String? avatar,
     Expierence? experience,
     List<ObjectId>? schedules,
     List<ObjectId>? typeEmployments,
@@ -27,6 +48,13 @@ class UserDataModel {
     int? coast,
   }) {
     return UserDataModel(
+      firstName: firstName ?? this.firstName,
+      surname: surname ?? this.surname,
+      isMale: isMale ?? this.isMale,
+      birthday: birthday ?? this.birthday,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      avatar: avatar ?? this.avatar,
       experience: experience ?? this.experience,
       schedules: schedules ?? this.schedules,
       typeEmployments: typeEmployments ?? this.typeEmployments,
@@ -42,10 +70,18 @@ class UserDataModel {
   }
 
   static UserDataModel deffault() => UserDataModel(
-      experience: Expierence.notChosed,
-      schedules: [],
-      typeEmployments: [],
-      region: ObjectId(0, ""),
-      post: "",
-      coast: 0);
+        firstName: "",
+        surname: "",
+        email: "",
+        phone: "",
+        avatar: "",
+        isMale: true,
+        birthday: DateTime.now(),
+        experience: Expierence.notChosed,
+        schedules: [],
+        typeEmployments: [],
+        region: ObjectId(0, ""),
+        post: "",
+        coast: 0,
+      );
 }
