@@ -37,6 +37,6 @@ class CardEmployeeService {
 
   Future<UserDataModel> getUserGraph() async {
     String token = await _sessionProvider.getUserToken();
-    return await _cardProvider.getUserGraph(token);
+    return await _cardProvider.getUserData(token);
   }
 }

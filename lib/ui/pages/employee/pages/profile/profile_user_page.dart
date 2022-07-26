@@ -1,25 +1,81 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/domain/services/profile_service.dart';
 import 'package:sisbi/models/tile_data.dart';
+import 'package:sisbi/models/user_data_model.dart';
+import 'package:sisbi/ui/pages/loader_page.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 import 'package:sisbi/ui/widgets/select_card.dart';
 
-class _ViewModel extends ChangeNotifier {}
+class _ViewModel extends ChangeNotifier {
+  final BuildContext _context;
+  final ProfileService _service = ProfileService();
+
+  UserDataModel? _userModel;
+  UserDataModel? get userModel => _userModel;
+
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+
+  Future<void> logout() async {
+    await _service.logout();
+    Navigator.of(_context).pushNamedAndRemoveUntil(
+      NameRoutes.login,
+      (route) => false,
+    );
+  }
+
+  _ViewModel(this._context) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    _userModel = await _service.getUserData();
+    _isLoading = false;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoading = true;
+    }
+  }
+}
 
 class ProfileUserPage extends StatelessWidget {
   const ProfileUserPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => _ViewModel(),
+        create: (context) => _ViewModel(context),
         child: const ProfileUserPage(),
       );
 
   @override
   Widget build(BuildContext context) {
+    final model = Provider.of<_ViewModel>(context);
+    final UserDataModel? user = model.userModel;
+    final bool isLoading = model.isLoading;
+    Widget avatar = Image.asset(
+      "assets/images/avatar.png",
+      width: 132,
+      height: 132,
+      fit: BoxFit.cover,
+    );
+
+    if (!isLoading) {
+      if (user!.avatar != "") {
+        avatar = Image.network(
+          user.avatar,
+          width: 132,
+          height: 132,
+          fit: BoxFit.cover,
+        );
+      }
+    }
+
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
@@ -59,7 +115,7 @@ class ProfileUserPage extends StatelessWidget {
                     title: "Выйти из аккаунта",
                     asset: "assets/icons/logout.svg",
                     isRed: true,
-                    onTap: () {},
+                    onTap: model.logout,
                   ),
                 ],
               ),
@@ -68,64 +124,77 @@ class ProfileUserPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          const _Header(isFirst: false),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(borderRadiusPage),
-              ),
-              child: Container(
-                width: double.infinity,
-                color: Colors.white,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(defaultPadding),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            "assets/images/сard_preview.png",
-                            width: 132,
-                            height: 132,
-                            fit: BoxFit.cover,
-                          ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                const _Header(isFirst: false),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(borderRadiusPage),
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.white,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(defaultPadding),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: avatar,
+                              ),
+                            ),
+                            SelectCard(
+                              title: "Имя, фамилия",
+                              value: user!.firstName != ""
+                                  ? "${user.firstName} ${user.surname}"
+                                  : null,
+                              onTap: () {},
+                            ),
+                            SelectCard(
+                              title: "Пол",
+                              value: user.isMale ? "Мужской" : "Женский",
+                              onTap: () {},
+                            ),
+                            SelectCard(
+                              title: "Дата рождения",
+                              value: DateTime.now().difference(user.birthday) <
+                                      const Duration(days: 365)
+                                  ? null
+                                  : DateFormat('dd.MM.yyyy')
+                                      .format(user.birthday),
+                              onTap: () {},
+                            ),
+                            SelectCard(
+                              title: "Город проживания",
+                              value: user.region.value != ""
+                                  ? user.region.value
+                                  : null,
+                              onTap: () {},
+                            ),
+                            SelectCard(
+                              title: "Номер телефона",
+                              value: user.phone,
+                              onTap: () {},
+                            ),
+                            SelectCard(
+                              title: "Email-адрес",
+                              value: user.email != "" ? user.email : null,
+                              onTap: () {},
+                            ),
+                          ],
                         ),
                       ),
-                      SelectCard(
-                        title: "Имя, фамилия",
-                        onTap: () {},
-                      ),
-                      SelectCard(
-                        title: "Пол",
-                        onTap: () {},
-                      ),
-                      SelectCard(
-                        title: "Дата рождения",
-                        onTap: () {},
-                      ),
-                      SelectCard(
-                        title: "Город проживания",
-                        onTap: () {},
-                      ),
-                      SelectCard(
-                        title: "Номер телефона",
-                        onTap: () {},
-                      ),
-                      SelectCard(
-                        title: "Email-адрес",
-                        onTap: () {},
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
     );
   }
 }

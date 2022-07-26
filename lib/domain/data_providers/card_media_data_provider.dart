@@ -114,7 +114,7 @@ class CardMediaDataProvider {
         }));
   }
 
-  Future<UserDataModel> getUserGraph(String token) async {
+  Future<UserDataModel> getUserData(String token) async {
     Uri _uri = Uri.parse(getUserUri);
     final _response = await http.get(
       _uri,
@@ -129,11 +129,20 @@ class CardMediaDataProvider {
 
     try {
       final String experience = _decoded["experience"];
-      final String? city = _decoded["city"];
       final List schedulesDatas = _decoded["schedules"];
       final List typeEmploymentsDatas = _decoded["type_employments"];
       final String skills = _decoded["skills"];
       final int coast = _decoded["min_salary"];
+      ObjectId city = ObjectId(0, "");
+      if (_decoded['city'] != null) {
+        city = ObjectId(
+            _decoded['city']['id'] as int, _decoded['city']['name'] as String);
+      }
+
+      List<String> birthdayList = _decoded['birthday'].split('.');
+
+      DateTime birthday = DateTime(int.parse(birthdayList[2]),
+          int.parse(birthdayList[1]), int.parse(birthdayList[0]));
 
       List<ObjectId> schedules = [];
       for (var i in schedulesDatas) {
@@ -149,19 +158,20 @@ class CardMediaDataProvider {
         firstName: _decoded['first_name'],
         surname: _decoded['surname'],
         avatar: _decoded['avatar'],
-        birthday: DateTime.now(),
+        birthday: birthday,
         isMale: _decoded['gender'] == "male",
         email: _decoded["email"] ?? "",
         phone: _decoded["phone"],
         experience: Expierence.values
             .firstWhere((e) => e.toString() == "Expierence." + experience),
         schedules: schedules,
-        region: ObjectId(0, city ?? ""),
+        region: city,
         post: skills,
         coast: coast,
         typeEmployments: typeEmployments,
       );
     } catch (e) {
+      print(e.toString());
       return UserDataModel.deffault();
     }
   }

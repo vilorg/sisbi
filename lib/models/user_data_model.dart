@@ -66,7 +66,7 @@ class UserDataModel {
 
   @override
   String toString() {
-    return 'UserDataModel(experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, city: $region, post: $post, coast: $coast)';
+    return 'UserDataModel(firstName: $firstName, surname: $surname, isMale: $isMale, birthday: $birthday, phone: $phone, email: $email, avatar: $avatar, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, region: $region, post: $post, coast: $coast)';
   }
 
   static UserDataModel deffault() => UserDataModel(

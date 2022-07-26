@@ -67,4 +67,4 @@ class FilterVacancyModel {
       typeEmployments: []);
 }
 
-enum Expierence { no, y_1_2, y_2_6, more_6, notChosed }
+enum Expierence { no, y_1_3, y_3_6, more_6, notChosed }
