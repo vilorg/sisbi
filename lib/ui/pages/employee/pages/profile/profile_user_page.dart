@@ -1,61 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/domain/services/profile_service.dart';
 import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/ui/pages/loader_page.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/widgets/name_profile_user.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 import 'package:sisbi/ui/widgets/select_card.dart';
 
-class _ViewModel extends ChangeNotifier {
-  final BuildContext _context;
-  final ProfileService _service = ProfileService();
-
-  UserDataModel? _userModel;
-  UserDataModel? get userModel => _userModel;
-
-  bool _isLoading = true;
-  bool get isLoading => _isLoading;
-
-  Future<void> logout() async {
-    await _service.logout();
-    Navigator.of(_context).pushNamedAndRemoveUntil(
-      NameRoutes.login,
-      (route) => false,
-    );
-  }
-
-  _ViewModel(this._context) {
-    _init();
-  }
-
-  Future<void> _init() async {
-    _userModel = await _service.getUserData();
-    _isLoading = false;
-    try {
-      notifyListeners();
-    } catch (e) {
-      _isLoading = true;
-    }
-  }
-}
+import 'profile_view_model.dart';
 
 class ProfileUserPage extends StatelessWidget {
   const ProfileUserPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => _ViewModel(context),
+        create: (context) => ProfileViewModel(context),
         child: const ProfileUserPage(),
       );
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<_ViewModel>(context);
+    final model = Provider.of<ProfileViewModel>(context);
     final UserDataModel? user = model.userModel;
     final bool isLoading = model.isLoading;
     Widget avatar = Image.asset(
@@ -67,15 +35,30 @@ class ProfileUserPage extends StatelessWidget {
 
     if (!isLoading) {
       if (user!.avatar != "") {
-        avatar = Image.network(
-          user.avatar,
-          width: 132,
-          height: 132,
-          fit: BoxFit.cover,
-        );
+        avatar = Image.network(user.avatar,
+            width: 132, height: 132, fit: BoxFit.cover);
       }
     }
 
+    var nameCard = isLoading
+        ? const SizedBox()
+        : SelectCard(
+            title: "Имя, фамилия",
+            value: user!.firstName != ""
+                ? "${user.firstName} ${user.surname}"
+                : null,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => NameProfileUser(
+                  name: user.firstName,
+                  surname: user.surname,
+                  setName: model.setName,
+                  setSurname: model.setSurname,
+                  onSave: model.saveName,
+                ),
+              ),
+            ),
+          );
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
@@ -126,7 +109,7 @@ class ProfileUserPage extends StatelessWidget {
       ),
       body: isLoading
           ? const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: colorIconContrast),
             )
           : Column(
               children: [
@@ -146,20 +129,15 @@ class ProfileUserPage extends StatelessWidget {
                               padding: const EdgeInsets.all(defaultPadding),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
-                                child: avatar,
+                                child: GestureDetector(
+                                    onTap: model.pickAvatar, child: avatar),
                               ),
                             ),
-                            SelectCard(
-                              title: "Имя, фамилия",
-                              value: user!.firstName != ""
-                                  ? "${user.firstName} ${user.surname}"
-                                  : null,
-                              onTap: () {},
-                            ),
+                            nameCard,
                             SelectCard(
                               title: "Пол",
-                              value: user.isMale ? "Мужской" : "Женский",
-                              onTap: () {},
+                              value: user!.isMale ? "Мужской" : "Женский",
+                              onTap: model.openGenroCard,
                             ),
                             SelectCard(
                               title: "Дата рождения",
@@ -168,7 +146,7 @@ class ProfileUserPage extends StatelessWidget {
                                   ? null
                                   : DateFormat('dd.MM.yyyy')
                                       .format(user.birthday),
-                              onTap: () {},
+                              onTap: model.openBirthdayCard,
                             ),
                             SelectCard(
                               title: "Город проживания",
@@ -180,7 +158,7 @@ class ProfileUserPage extends StatelessWidget {
                             SelectCard(
                               title: "Номер телефона",
                               value: user.phone,
-                              onTap: () {},
+                              onTap: model.openPhoneScreen,
                             ),
                             SelectCard(
                               title: "Email-адрес",
