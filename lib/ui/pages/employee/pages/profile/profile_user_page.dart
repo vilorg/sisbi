@@ -153,17 +153,17 @@ class ProfileUserPage extends StatelessWidget {
                               value: user.region.value != ""
                                   ? user.region.value
                                   : null,
-                              onTap: () {},
+                              onTap: model.openCityScreen,
                             ),
                             SelectCard(
                               title: "Номер телефона",
                               value: user.phone,
-                              onTap: model.openPhoneScreen,
+                              onTap: null,
                             ),
                             SelectCard(
                               title: "Email-адрес",
                               value: user.email != "" ? user.email : null,
-                              onTap: () {},
+                              onTap: model.openEmailScreen,
                             ),
                           ],
                         ),

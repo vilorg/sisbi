@@ -7,12 +7,12 @@ import 'package:sisbi/constants.dart';
 class SelectCard extends StatelessWidget {
   final String title;
   final String? value;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   const SelectCard({
     Key? key,
     required this.title,
     this.value,
-    required this.onTap,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -50,10 +50,12 @@ class SelectCard extends StatelessWidget {
                                     color: colorText,
                                   ),
                         ),
-                        SvgPicture.asset(
-                          "assets/icons/arrow_right.svg",
-                          color: colorText,
-                        ),
+                        onTap != null
+                            ? SvgPicture.asset(
+                                "assets/icons/arrow_right.svg",
+                                color: colorText,
+                              )
+                            : const SizedBox(),
                       ],
                     )
                   : Row(
@@ -65,10 +67,12 @@ class SelectCard extends StatelessWidget {
                                     color: colorIconSecondary,
                                   ),
                         ),
-                        SvgPicture.asset(
-                          "assets/icons/arrow_right.svg",
-                          color: colorIconSecondary,
-                        ),
+                        onTap != null
+                            ? SvgPicture.asset(
+                                "assets/icons/arrow_right.svg",
+                                color: colorIconSecondary,
+                              )
+                            : const SizedBox(),
                       ],
                     ),
             ],

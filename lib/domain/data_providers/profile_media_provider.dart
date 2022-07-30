@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/object_id.dart';
 
 class ProfileMediaProvider {
   Future respondVacancy(String token, int vacancyId, String text) async {
@@ -78,6 +79,36 @@ class ProfileMediaProvider {
         body: jsonEncode({
           "user": {
             "birthday": DateFormat('dd.MM.yyyy').format(birthday),
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveEmail(String email, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "email": email,
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveCity(ObjectId city, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "city_id": city.id,
           }
         }));
     if (response.statusCode != 200) throw Exception();

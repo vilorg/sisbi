@@ -171,8 +171,19 @@ class CardMediaDataProvider {
         typeEmployments: typeEmployments,
       );
     } catch (e) {
-      print(e.toString());
       return UserDataModel.deffault();
     }
+  }
+
+  Future<List<ObjectId>> getCities(String search) async {
+    List<ObjectId> cities = [];
+    Uri uri = Uri.parse(getCityUri + "&q[name_cont]=" + search);
+    var response = await http.get(uri);
+    if (response.statusCode != 200) throw Exception;
+    var decoded = jsonDecode(response.body)['payload'];
+    for (var city in decoded) {
+      cities.add(ObjectId(city['id'] as int, city['name'] as String));
+    }
+    return cities;
   }
 }

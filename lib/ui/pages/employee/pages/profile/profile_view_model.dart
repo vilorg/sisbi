@@ -1,32 +1,48 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/profile_service.dart';
+import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/profile/widgets/phone_profile_user.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/widgets/city_profile_user.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/widgets/email_profile_user.dart';
 
 class _ViewModelState {
   final String name;
   final String surname;
   final bool isMale;
   final DateTime? birthday;
+  final String email;
+  final ObjectId? city;
 
-  _ViewModelState(
-      {this.name = "", this.surname = "", this.isMale = true, this.birthday});
+  _ViewModelState({
+    this.name = "",
+    this.surname = "",
+    this.isMale = true,
+    this.birthday,
+    this.email = "",
+    this.city,
+  });
 
   _ViewModelState copyWith({
     String? name,
     String? surname,
     bool? isMale,
     DateTime? birthday,
+    String? email,
+    ObjectId? city,
   }) {
     return _ViewModelState(
       name: name ?? this.name,
       surname: surname ?? this.surname,
       isMale: isMale ?? this.isMale,
       birthday: birthday ?? this.birthday,
+      email: email ?? this.email,
+      city: city ?? this.city,
     );
   }
 }
@@ -49,8 +65,8 @@ class ProfileViewModel extends ChangeNotifier {
   Future<void> pickAvatar() async {
     final ImagePicker _picker = ImagePicker();
     // Pick an image
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       await _service.uploadAvatar(image!.path, _token);
       _init();
     } catch (e) {
@@ -129,8 +145,65 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
-  void openPhoneScreen() => Navigator.of(_context)
-      .push(MaterialPageRoute(builder: (context) => PhoneProfileUser.create()));
+  Future<void> saveEmail(String email) async {
+    setEmail(email);
+    try {
+      await _service.saveEmail(_state.email, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> saveCity(ObjectId city) async {
+    setCity(city);
+    try {
+      await _service.saveCity(_state.city!, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  void openCityScreen() => Navigator.of(_context).push(
+        MaterialPageRoute(
+          builder: (context) => CityProfileUser.create(
+            _state.city!,
+            saveCity,
+          ),
+        ),
+      );
+
+  void openEmailScreen() => Navigator.of(_context).push(
+        MaterialPageRoute(
+          builder: (context) => EmailProfileUser(
+            initValue: _state.email,
+            setEmail: saveEmail,
+          ),
+        ),
+      );
 
   void openGenroCard() {
     showModalBottomSheet(
@@ -303,6 +376,10 @@ class ProfileViewModel extends ChangeNotifier {
 
   void setGenro(bool isMale) => _state = _state.copyWith(isMale: isMale);
 
+  void setEmail(String email) => _state = _state.copyWith(email: email);
+
+  void setCity(ObjectId city) => _state = _state.copyWith(city: city);
+
   Future<void> logout() async {
     await _service.logout();
     Navigator.of(_context).pushNamedAndRemoveUntil(
@@ -325,7 +402,11 @@ class ProfileViewModel extends ChangeNotifier {
     _token = await _service.getUserToken();
     _userModel = await _service.getUserData(_token);
     _state = _state.copyWith(
-        isMale: _userModel!.isMale, birthday: _userModel!.birthday);
+      isMale: _userModel!.isMale,
+      birthday: _userModel!.birthday,
+      email: _userModel!.email,
+      city: _userModel!.region,
+    );
     _isLoading = false;
     try {
       notifyListeners();
