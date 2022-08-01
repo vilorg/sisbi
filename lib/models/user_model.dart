@@ -1,11 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:collection/collection.dart';
 
-import 'package:sisbi/models/filter_vacancy_model.dart';
-
+import 'enum_classes.dart';
 import 'object_id.dart';
 
 class UserModel {
@@ -26,7 +24,7 @@ class UserModel {
   final bool readyMission;
   final bool readyMove;
   final List<Char> drivingLicence;
-  final String education;
+  final Education education;
   final String previusJob;
   final List<ObjectId> schedules;
   final List<ObjectId> typeEmployments;
@@ -72,7 +70,7 @@ class UserModel {
     bool? readyMission,
     bool? readyMove,
     List<Char>? drivingLicence,
-    String? education,
+    Education? education,
     String? previusJob,
     List<ObjectId>? schedules,
     List<ObjectId>? typeEmployments,

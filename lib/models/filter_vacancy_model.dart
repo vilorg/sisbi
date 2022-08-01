@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:sisbi/models/object_id.dart';
 
+import 'enum_classes.dart';
+
 class FilterVacancyModel {
   final String post;
   final ObjectId region;
@@ -66,5 +68,3 @@ class FilterVacancyModel {
       schedules: [],
       typeEmployments: []);
 }
-
-enum Expierence { no, y_1_3, y_3_6, more_6, notChosed }

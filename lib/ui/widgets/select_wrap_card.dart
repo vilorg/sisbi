@@ -4,11 +4,11 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
 
-class SelectCard extends StatelessWidget {
+class SelectWrapCard extends StatelessWidget {
   final String title;
   final String? value;
   final VoidCallback? onTap;
-  const SelectCard({
+  const SelectWrapCard({
     Key? key,
     required this.title,
     this.value,

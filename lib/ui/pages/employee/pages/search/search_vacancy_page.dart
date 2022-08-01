@@ -4,13 +4,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/filter_vacancy_model.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/coast_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/post_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/region_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
-import 'package:sisbi/ui/widgets/select_card.dart';
+import 'package:sisbi/ui/widgets/select_wrap_card.dart';
 
 import 'widgets/fields_of_activity_tabs.dart';
 import 'widgets/wrap_expierence_tabs.dart';
@@ -163,7 +164,7 @@ class SearchVacancyPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: defaultPadding),
                   child: Column(
                     children: [
-                      SelectCard(
+                      SelectWrapCard(
                         onTap: () => Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder:
@@ -190,7 +191,7 @@ class SearchVacancyPage extends StatelessWidget {
                             model.filter.post != "" ? model.filter.post : null,
                       ),
                       const SizedBox(height: defaultPadding / 2),
-                      SelectCard(
+                      SelectWrapCard(
                           onTap: () => Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
@@ -217,7 +218,7 @@ class SearchVacancyPage extends StatelessWidget {
                               ? null
                               : model.filter.region.value),
                       const SizedBox(height: defaultPadding / 2),
-                      SelectCard(
+                      SelectWrapCard(
                         onTap: () => Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder:

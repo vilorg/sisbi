@@ -62,6 +62,9 @@ class ProfileViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
+  bool _isFirst = false;
+  bool get isFirst => _isFirst;
+
   Future<void> pickAvatar() async {
     final ImagePicker _picker = ImagePicker();
     // Pick an image
@@ -386,6 +389,15 @@ class ProfileViewModel extends ChangeNotifier {
       NameRoutes.login,
       (route) => false,
     );
+  }
+
+  void setPage(bool isFirst) {
+    _isFirst = isFirst;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isFirst = isFirst;
+    }
   }
 
   ProfileViewModel(this._context) {

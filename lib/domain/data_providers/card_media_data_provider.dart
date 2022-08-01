@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/filter_vacancy_model.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
@@ -129,10 +130,24 @@ class CardMediaDataProvider {
 
     try {
       final String experience = _decoded["experience"];
+      final String education = _decoded['education'];
       final List schedulesDatas = _decoded["schedules"];
       final List typeEmploymentsDatas = _decoded["type_employments"];
       final String skills = _decoded["skills"];
       final int coast = _decoded["min_salary"];
+      final String drivingLicenceString = _decoded['driving_license'];
+      List<String> drivingLicenceList = [];
+      List<DrivingLicence> drivingLicence = [];
+
+      if (drivingLicenceString.isNotEmpty) {
+        drivingLicenceList = drivingLicenceString.split(" ");
+      }
+
+      for (String licence in drivingLicenceList) {
+        drivingLicence.add(DrivingLicence.values.firstWhere(
+            (element) => element.toString() == "DrivingLicence." + licence));
+      }
+
       ObjectId city = ObjectId(0, "");
       if (_decoded['city'] != null) {
         city = ObjectId(
@@ -159,16 +174,23 @@ class CardMediaDataProvider {
         surname: _decoded['surname'],
         avatar: _decoded['avatar'],
         birthday: birthday,
+        previusJob: _decoded['previous_job'],
         isMale: _decoded['gender'] == "male",
         email: _decoded["email"] ?? "",
         phone: _decoded["phone"],
+        drivingLicence: drivingLicence,
+        education: Education.values.firstWhere(
+            (element) => element.toString() == "Education." + education),
         experience: Expierence.values
             .firstWhere((e) => e.toString() == "Expierence." + experience),
         schedules: schedules,
+        skills: (_decoded['skills'] as String).split(" "),
         region: city,
         post: skills,
         coast: coast,
         typeEmployments: typeEmployments,
+        readyMission: _decoded['ready_mission'] as bool,
+        readyMove: _decoded['ready_move'] as bool,
       );
     } catch (e) {
       return UserDataModel.deffault();

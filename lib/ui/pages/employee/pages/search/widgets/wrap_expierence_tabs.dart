@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/filter_vacancy_model.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
 
 class WrapExpierenceTabs extends StatelessWidget {
