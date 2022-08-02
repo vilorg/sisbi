@@ -88,6 +88,26 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> saveCareer(String vacancy, int coast) async {
+    try {
+      await _service.saveCareer(vacancy, coast, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> saveName() async {
     try {
       await _service.saveName(_state.name, _state.surname, _token);

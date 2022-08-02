@@ -208,4 +208,16 @@ class CardMediaDataProvider {
     }
     return cities;
   }
+
+  Future<List<String>> getNameVacancies(String text) async {
+    List<String> vacancies = [];
+    Uri uri = Uri.parse(getNameVacancyUri + "&q[name_cont]=" + text);
+    var response = await http.get(uri);
+    if (response.statusCode != 200) throw Exception;
+    var decoded = jsonDecode(response.body)['payload'];
+    for (var vacancyName in decoded) {
+      vacancies.add(vacancyName['name'] as String);
+    }
+    return vacancies;
+  }
 }

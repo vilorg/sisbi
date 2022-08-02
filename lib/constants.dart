@@ -76,6 +76,7 @@ const String getJobCategoriesUri = baseUri + "job_categories";
 const String getAllChatsUri = baseUri + "chats";
 const String getMessagesUri = baseUri + "messages";
 const String getCityUri = baseUri + "cities?page=1";
+const String getNameVacancyUri = baseUri + "name_vacancies?page=1";
 
 String getRusMonthString(DateTime date) {
   String ans = "";

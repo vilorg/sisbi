@@ -8,6 +8,8 @@ import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/profile_view_model.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/widgets/career_info.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/widgets/skills_profile.dart';
 
 class ResumeUser extends StatelessWidget {
   const ResumeUser({Key? key}) : super(key: key);
@@ -68,8 +70,7 @@ class ResumeUser extends StatelessWidget {
                 padding: const EdgeInsets.all(defaultPadding),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child:
-                      GestureDetector(onTap: model.pickAvatar, child: avatar),
+                  child: avatar,
                 ),
               ),
               Text(
@@ -121,12 +122,26 @@ class ResumeUser extends StatelessWidget {
                           _Tile(
                             title: user.previusJob,
                             subtitle: "Зарплата от ${user.coast} руб.",
-                            onTap: () {},
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CareerInfo.create(
+                                  user.previusJob,
+                                  user.coast,
+                                  (vacancy, coast) =>
+                                      model.saveCareer(vacancy, coast)),
+                            )),
                           ),
                           _Tile(
                             title: "Профессиональные навыки",
                             subtitle: skills,
-                            onTap: () {},
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SkillsProfile(
+                                  initSkills: skills,
+                                  setSkills: (List<String> skills) {},
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

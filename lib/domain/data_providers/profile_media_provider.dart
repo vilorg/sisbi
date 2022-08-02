@@ -113,4 +113,20 @@ class ProfileMediaProvider {
         }));
     if (response.statusCode != 200) throw Exception();
   }
+
+  Future<void> saveCareer(String vacancy, int coast, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "previous_job": vacancy,
+            "min_salary": coast,
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
 }
