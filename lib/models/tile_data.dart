@@ -13,3 +13,25 @@ class TileData {
     required this.onTap,
   });
 }
+
+class RadioData {
+  final List<String> titles;
+  final Function(int?) onTap;
+  final int? initValue;
+  RadioData({
+    required this.titles,
+    required this.onTap,
+    this.initValue,
+  });
+}
+
+class CheckData {
+  final List<String> titles;
+  final Function(List<String>) onTap;
+  final List<String> initValue;
+  CheckData({
+    required this.titles,
+    required this.onTap,
+    required this.initValue,
+  });
+}

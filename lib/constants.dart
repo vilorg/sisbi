@@ -66,8 +66,12 @@ const String getSmsUserUri = baseUri + "users_sms";
 const String getSmsEmployerUri = baseUri + "employer/employers_sms";
 const String getUserTokenUri = baseUri + "auth/user_token";
 const String getEmployerTokenUri = baseUri + "auth/employer_token";
+const String getAddSchedulesUri = baseUri + "user/add_schedules";
+const String getRemoveSchedulesUri = baseUri + "user/remove_schedules";
 const String setSchedulesUri = baseUri + "user/add_schedules";
-const String setTypeEmploymentsUri = baseUri + "user/add_type_employments";
+const String getAddTypeEmploymentsUri = baseUri + "user/add_type_employments";
+const String getRemoveTypeEmploymentsUri =
+    baseUri + "user/remove_type_employments";
 const String getVacancyUri = baseUri + "vacancies";
 const String getFavouriteVacancyUri = baseUri + "favorite_vacancies";
 const String respondVacancyUri = baseUri + "responses";

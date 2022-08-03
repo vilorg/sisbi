@@ -10,13 +10,11 @@ import 'package:sisbi/ui/pages/employee/pages/responses/widgets/actions_message.
 import 'package:web_socket_channel/io.dart';
 
 class DialogViewModel extends ChangeNotifier {
-  final BuildContext context;
+  final BuildContext _context;
   final ChatPreviewModel chat;
   final bool isUser;
   final VoidCallback onClose;
-  final BuildContext _context;
-  DialogViewModel(
-      this.context, this.chat, this.isUser, this.onClose, this._context) {
+  DialogViewModel(this._context, this.chat, this.isUser, this.onClose) {
     _chatId = chat.chatId;
     _init();
   }
@@ -94,12 +92,12 @@ class DialogViewModel extends ChangeNotifier {
     if (_endPage || _isLoadingMore) return;
     _isLoadingMore = true;
     notifyListeners();
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(_context).showSnackBar(
       SnackBar(
         backgroundColor: colorTextContrast,
         content: Text(
           "Загрузка новых сообщений...",
-          style: Theme.of(context).textTheme.subtitle2!.copyWith(
+          style: Theme.of(_context).textTheme.subtitle2!.copyWith(
                 color: colorAccentDarkBlue,
                 fontWeight: FontWeight.w600,
               ),
@@ -135,7 +133,7 @@ class DialogViewModel extends ChangeNotifier {
       _messages = [];
     }
     onClose();
-    Navigator.of(context).pop();
+    Navigator.of(_context).pop();
     return true;
   }
 
@@ -153,7 +151,7 @@ class DialogViewModel extends ChangeNotifier {
       shape: const RoundedRectangleBorder(
           borderRadius:
               BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
-      context: context,
+      context: _context,
       builder: (context) => ActionsMessage(chat: chat, isUser: isUser),
       // ActionsMessage(vacancy: ,)
     );

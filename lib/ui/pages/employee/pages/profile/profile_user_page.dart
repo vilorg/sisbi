@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/resume_user.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/chat_view_model.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 
 import 'profile_view_model.dart';

@@ -26,8 +26,7 @@ class DialogPage extends StatelessWidget {
         ? chat.employerName
         : "${chat.userFirstName} ${chat.userSurname}";
     return ChangeNotifierProvider(
-      create: (context) =>
-          DialogViewModel(context, chat, isUser, onClose, context),
+      create: (context) => DialogViewModel(context, chat, isUser, onClose),
       child: DialogPage(
           parthnerName: parthnerName,
           title: chat.title,

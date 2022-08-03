@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 
 class ProfileMediaProvider {
@@ -129,4 +130,113 @@ class ProfileMediaProvider {
         }));
     if (response.statusCode != 200) throw Exception();
   }
+
+  Future<void> saveSkills(List<String> skills, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "skills": skills.join(" "),
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveExp(Expierence exp, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "experience": exp.name,
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveEducation(Education education, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "education": education.name,
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveTypeEmployments(
+      List<int> typeEmployments, String token) async {
+    Uri url = Uri.parse(getRemoveTypeEmploymentsUri);
+    await http.put(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "type_employments": [1, 2, 3, 4],
+        }));
+
+    Uri uri = Uri.parse(getAddTypeEmploymentsUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({"type_employments": typeEmployments}));
+
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveSchedules(List<int> schedules, String token) async {
+    Uri url = Uri.parse(getRemoveSchedulesUri);
+    await http.put(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "schedules": [1, 2, 3, 4],
+        }));
+
+    Uri uri = Uri.parse(getAddSchedulesUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({"schedules": schedules}));
+
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveLicences(List<String> licences, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "driving_license": licences.join(" "),
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
 }
+
+
+//TODO: объединить методы по сохранению профиля через named params
+//TODO: разъединить data provider по profile, card and etc.

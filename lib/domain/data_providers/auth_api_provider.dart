@@ -151,7 +151,7 @@ class AuthApiProvider {
 
   Future<void> saveTypeEmployments(
       String token, List<int> typeEmployments) async {
-    Uri uri = Uri.parse(setTypeEmploymentsUri);
+    Uri uri = Uri.parse(getAddTypeEmploymentsUri);
     await http.put(uri,
         body: jsonEncode({"type_employments": "$typeEmployments"}),
         headers: {

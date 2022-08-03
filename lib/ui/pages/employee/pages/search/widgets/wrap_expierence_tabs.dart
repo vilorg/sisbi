@@ -46,9 +46,9 @@ class WrapExpierenceTabs extends StatelessWidget {
                     context, "1 - 3 года", expierence == Expierence.y_1_3),
               ),
               GestureDetector(
-                onTap: () => model.setExpierence(Expierence.y_3_6),
+                onTap: () => model.setExpierence(Expierence.y_2_6),
                 child: _buildWrapCard(
-                    context, "3 - 6 лет", expierence == Expierence.y_3_6),
+                    context, "3 - 6 лет", expierence == Expierence.y_2_6),
               ),
               GestureDetector(
                 onTap: () => model.setExpierence(Expierence.more_6),

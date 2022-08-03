@@ -14,7 +14,7 @@ class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => ChatViewModel(context),
+        create: (context) => ChatViewModel(),
         child: const ChatPage(),
       );
 

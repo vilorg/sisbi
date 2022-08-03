@@ -76,3 +76,185 @@ class _Tile extends StatelessWidget {
     );
   }
 }
+
+class RadioActionButton extends StatelessWidget {
+  final RadioData radios;
+  const RadioActionButton({
+    Key? key,
+    required this.radios,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Function(int?) onTap = radios.onTap;
+    final List<String> titles = radios.titles;
+
+    List<Widget> data = [
+      const SizedBox(height: defaultPadding),
+      Container(
+        width: 50,
+        height: 10,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(borderRadius),
+          color: Colors.grey[300],
+        ),
+      ),
+      const SizedBox(height: defaultPadding / 2),
+      const Divider(),
+    ];
+
+    for (int i = 0; i < titles.length; i++) {
+      data.add(_RadioTile(
+        title: titles[i],
+        groupValue: radios.initValue,
+        onTap: onTap,
+        value: i,
+      ));
+    }
+
+    return SizedBox(
+      height: titles.length * 60 + 50,
+      child: SingleChildScrollView(
+        child: Column(
+          children: data,
+        ),
+      ),
+    );
+  }
+}
+
+class _RadioTile extends StatelessWidget {
+  const _RadioTile({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    required this.value,
+    required this.groupValue,
+  }) : super(key: key);
+
+  final String title;
+  final void Function(int?) onTap;
+  final int value;
+  final int? groupValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return RadioListTile(
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+      ),
+      groupValue: groupValue,
+      value: value,
+      onChanged: (int? val) {
+        onTap(val);
+        Navigator.of(context).pop();
+      },
+    );
+  }
+}
+
+class CheckActionButton extends StatelessWidget {
+  final CheckData checks;
+  const CheckActionButton({
+    Key? key,
+    required this.checks,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> titles = checks.titles;
+    final List<String> values = checks.initValue;
+
+    return StatefulBuilder(
+      builder: (BuildContext context, setState) {
+        List<Widget> data = [
+          const SizedBox(height: defaultPadding),
+          Container(
+            width: 50,
+            height: 10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: Colors.grey[300],
+            ),
+          ),
+          const SizedBox(height: defaultPadding / 2),
+          const Divider(),
+        ];
+
+        for (int i = 0; i < titles.length; i++) {
+          bool value = values.contains(titles[i]);
+          data.add(_CheckTile(
+            title: titles[i],
+            onTap: (bool? val) {
+              if (value) {
+                values.remove(titles[i]);
+              } else {
+                values.add(titles[i]);
+              }
+              setState(() {});
+            },
+            value: value,
+          ));
+        }
+
+        data.add(Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+                child: Padding(
+                  padding: const EdgeInsets.all(defaultButtonPadding),
+                  child: Text(
+                    "Сохранить",
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                ),
+                onPressed: () {
+                  checks.onTap(values);
+                  Navigator.of(context).pop();
+                }),
+          ),
+        ));
+
+        return SizedBox(
+          height: checks.titles.length * 60 + 120,
+          child: SingleChildScrollView(
+            child: Column(
+              children: data,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _CheckTile extends StatelessWidget {
+  const _CheckTile({
+    Key? key,
+    required this.title,
+    required this.onTap,
+    required this.value,
+  }) : super(key: key);
+
+  final String title;
+  final bool? value;
+  final Function(bool?) onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return CheckboxListTile(
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+      ),
+      value: value,
+      onChanged: onTap,
+    );
+  }
+}

@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
+import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/profile_view_model.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/career_info.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/skills_profile.dart';
+import 'package:sisbi/ui/widgets/action_bottom.dart';
 
 class ResumeUser extends StatelessWidget {
   const ResumeUser({Key? key}) : super(key: key);
@@ -45,14 +47,14 @@ class ResumeUser extends StatelessWidget {
     }
 
     List<String> typeEmployments = [];
-    List<String> shedules = [];
+    List<String> schedules = [];
 
     for (ObjectId val in user.typeEmployments) {
       typeEmployments.add(val.value);
     }
 
     for (ObjectId val in user.schedules) {
-      shedules.add(val.value);
+      schedules.add(val.value);
     }
 
     final String mission =
@@ -125,10 +127,10 @@ class ResumeUser extends StatelessWidget {
                             onTap: () =>
                                 Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CareerInfo.create(
-                                  user.previusJob,
-                                  user.coast,
-                                  (vacancy, coast) =>
-                                      model.saveCareer(vacancy, coast)),
+                                user.previusJob,
+                                user.coast,
+                                model.saveCareer,
+                              ),
                             )),
                           ),
                           _Tile(
@@ -138,7 +140,7 @@ class ResumeUser extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => SkillsProfile(
                                   initSkills: skills,
-                                  setSkills: (List<String> skills) {},
+                                  setSkills: model.saveSkills,
                                 ),
                               ),
                             ),
@@ -150,7 +152,33 @@ class ResumeUser extends StatelessWidget {
                         tiles: [
                           _Tile(
                             title: getExpierenceString(user.experience),
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(borderRadiusPage),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) => RadioActionButton(
+                                  radios: RadioData(
+                                    onTap: (int? value) {
+                                      Expierence exp =
+                                          getExpierenceFromInt(value);
+                                      model.saveExp(exp);
+                                    },
+                                    titles: [
+                                      "Нет опыта",
+                                      "1 - 3 года",
+                                      "3 - 6 лет",
+                                      "более 6 лет",
+                                    ],
+                                    initValue:
+                                        getIntFromExpierence(user.experience),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -159,7 +187,37 @@ class ResumeUser extends StatelessWidget {
                         tiles: [
                           _Tile(
                             title: getEducationString(user.education),
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(borderRadiusPage),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) => RadioActionButton(
+                                  radios: RadioData(
+                                    onTap: (int? value) {
+                                      Education education =
+                                          getEducationFromInt(value);
+                                      model.saveEducation(education);
+                                    },
+                                    titles: [
+                                      "Среднее",
+                                      "Среднее специальное",
+                                      "Неоконченное высшее",
+                                      "Высшее",
+                                      "Бакалавр",
+                                      "Магистр",
+                                      "Кандидат наук",
+                                      "Доктор наук",
+                                    ],
+                                    initValue:
+                                        getIntFromEducation(user.education),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -169,17 +227,113 @@ class ResumeUser extends StatelessWidget {
                           _Tile(
                             title: "Занятость",
                             subtitle: typeEmployments.join(", "),
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(borderRadiusPage),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  List<String> titles = [
+                                    "Полная занятость",
+                                    "Частичная занятость",
+                                    "Проектная работа",
+                                    "Стажировка",
+                                  ];
+                                  return CheckActionButton(
+                                    checks: CheckData(
+                                      onTap: (List<String> typeEmployments) {
+                                        List<int> values = [];
+                                        for (int i = 1;
+                                            i <= titles.length;
+                                            i++) {
+                                          if (typeEmployments
+                                              .contains(titles[i - 1])) {
+                                            values.add(i);
+                                          }
+                                        }
+                                        model.saveTypeEmployments(values);
+                                      },
+                                      titles: titles,
+                                      initValue: typeEmployments,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                           _Tile(
                             title: "График работы",
-                            subtitle: shedules.join(", "),
-                            onTap: () {},
+                            subtitle: schedules.join(", "),
+                            onTap: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(borderRadiusPage),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  List<String> titles = [
+                                    "Удаленная работа",
+                                    "Полный день",
+                                    "Гибкий график",
+                                    "Сменный график",
+                                  ];
+                                  return CheckActionButton(
+                                    checks: CheckData(
+                                      onTap: (List<String> typeEmployments) {
+                                        List<int> values = [];
+                                        for (int i = 1;
+                                            i <= titles.length;
+                                            i++) {
+                                          if (typeEmployments
+                                              .contains(titles[i - 1])) {
+                                            values.add(i);
+                                          }
+                                        }
+                                        model.saveSchedules(values);
+                                      },
+                                      titles: titles,
+                                      initValue: schedules,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                           _Tile(
                             title: "Категория прав",
                             subtitle: drivingLicence.join(", "),
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(borderRadiusPage),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  List<String> titles = DrivingLicence.values
+                                      .map((e) => e.name)
+                                      .toList();
+
+                                  return CheckActionButton(
+                                    checks: CheckData(
+                                      onTap: (List<String> licences) {
+                                        model.saveLicences(licences);
+                                      },
+                                      titles: titles,
+                                      initValue: user.drivingLicence
+                                          .map((e) => e.name)
+                                          .toList(),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                           _Tile(
                             title: "Командировки и переезд",
@@ -269,3 +423,5 @@ class _Tile extends StatelessWidget {
     );
   }
 }
+
+//TODO: пофиксить названия полей через map класса

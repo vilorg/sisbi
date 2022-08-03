@@ -1,6 +1,7 @@
 import 'package:sisbi/domain/data_providers/card_media_data_provider.dart';
 import 'package:sisbi/domain/data_providers/profile_media_provider.dart';
 import 'package:sisbi/domain/data_providers/session_data_provider.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 
@@ -35,6 +36,24 @@ class ProfileService {
 
   Future<void> saveCareer(String vacancy, int coast, String token) async =>
       await _profileProvider.saveCareer(vacancy, coast, token);
+
+  Future<void> saveSkills(List<String> skills, String token) async =>
+      await _profileProvider.saveSkills(skills, token);
+
+  Future<void> saveExp(Expierence exp, String token) async =>
+      await _profileProvider.saveExp(exp, token);
+
+  Future<void> saveEducation(Education education, String token) async =>
+      await _profileProvider.saveEducation(education, token);
+
+  Future<void> saveTypeEmployments(List<int> schedules, String token) async =>
+      await _profileProvider.saveTypeEmployments(schedules, token);
+
+  Future<void> saveSchedules(List<int> typeEmployments, String token) async =>
+      await _profileProvider.saveSchedules(typeEmployments, token);
+
+  Future<void> saveLicences(List<String> licences, String token) async =>
+      await _profileProvider.saveLicences(licences, token);
 
   Future<List<ObjectId>> getCities(String search) async =>
       await _cardProvider.getCities(search);

@@ -3,11 +3,10 @@ import 'package:sisbi/domain/services/chat_service.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 
 class ChatViewModel extends ChangeNotifier {
-  ChatViewModel(this._context) {
+  ChatViewModel() {
     _init();
   }
 
-  final BuildContext _context;
   late String _token;
   final ChatService _service = ChatService();
 

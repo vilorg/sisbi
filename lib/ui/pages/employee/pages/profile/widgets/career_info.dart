@@ -16,10 +16,10 @@ class _ViewModel extends ChangeNotifier {
 
   final ProfileService _service = ProfileService();
 
-  TextEditingController _vacancyController = TextEditingController();
+  final TextEditingController _vacancyController = TextEditingController();
   TextEditingController get vacancyController => _vacancyController;
 
-  TextEditingController _coastController = TextEditingController();
+  final TextEditingController _coastController = TextEditingController();
   TextEditingController get coastController => _coastController;
 
   List<String> _vacancies = [];

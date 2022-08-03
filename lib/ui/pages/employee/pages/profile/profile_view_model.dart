@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/profile_service.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/city_profile_user.dart';
@@ -88,9 +89,129 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> saveSchedules(List<int> typeEmployments) async {
+    try {
+      await _service.saveSchedules(typeEmployments, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> saveLicences(List<String> licences) async {
+    try {
+      await _service.saveLicences(licences, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> saveTypeEmployments(List<int> typeEmployments) async {
+    try {
+      await _service.saveTypeEmployments(typeEmployments, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> saveEducation(Education education) async {
+    try {
+      await _service.saveEducation(education, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> saveCareer(String vacancy, int coast) async {
     try {
       await _service.saveCareer(vacancy, coast, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> saveExp(Expierence exp) async {
+    try {
+      await _service.saveExp(exp, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> saveSkills(List<String> skills) async {
+    try {
+      await _service.saveSkills(skills, _token);
       _init();
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
