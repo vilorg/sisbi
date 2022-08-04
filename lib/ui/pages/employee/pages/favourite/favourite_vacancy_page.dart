@@ -68,6 +68,16 @@ class FavouriteVacancyPage extends StatelessWidget {
       data.add(const Divider());
     }
 
+    if (data.isEmpty) {
+      data.add(Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Text(
+          "У вас нет избранных вакансий...",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ));
+    }
+
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
@@ -86,7 +96,8 @@ class FavouriteVacancyPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(borderRadiusPage)),
-                    child: ColoredBox(
+                    child: Container(
+                      width: double.infinity,
                       color: Colors.white,
                       child: SingleChildScrollView(
                         child: Column(

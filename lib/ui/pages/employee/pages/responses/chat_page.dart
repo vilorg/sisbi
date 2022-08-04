@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
@@ -8,7 +8,7 @@ import 'package:sisbi/ui/pages/employee/pages/responses/chat_view_model.dart';
 import 'package:sisbi/ui/pages/employee/pages/responses/dialog_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/responses/widgets/chat_preview.dart';
 
-import 'widgets/header_responses_employee.dart';
+// import 'widgets/header_responses_employee.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -50,6 +50,16 @@ class ChatPage extends StatelessWidget {
       data.add(const Divider());
     }
 
+    if (data.isEmpty) {
+      data.add(Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Text(
+          "У вас нет откликов...",
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ));
+    }
+
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
@@ -59,17 +69,17 @@ class ChatPage extends StatelessWidget {
                 color: colorTextContrast,
               ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset("assets/icons/notification.svg"),
-          ),
-        ],
+        // actions: [
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: SvgPicture.asset("assets/icons/notification.svg"),
+        // ),
+        // ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const HeaderResponsesEmployee(),
+          // const HeaderResponsesEmployee(),
           Expanded(
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(

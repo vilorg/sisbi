@@ -22,25 +22,32 @@ class CardsSwitcherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<VacanciesSwitcherViewModel>(context);
     var appBar = AppBar(
-      title: Row(
-        children: [
-          TextButton(
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/icons/history_watch.svg"),
-                const SizedBox(width: defaultPadding / 2),
-                Text(
-                  "Открыть историю просмотров",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                        color: colorTextContrast,
-                      ),
-                ),
-              ],
+      title: Text(
+        "Вакансии",
+        style: Theme.of(context).textTheme.headline3!.copyWith(
+              color: colorTextContrast,
+              fontWeight: FontWeight.w700,
             ),
-            onPressed: () {},
-          ),
-        ],
       ),
+      // title: Row(
+      //   children: [
+      //     TextButton(
+      //       child: Row(
+      //         children: [
+      //           SvgPicture.asset("assets/icons/history_watch.svg"),
+      //           const SizedBox(width: defaultPadding / 2),
+      //           Text(
+      //             "Открыть историю просмотров",
+      //             style: Theme.of(context).textTheme.bodyText2!.copyWith(
+      //                   color: colorTextContrast,
+      //                 ),
+      //           ),
+      //         ],
+      //       ),
+      //       onPressed: () {},
+      //     ),
+      //   ],
+      // ),
       actions: [
         IconButton(
           icon: SvgPicture.asset("assets/icons/search.svg"),
@@ -84,13 +91,41 @@ class CardsSwitcherPage extends StatelessWidget {
 
   Widget _buildCards(BuildContext context) {
     final model = Provider.of<VacanciesSwitcherViewModel>(context);
-    final vacancyes = model.vacancyes;
+    final bool isLoading = model.isLoading;
+    final vacancyes = model.vacancies;
+
+    List<Widget> data = vacancyes.map((VacancyModel vacancy) {
+      return VacancySwitcherCard(
+          isFront: vacancyes.last == vacancy, vacancy: vacancy);
+    }).toList();
+
+    if (isLoading) {
+      data = [
+        const Center(child: CircularProgressIndicator(color: colorIconContrast))
+      ];
+    } else if (data.isEmpty) {
+      data = [
+        ClipRRect(
+          borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(borderRadiusPage)),
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Text(
+                "Вы посмотрели все вакансии...",
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+          ),
+        )
+      ];
+    }
 
     return Stack(
-      children: vacancyes.map((VacancyModel vacancy) {
-        return VacancySwitcherCard(
-            isFront: vacancyes.last == vacancy, vacancy: vacancy);
-      }).toList(),
+      children: data,
     );
   }
 }

@@ -17,11 +17,17 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   VacanciesSwitcherViewModel(this.context) {
     resetCards();
   }
+
   final BuildContext context;
   final CardEmployeeService _cardService = CardEmployeeService();
 
-  List<VacancyModel> _vacancyes = [];
-  List<VacancyModel> get vacancyes => _vacancyes;
+  List<VacancyModel> _vacancies = [];
+  List<VacancyModel> get vacancies => _vacancies;
+
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
+
+  int _page = 1;
 
   VacancyModel? _lastVacancy;
   FilterVacancyModel _filter = FilterVacancyModel.deffault();
@@ -116,7 +122,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
 
   Future starVacancy() async {
     String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.starVacancy(token, vacancyes.last.id);
+    await _cardService.starVacancy(token, vacancies.last.id);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: colorAccentDarkBlue,
@@ -137,17 +143,18 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future _nextCard() async {
-    if (_vacancyes.isEmpty) return;
+    if (_vacancies.isEmpty) return;
 
     await Future.delayed(const Duration(milliseconds: 200));
-    _lastVacancy = _vacancyes.last;
-    _vacancyes.removeLast();
+    _lastVacancy = _vacancies.last;
+    _vacancies.removeLast();
     resetPosition();
+    if (_vacancies.length == 1) await _loadMoreVacancies();
   }
 
   Future resetLast() async {
     if (_lastVacancy == null) return;
-    _vacancyes.add(_lastVacancy!);
+    _vacancies.add(_lastVacancy!);
     _lastVacancy = null;
     resetPosition();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -165,6 +172,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
+    _isLoading = true;
     try {
       _userData = await _cardService.getUserGraph();
       _filter = _filter.copyWith(
@@ -186,9 +194,10 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
 
   Future<void> resetCards() async {
     try {
-      _vacancyes = (await _cardService.getActualVacancyList(1, _filter))
+      _vacancies = (await _cardService.getActualVacancyList(_page, _filter))
           .reversed
           .toList();
+      _isLoading = false;
     } catch (e) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
@@ -196,7 +205,26 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     try {
       notifyListeners();
     } catch (e) {
-      _vacancyes = [];
+      _vacancies = [];
+    }
+  }
+
+  Future<void> _loadMoreVacancies() async {
+    _page += 1;
+    try {
+      _vacancies.addAll(
+          (await _cardService.getActualVacancyList(_page, _filter))
+              .reversed
+              .toList());
+      _isLoading = false;
+    } catch (e) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
+    }
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
     }
   }
 
@@ -206,7 +234,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
             borderRadius:
                 BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
         context: context,
-        builder: (context) => ShowContactsVacancy(vacancy: vacancyes.last));
+        builder: (context) => ShowContactsVacancy(vacancy: vacancies.last));
   }
 
   void trySendMessage() {
@@ -217,12 +245,12 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         context: context,
         isScrollControlled: true,
         builder: (context) => RespondVacancyBottomSheet(
-            vacancy: vacancyes.last, sendMessage: sendMessage));
+            vacancy: vacancies.last, sendMessage: sendMessage));
   }
 
   Future<void> sendMessage(BuildContext curContext, String text) async {
     String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.respondVacancy(token, vacancyes.last.id, text);
+    await _cardService.respondVacancy(token, vacancies.last.id, text);
     Navigator.pop(curContext);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -247,7 +275,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         isScrollControlled: true,
         builder: (context) {
           return RespondVacancyBottomSheet(
-              vacancy: vacancyes.last, sendMessage: sendMessage);
+              vacancy: vacancies.last, sendMessage: sendMessage);
         });
   }
 }
