@@ -35,3 +35,14 @@ class CheckData {
     required this.initValue,
   });
 }
+
+class SwitchData {
+  final List<String> titles;
+  final Function(List<bool>) onTap;
+  final List<bool> initValue;
+  SwitchData({
+    required this.titles,
+    required this.onTap,
+    required this.initValue,
+  });
+}

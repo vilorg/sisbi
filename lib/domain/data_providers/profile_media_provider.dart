@@ -115,7 +115,8 @@ class ProfileMediaProvider {
     if (response.statusCode != 200) throw Exception();
   }
 
-  Future<void> saveCareer(String vacancy, int coast, String token) async {
+  Future<void> saveCareer(
+      String vacancy, int coast, int jobCategoryId, String token) async {
     Uri uri = Uri.parse(getUserUri);
     var response = await http.put(uri,
         headers: {
@@ -126,6 +127,7 @@ class ProfileMediaProvider {
           "user": {
             "previous_job": vacancy,
             "min_salary": coast,
+            "job_category_id": jobCategoryId,
           }
         }));
     if (response.statusCode != 200) throw Exception();
@@ -231,6 +233,22 @@ class ProfileMediaProvider {
         body: jsonEncode({
           "user": {
             "driving_license": licences.join(" "),
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> saveMission(List<bool> missions, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "ready_mission": missions[0],
+            "ready_move": missions[1],
           }
         }));
     if (response.statusCode != 200) throw Exception();

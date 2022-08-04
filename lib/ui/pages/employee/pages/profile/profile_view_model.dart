@@ -89,6 +89,26 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> saveMission(List<bool> missions) async {
+    try {
+      await _service.saveMission(missions, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> saveSchedules(List<int> typeEmployments) async {
     try {
       await _service.saveSchedules(typeEmployments, _token);
@@ -169,9 +189,9 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> saveCareer(String vacancy, int coast) async {
+  Future<void> saveCareer(String vacancy, int coast, int jobCategoryId) async {
     try {
-      await _service.saveCareer(vacancy, coast, _token);
+      await _service.saveCareer(vacancy, coast, jobCategoryId, _token);
       _init();
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(

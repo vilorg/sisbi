@@ -4,13 +4,16 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 
 import 'package:sisbi/domain/services/profile_service.dart';
+import 'package:sisbi/models/object_id.dart';
 
 class _ViewModel extends ChangeNotifier {
-  final String initState;
+  final ObjectId initJobCategory;
+  final String initVacancy;
   final int initCoast;
-  _ViewModel(this.initState, this.initCoast) {
-    _vacancyController.text = initState;
+  _ViewModel(this.initVacancy, this.initCoast, this.initJobCategory) {
+    _vacancyController.text = initVacancy;
     _coastController.text = initCoast.toString();
+    _jobCategory = initJobCategory;
     _init();
   }
 
@@ -25,74 +28,106 @@ class _ViewModel extends ChangeNotifier {
   List<String> _vacancies = [];
   List<String> get vacancies => _vacancies;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+  bool _isLoadingVacancies = false;
+  bool get isLoadingVacancies => _isLoadingVacancies;
 
-  bool _isAvaible = true;
-  bool get isAvaible => _isAvaible;
+  bool _isAvaibleVacancies = true;
+  bool get isAvaibleVacancies => _isAvaibleVacancies;
+
+  List<ObjectId> _jobCategories = [];
+  List<ObjectId> get jobCategories => _jobCategories;
+
+  bool _isLoadingjobCategories = false;
+  bool get isLoadingjobCategories => _isLoadingjobCategories;
+
+  ObjectId? _jobCategory;
+  ObjectId? get jobCategory => _jobCategory;
 
   Future<void> _init() async {
-    _isLoading = true;
+    _isLoadingVacancies = true;
+    _isLoadingjobCategories = true;
     try {
       notifyListeners();
     } catch (e) {
-      _isLoading = false;
+      _isLoadingVacancies = false;
     }
     _vacancies = await _service.getNamedVacancies(_vacancyController.text);
-    _isLoading = false;
+    _jobCategories = await _service.getNamedJobCategories();
+    _isLoadingVacancies = false;
+    _isLoadingjobCategories = false;
     try {
       notifyListeners();
     } catch (e) {
-      _isLoading = false;
+      _isLoadingVacancies = false;
     }
   }
 
-  Future<void> refreshVacancies() async => await _init();
-
-  void onVacancyTap(String text) {
-    _vacancyController.text = text;
-    _isAvaible = false;
+  Future<void> refreshVacancies() async {
+    _isLoadingVacancies = true;
     try {
       notifyListeners();
     } catch (e) {
-      _isLoading = false;
+      _isLoadingVacancies = false;
+    }
+    _vacancies = await _service.getNamedVacancies(_vacancyController.text);
+    _isLoadingVacancies = false;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoadingVacancies = false;
+    }
+  }
+
+  void onVacancyTap(String text) {
+    _vacancyController.text = text;
+    _isAvaibleVacancies = false;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoadingVacancies = false;
     }
   }
 
   Future<void> onTap() async {
-    _isAvaible = true;
+    _isAvaibleVacancies = true;
     _vacancyController.clear();
     await _init();
+  }
+
+  void onJobCategoryTap(ObjectId? jobCategory) {
+    _jobCategory = jobCategory;
+    notifyListeners();
   }
 }
 
 class CareerInfo extends StatelessWidget {
-  final Function(String, int) setCareer;
-  const CareerInfo({
-    Key? key,
-    required this.setCareer,
-  }) : super(key: key);
+  final Function(String, int, int) setCareer;
+  const CareerInfo({Key? key, required this.setCareer}) : super(key: key);
 
-  static Widget create(
-          String initVacancy, int initCoast, Function(String, int) setCareer) =>
+  static Widget create(String initVacancy, int initCoast,
+          ObjectId initJobCategory, Function(String, int, int) setCareer) =>
       ChangeNotifierProvider(
-        create: (context) => _ViewModel(initVacancy, initCoast),
+        create: (context) =>
+            _ViewModel(initVacancy, initCoast, initJobCategory),
         child: CareerInfo(setCareer: setCareer),
       );
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<_ViewModel>(context);
-    final bool isLoading = model.isLoading;
-    final bool isAvaible = model.isAvaible;
+    final bool isLoadingVacancy = model.isLoadingVacancies;
+    final bool isAvaible = model.isAvaibleVacancies;
     final List<String> vacancies = model.vacancies;
     final TextEditingController vacancyController = model.vacancyController;
     final TextEditingController coastController = model.coastController;
+    final bool isLoadingjobCategories = model.isLoadingjobCategories;
+    final List<ObjectId> jobCategories = model.jobCategories;
+    final ObjectId? jobCategory = model.jobCategory;
 
     List<Widget> data = [];
 
     if (isAvaible) {
-      if (isLoading) {
+      if (isLoadingVacancy) {
         data = [
           const CircularProgressIndicator(color: colorAccentDarkBlue),
         ];
@@ -130,6 +165,7 @@ class CareerInfo extends StatelessWidget {
                         setCareer(
                           vacancyController.text,
                           int.parse(coastController.text),
+                          jobCategory!.id,
                         );
                         Navigator.of(context).pop();
                       },
@@ -191,6 +227,30 @@ class CareerInfo extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodyText1,
                         keyboardType: TextInputType.number,
                       ),
+                      const SizedBox(height: defaultPadding),
+                      !isLoadingjobCategories
+                          ? DropdownButton<String>(
+                              value: jobCategory!.value,
+                              elevation: 16,
+                              style: Theme.of(context).textTheme.bodyText1,
+                              onChanged: (String? newValue) {
+                                ObjectId val = jobCategories.firstWhere(
+                                    (element) => element.value == newValue);
+                                model.onJobCategoryTap(val);
+                              },
+                              items: jobCategories
+                                  .map((e) => e.value)
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            )
+                          : const CircularProgressIndicator(
+                              color: colorAccentDarkBlue),
+                      const SizedBox(height: defaultPadding),
                     ],
                   ),
                 ),

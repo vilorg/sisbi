@@ -186,6 +186,8 @@ class CardMediaDataProvider {
         schedules: schedules,
         skills: (_decoded['skills'] as String).split(" "),
         region: city,
+        jobCategory: ObjectId(
+            _decoded['job_category']['id'], _decoded['job_category']['name']),
         post: skills,
         coast: coast,
         typeEmployments: typeEmployments,
@@ -217,6 +219,19 @@ class CardMediaDataProvider {
     var decoded = jsonDecode(response.body)['payload'];
     for (var vacancyName in decoded) {
       vacancies.add(vacancyName['name'] as String);
+    }
+    return vacancies;
+  }
+
+  Future<List<ObjectId>> getNamedJobCategories() async {
+    List<ObjectId> vacancies = [];
+    Uri uri = Uri.parse(getJobCategoriesUri);
+    var response = await http.get(uri);
+    if (response.statusCode != 200) throw Exception;
+    var decoded = jsonDecode(response.body)['payload'];
+    for (var vacancyName in decoded) {
+      vacancies.add(
+          ObjectId(vacancyName['id'] as int, vacancyName['name'] as String));
     }
     return vacancies;
   }

@@ -12,6 +12,7 @@ class UserDataModel {
   final int coast;
   final String phone;
   final String email;
+  final ObjectId jobCategory;
   final ObjectId region;
   final String post;
   final List<DrivingLicence> drivingLicence;
@@ -32,6 +33,7 @@ class UserDataModel {
     required this.coast,
     required this.phone,
     required this.email,
+    required this.jobCategory,
     required this.region,
     required this.post,
     required this.drivingLicence,
@@ -54,6 +56,7 @@ class UserDataModel {
     int? coast,
     String? phone,
     String? email,
+    ObjectId? jobCategory,
     ObjectId? region,
     String? post,
     List<DrivingLicence>? drivingLicence,
@@ -75,6 +78,7 @@ class UserDataModel {
       coast: coast ?? this.coast,
       phone: phone ?? this.phone,
       email: email ?? this.email,
+      jobCategory: jobCategory ?? this.jobCategory,
       region: region ?? this.region,
       post: post ?? this.post,
       drivingLicence: drivingLicence ?? this.drivingLicence,
@@ -91,7 +95,7 @@ class UserDataModel {
 
   @override
   String toString() {
-    return 'UserDataModel(firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove)';
+    return 'UserDataModel(firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove)';
   }
 
   static UserDataModel deffault() => UserDataModel(
@@ -110,6 +114,7 @@ class UserDataModel {
         typeEmployments: [],
         education: Education.secondary,
         region: ObjectId(0, ""),
+        jobCategory: ObjectId(0, ""),
         post: "",
         coast: 0,
         readyMission: false,

@@ -34,8 +34,9 @@ class ProfileService {
   Future<void> saveCity(ObjectId city, String token) async =>
       await _profileProvider.saveCity(city, token);
 
-  Future<void> saveCareer(String vacancy, int coast, String token) async =>
-      await _profileProvider.saveCareer(vacancy, coast, token);
+  Future<void> saveCareer(
+          String vacancy, int coast, int jobCategoryId, String token) async =>
+      await _profileProvider.saveCareer(vacancy, coast, jobCategoryId, token);
 
   Future<void> saveSkills(List<String> skills, String token) async =>
       await _profileProvider.saveSkills(skills, token);
@@ -55,11 +56,17 @@ class ProfileService {
   Future<void> saveLicences(List<String> licences, String token) async =>
       await _profileProvider.saveLicences(licences, token);
 
+  Future<void> saveMission(List<bool> missions, String token) async =>
+      await _profileProvider.saveMission(missions, token);
+
   Future<List<ObjectId>> getCities(String search) async =>
       await _cardProvider.getCities(search);
 
   Future<List<String>> getNamedVacancies(String text) async =>
       await _cardProvider.getNameVacancies(text);
+
+  Future<List<ObjectId>> getNamedJobCategories() async =>
+      await _cardProvider.getNamedJobCategories();
 
   Future<void> logout() async => await _sessionProvider.logout();
 }

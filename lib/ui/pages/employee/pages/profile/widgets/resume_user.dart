@@ -58,7 +58,7 @@ class ResumeUser extends StatelessWidget {
     }
 
     final String mission =
-        "${user.readyMission ? "Готовность" : "Неготовность"} к командировкам\n${user.readyMove ? "Готовность" : "Неготовность"} к переезду";
+        "${user.readyMission ? "Готов" : "Не готов"} к командировкам\n${user.readyMove ? "Готов" : "Не готов"} к переезду";
 
     return Expanded(
       child: ClipRRect(
@@ -123,12 +123,14 @@ class ResumeUser extends StatelessWidget {
                         tiles: [
                           _Tile(
                             title: user.previusJob,
-                            subtitle: "Зарплата от ${user.coast} руб.",
+                            subtitle:
+                                "Зарплата от ${user.coast} руб.\n${user.jobCategory.value}",
                             onTap: () =>
                                 Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CareerInfo.create(
                                 user.previusJob,
                                 user.coast,
+                                user.jobCategory,
                                 model.saveCareer,
                               ),
                             )),
@@ -338,7 +340,35 @@ class ResumeUser extends StatelessWidget {
                           _Tile(
                             title: "Командировки и переезд",
                             subtitle: mission,
-                            onTap: () {},
+                            onTap: () {
+                              showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(borderRadiusPage),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  List<String> titles = [
+                                    "к командировкам",
+                                    "к переезду",
+                                  ];
+
+                                  return SwitchActionButton(
+                                    switchs: SwitchData(
+                                      onTap: (List<bool> missioins) {
+                                        model.saveMission(missioins);
+                                      },
+                                      titles: titles,
+                                      initValue: [
+                                        user.readyMission,
+                                        user.readyMove,
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
                         ],
                       ),
