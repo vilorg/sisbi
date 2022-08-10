@@ -1,4 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
+import 'package:intl/intl.dart';
+
+import 'package:sisbi/models/enum_classes.dart';
 
 class VacancyModel {
   final int id;
@@ -8,9 +13,8 @@ class VacancyModel {
   final String avatar;
   final String phone;
   final String email;
-  final String experience;
+  final Expierence experience;
   final int salary;
-  final String createdAt;
   final String jobCategoryName;
   final int jobCategoryId;
   final List<String> schedules;
@@ -23,6 +27,11 @@ class VacancyModel {
   final String employerAbout;
   final int cityId;
   final String cityName;
+  final int views;
+  final int shows;
+  final int countResponse;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   VacancyModel({
     required this.id,
@@ -34,7 +43,6 @@ class VacancyModel {
     required this.email,
     required this.experience,
     required this.salary,
-    required this.createdAt,
     required this.jobCategoryName,
     required this.jobCategoryId,
     required this.schedules,
@@ -47,6 +55,11 @@ class VacancyModel {
     required this.employerAbout,
     required this.cityId,
     required this.cityName,
+    required this.views,
+    required this.shows,
+    required this.countResponse,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   VacancyModel copyWith({
@@ -57,9 +70,8 @@ class VacancyModel {
     String? avatar,
     String? phone,
     String? email,
-    String? experience,
+    Expierence? experience,
     int? salary,
-    String? createdAt,
     String? jobCategoryName,
     int? jobCategoryId,
     List<String>? schedules,
@@ -72,6 +84,11 @@ class VacancyModel {
     String? employerAbout,
     int? cityId,
     String? cityName,
+    int? views,
+    int? shows,
+    int? countResponse,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return VacancyModel(
       id: id ?? this.id,
@@ -83,7 +100,6 @@ class VacancyModel {
       email: email ?? this.email,
       experience: experience ?? this.experience,
       salary: salary ?? this.salary,
-      createdAt: createdAt ?? this.createdAt,
       jobCategoryName: jobCategoryName ?? this.jobCategoryName,
       jobCategoryId: jobCategoryId ?? this.jobCategoryId,
       schedules: schedules ?? this.schedules,
@@ -96,34 +112,12 @@ class VacancyModel {
       employerAbout: employerAbout ?? this.employerAbout,
       cityId: cityId ?? this.cityId,
       cityName: cityName ?? this.cityName,
+      views: views ?? this.views,
+      shows: shows ?? this.shows,
+      countResponse: countResponse ?? this.countResponse,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'title': title,
-      'description': description,
-      'fullName': fullName,
-      'avatar': avatar,
-      'phone': phone,
-      'email': email,
-      'experience': experience,
-      'salary': salary,
-      'createdAt': createdAt,
-      'jobCategoryName': jobCategoryName,
-      'jobCategoryId': jobCategoryId,
-      'schedules': schedules,
-      'typeEmployments': typeEmployments,
-      'employerId': employerId,
-      'employerName': employerName,
-      'employerAvatar': employerAvatar,
-      'employerPhone': employerPhone,
-      'employerEmail': employerEmail,
-      'employerAbout': employerAbout,
-      'cityId': cityId,
-      'cityName': cityName,
-    };
   }
 
   factory VacancyModel.fromMap(Map<String, dynamic> json) {
@@ -146,9 +140,9 @@ class VacancyModel {
       avatar: json['avatar'] as String,
       phone: json['phone'] as String,
       email: json['email'] as String,
-      experience: json['experience'] as String,
+      experience: Expierence.values
+          .firstWhere((e) => e.name == json['experience'] as String),
       salary: json['salary'] as int,
-      createdAt: json['created_at'] as String,
       jobCategoryName: json['job_category']['name'] as String,
       jobCategoryId: json['job_category']['id'] as int,
       schedules: schedules,
@@ -161,16 +155,30 @@ class VacancyModel {
       employerAbout: json['employer']['about'] as String,
       cityId: json['city']['id'] as int,
       cityName: json['city']['name'] as String,
+      views: json['views'] as int,
+      shows: json['shows'] as int,
+      countResponse: json['count_responses'] as int,
+      createdAt: DateFormat("yyyy-MM-ddTHH:mm:ss")
+          .parse((json['created_at'] as String).substring(0, 19)),
+      updatedAt: DateFormat("yyyy-MM-ddTHH:mm:ss")
+          .parse((json['updated_at'] as String).substring(0, 19)),
     );
   }
-
-  String toJson() => json.encode(toMap());
 
   factory VacancyModel.fromJson(String source) =>
       VacancyModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  static List<VacancyModel> getVacanciesFromListJson(String source) {
+    List<VacancyModel> _vacancies = [];
+    var _decoded = json.decode(source)['payload'] as List<dynamic>;
+    for (var _vacancy in _decoded) {
+      _vacancies.add(VacancyModel.fromMap(_vacancy));
+    }
+    return _vacancies;
+  }
+
   @override
   String toString() {
-    return 'VacancyModel(id: $id, title: $title, description: $description, fullName: $fullName, avatar: $avatar, phone: $phone, email: $email, experience: $experience, salary: $salary, createdAt: $createdAt, jobCategoryName: $jobCategoryName, jobCategoryId: $jobCategoryId, schedules: $schedules, typeEmployments: $typeEmployments, employerId: $employerId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, employerAbout: $employerAbout, cityId: $cityId, cityName: $cityName)';
+    return 'VacancyModel(id: $id, title: $title, description: $description, fullName: $fullName, avatar: $avatar, phone: $phone, email: $email, experience: $experience, salary: $salary, jobCategoryName: $jobCategoryName, jobCategoryId: $jobCategoryId, schedules: $schedules, typeEmployments: $typeEmployments, employerId: $employerId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, employerAbout: $employerAbout, cityId: $cityId, cityName: $cityName, views: $views, shows: $shows, countResponse: $countResponse, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }

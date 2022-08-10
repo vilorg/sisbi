@@ -19,19 +19,20 @@ class _SkillsProfileState extends State<SkillsProfile> {
   @override
   void initState() {
     skills = widget.initSkills.split(", ");
+    if (skills[0] == "") skills = [];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> data = [];
-
     for (String skill in skills) {
       data.add(_getWrapCard(skill, () {
         skills.remove(skill);
         setState(() {});
       }));
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(

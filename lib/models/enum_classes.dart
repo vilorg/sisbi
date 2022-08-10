@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names
 
-enum Expierence { no, y_1_3, y_2_6, more_6, notChosed }
+import 'package:sisbi/models/object_id.dart';
+
+enum Expierence { notChosed, no, y_1_3, y_2_6, more_6 }
 
 String getExpierenceString(Expierence expierence) {
   String ans = "";
@@ -50,6 +52,9 @@ Expierence getExpierenceFromInt(int? exp) {
   Expierence ans = Expierence.notChosed;
   switch (exp) {
     case null:
+      ans = Expierence.notChosed;
+      break;
+    case -1:
       ans = Expierence.notChosed;
       break;
     case 0:
@@ -174,5 +179,56 @@ Education getEducationFromInt(int? edu) {
 
 enum DrivingLicence { A, B, C, D, E, BE, CE, DE, TM, DB }
 
+List<ObjectId> getTypeEmploymentsString() => const [
+      ObjectId(4, 'Полная занятость'),
+      ObjectId(3, 'Частичная занятость'),
+      ObjectId(2, 'Проектная работа'),
+      ObjectId(1, 'Стажировка'),
+    ];
+
+ObjectId getTypeEmploymentFromInt(int i) {
+  ObjectId ans = const ObjectId(0, "");
+  switch (i) {
+    case 0:
+      ans = const ObjectId(4, 'Полная занятость');
+      break;
+    case 1:
+      ans = const ObjectId(3, 'Частичная занятость');
+      break;
+    case 2:
+      ans = const ObjectId(2, 'Проектная работа');
+      break;
+    case 3:
+      ans = const ObjectId(1, 'Стажировка');
+      break;
+  }
+  return ans;
+}
+
+List<ObjectId> getSchedulesString() => const [
+      ObjectId(4, 'Удаленная работа'),
+      ObjectId(3, 'Полный день'),
+      ObjectId(2, 'Гибкий график'),
+      ObjectId(1, 'Сменный график'),
+    ];
+
+ObjectId getSchedulesFromInt(int i) {
+  ObjectId ans = const ObjectId(0, "");
+  switch (i) {
+    case 0:
+      ans = const ObjectId(4, 'Удаленная работа');
+      break;
+    case 1:
+      ans = const ObjectId(3, 'Полный день');
+      break;
+    case 2:
+      ans = const ObjectId(2, 'Гибкий график');
+      break;
+    case 3:
+      ans = const ObjectId(1, 'Сменный график');
+      break;
+  }
+  return ans;
+}
 
 //TODO: пофиксить y_2_6 а не y_3_6

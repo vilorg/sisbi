@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sisbi/ui/pages/employer/pages/profile/profile_employer_page.dart';
 
 class _ViewModelState {
   final int selectedIndex;
@@ -43,15 +44,15 @@ class HomeEmployerPage extends StatelessWidget {
 
     int selectedIndex = state.selectedIndex;
 
-    List<String> texts = ["1", "2", "3", "4"];
+    List<Widget> pages = [
+      Scaffold(appBar: AppBar()),
+      Scaffold(appBar: AppBar()),
+      Scaffold(appBar: AppBar()),
+      ProfileEmployerPage.create(),
+    ];
 
     return Scaffold(
-      body: Center(
-        child: Text(
-          "${texts[selectedIndex]} page.",
-          style: Theme.of(context).textTheme.headline1,
-        ),
-      ),
+      body: pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: model.setSelectedIndex,

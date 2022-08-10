@@ -21,7 +21,7 @@ class SessionDataProvider {
     return _prefs.getBool(_keyIsUser) ?? true;
   }
 
-  Future<String> getUserToken() async {
+  Future<String> getToken() async {
     return await _storage.read(key: _keyToken) ?? "";
   }
 

@@ -5,7 +5,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
 
-class ChatMediaDataProvider {
+class ChatUserDataProvider {
   Future<List<ChatPreviewModel>> getAllChats(String token) async {
     Uri uri = Uri.parse(getAllChatsUri);
     var response = await http.get(uri, headers: {

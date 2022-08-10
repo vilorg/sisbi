@@ -54,7 +54,7 @@ class ContactssMessage extends StatelessWidget {
               children: [
                 SvgPicture.asset("assets/icons/phone_icon.svg"),
                 const SizedBox(width: defaultPadding / 2),
-                Text(
+                SelectableText(
                   isUser ? chat.employerPhone : chat.userPhone,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontWeight: FontWeight.w600,
@@ -77,7 +77,7 @@ class ContactssMessage extends StatelessWidget {
               children: [
                 SvgPicture.asset("assets/icons/main_icon.svg"),
                 const SizedBox(width: defaultPadding / 2),
-                Text(
+                SelectableText(
                   isUser ? chat.employerEmail : chat.userEmail,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontWeight: FontWeight.w600,

@@ -7,20 +7,20 @@ import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/resume_user.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 
-import 'profile_view_model.dart';
+import 'profile_user_view_model.dart';
 import 'widgets/personal_data_user.dart';
 
 class ProfileUserPage extends StatelessWidget {
   const ProfileUserPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => ProfileViewModel(context),
+        create: (context) => ProfileUserViewModel(context),
         child: const ProfileUserPage(),
       );
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ProfileViewModel>(context);
+    final model = Provider.of<ProfileUserViewModel>(context);
     final bool isLoading = model.isLoading;
     final bool isFirst = model.isFirst;
 
@@ -97,7 +97,7 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ProfileViewModel>(context);
+    final model = Provider.of<ProfileUserViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),

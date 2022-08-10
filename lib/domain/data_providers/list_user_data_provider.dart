@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/object_id.dart';
 
-class ListMediaDataProvider {
+class ListUserDataProvider {
   Future<List<ObjectId>> getCities(String token, String s) async {
     String uriString = getCitiesUri;
     if (s.isNotEmpty) {

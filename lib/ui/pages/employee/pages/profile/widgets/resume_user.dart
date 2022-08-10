@@ -8,8 +8,8 @@ import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/profile/profile_view_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/profile/widgets/career_info.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/profile_user_view_model.dart';
+import 'package:sisbi/ui/widgets/profile/career_info.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/skills_profile.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 
@@ -18,7 +18,7 @@ class ResumeUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ProfileViewModel>(context);
+    final model = Provider.of<ProfileUserViewModel>(context);
     final UserDataModel? user = model.userModel;
     final bool isLoading = model.isLoading;
 
@@ -124,7 +124,7 @@ class ResumeUser extends StatelessWidget {
                           _Tile(
                             title: user.previusJob,
                             subtitle:
-                                "Зарплата от ${user.coast} руб.\n${user.jobCategory.value}",
+                                "Зарплата от ${user.coast} руб.\n${user.jobCategory.value == "" ? "Не указано" : user.jobCategory.value}",
                             onTap: () =>
                                 Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => CareerInfo.create(

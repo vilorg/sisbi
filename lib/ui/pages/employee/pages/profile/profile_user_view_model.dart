@@ -5,12 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/domain/services/profile_service.dart';
+import 'package:sisbi/domain/services/profile_user_service.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/profile/widgets/city_profile_user.dart';
-import 'package:sisbi/ui/pages/employee/pages/profile/widgets/email_profile_user.dart';
+import 'package:sisbi/ui/widgets/profile/city_profile_page.dart';
+import 'package:sisbi/ui/widgets/profile/email_profile_user.dart';
 
 class _ViewModelState {
   final String name;
@@ -48,9 +48,9 @@ class _ViewModelState {
   }
 }
 
-class ProfileViewModel extends ChangeNotifier {
+class ProfileUserViewModel extends ChangeNotifier {
   final BuildContext _context;
-  final ProfileService _service = ProfileService();
+  final ProfileUserService _service = ProfileUserService();
 
   String _token = "";
 
@@ -189,9 +189,10 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> saveCareer(String vacancy, int coast, int jobCategoryId) async {
+  Future<void> saveCareer(
+      String vacancy, int coast, ObjectId jobCategoryId) async {
     try {
-      await _service.saveCareer(vacancy, coast, jobCategoryId, _token);
+      await _service.saveCareer(vacancy, coast, jobCategoryId.id, _token);
       _init();
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
@@ -353,7 +354,7 @@ class ProfileViewModel extends ChangeNotifier {
 
   void openCityScreen() => Navigator.of(_context).push(
         MaterialPageRoute(
-          builder: (context) => CityProfileUser.create(
+          builder: (context) => CityProfilePage.create(
             _state.city!,
             saveCity,
           ),
@@ -362,7 +363,7 @@ class ProfileViewModel extends ChangeNotifier {
 
   void openEmailScreen() => Navigator.of(_context).push(
         MaterialPageRoute(
-          builder: (context) => EmailProfileUser(
+          builder: (context) => EmailProfilePage(
             initValue: _state.email,
             setEmail: saveEmail,
           ),
@@ -503,7 +504,7 @@ class ProfileViewModel extends ChangeNotifier {
                         onDateTimeChanged: (DateTime birthday) =>
                             _state = _state.copyWith(birthday: birthday),
                         mode: CupertinoDatePickerMode.date,
-                        maximumYear: 2010,
+                        maximumYear: DateTime.now().year,
                         minimumYear: 1900,
                         initialDateTime: _state.birthday),
                     height: 150,
@@ -561,7 +562,7 @@ class ProfileViewModel extends ChangeNotifier {
     }
   }
 
-  ProfileViewModel(this._context) {
+  ProfileUserViewModel(this._context) {
     _init();
   }
 

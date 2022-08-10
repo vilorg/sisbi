@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
@@ -25,7 +26,7 @@ class WrapVacancyCards extends StatelessWidget {
       context,
       _stringExp(vacancy.experience),
       isAvaibleIsSelect
-          ? _isExpierence(userData!.experience.toString(), vacancy.experience)
+          ? _isExpierence(userData!.experience, vacancy.experience)
           : false,
     ));
 
@@ -80,9 +81,9 @@ class WrapVacancyCards extends StatelessWidget {
         ),
       );
 
-  bool _isExpierence(String userExpierence, String vacancyExpierence) {
-    int intUserExp = _intExp(userExpierence);
-    int intVacancyExp = _intExp(vacancyExpierence);
+  bool _isExpierence(Expierence userExpierence, Expierence vacancyExpierence) {
+    int intUserExp = _intExp(userExpierence.name.toString());
+    int intVacancyExp = _intExp(vacancyExpierence.name.toString());
     return intUserExp >= intVacancyExp;
   }
 
@@ -100,8 +101,8 @@ class WrapVacancyCards extends StatelessWidget {
     return -1;
   }
 
-  String _stringExp(String experience) {
-    switch (experience) {
+  String _stringExp(Expierence experience) {
+    switch (experience.name) {
       case "no":
         return "Нет опыта";
       case "y_1_3":

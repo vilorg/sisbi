@@ -6,7 +6,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 
-class ProfileMediaProvider {
+class ProfileUserProvider {
   Future respondVacancy(String token, int vacancyId, String text) async {
     Uri uri = Uri.parse(respondVacancyUri);
     return await http.post(uri,

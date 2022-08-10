@@ -40,41 +40,53 @@ class SelectWrapCard extends StatelessWidget {
                       color: colorInputContent,
                     ),
               ),
-              value != null
-                  ? Row(
-                      children: [
-                        Text(
-                          value!,
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+              Expanded(
+                child: value != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              value!,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
                                     color: colorText,
                                   ),
-                        ),
-                        onTap != null
-                            ? SvgPicture.asset(
-                                "assets/icons/arrow_right.svg",
-                                color: colorText,
-                              )
-                            : const SizedBox(),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        Text(
-                          "Не указано",
-                          style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
-                                    color: colorIconSecondary,
-                                  ),
-                        ),
-                        onTap != null
-                            ? SvgPicture.asset(
-                                "assets/icons/arrow_right.svg",
-                                color: colorIconSecondary,
-                              )
-                            : const SizedBox(),
-                      ],
-                    ),
+                              maxLines: 1,
+                              textAlign: TextAlign.end,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          onTap != null
+                              ? SvgPicture.asset(
+                                  "assets/icons/arrow_right.svg",
+                                  color: colorText,
+                                )
+                              : const SizedBox(),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Не указано",
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: colorIconSecondary,
+                                    ),
+                          ),
+                          onTap != null
+                              ? SvgPicture.asset(
+                                  "assets/icons/arrow_right.svg",
+                                  color: colorIconSecondary,
+                                )
+                              : const SizedBox(),
+                        ],
+                      ),
+              ),
             ],
           ),
         ),

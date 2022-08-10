@@ -1,19 +1,22 @@
-import 'package:sisbi/domain/data_providers/card_media_data_provider.dart';
-import 'package:sisbi/domain/data_providers/profile_media_provider.dart';
+import 'package:sisbi/domain/data_providers/card_user_data_provider.dart';
+import 'package:sisbi/domain/data_providers/profile_user_provider.dart';
 import 'package:sisbi/domain/data_providers/session_data_provider.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 
-class ProfileService {
+class ProfileUserService {
   final SessionDataProvider _sessionProvider = SessionDataProvider();
-  final CardMediaDataProvider _cardProvider = CardMediaDataProvider();
-  final ProfileMediaProvider _profileProvider = ProfileMediaProvider();
+  final CardUserDataProvider _cardProvider = CardUserDataProvider();
+  final ProfileUserProvider _profileProvider = ProfileUserProvider();
 
-  Future<String> getUserToken() async => await _sessionProvider.getUserToken();
+  Future<String> getUserToken() async => await _sessionProvider.getToken();
 
   Future<UserDataModel> getUserData(String token) async {
-    return await _cardProvider.getUserData(token);
+    final UserDataModel _userData = await _cardProvider.getUserData(token);
+    // print(_userData.firstName);
+    // print(_userData.surname);
+    return _userData;
   }
 
   Future<void> uploadAvatar(String path, String token) async =>
@@ -70,3 +73,5 @@ class ProfileService {
 
   Future<void> logout() async => await _sessionProvider.logout();
 }
+
+//TODO: объединить user и employer в один сервис

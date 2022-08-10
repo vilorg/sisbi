@@ -3,7 +3,7 @@ class ObjectId {
   final int id;
   final String value;
 
-  ObjectId(this.id, this.value);
+  const ObjectId(this.id, this.value);
 
   @override
   String toString() => '\nObjectId(id: $id, value: $value)';

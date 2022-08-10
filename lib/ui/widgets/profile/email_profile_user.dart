@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
 
-class EmailProfileUser extends StatefulWidget {
-  const EmailProfileUser({
+class EmailProfilePage extends StatefulWidget {
+  const EmailProfilePage({
     Key? key,
     required this.initValue,
     required this.setEmail,
@@ -14,10 +14,10 @@ class EmailProfileUser extends StatefulWidget {
   final Function(String) setEmail;
 
   @override
-  State<EmailProfileUser> createState() => _EmailProfileUserState();
+  State<EmailProfilePage> createState() => _EmailProfilePageState();
 }
 
-class _EmailProfileUserState extends State<EmailProfileUser> {
+class _EmailProfilePageState extends State<EmailProfilePage> {
   TextEditingController controller = TextEditingController();
 
   bool get isError => RegExp(

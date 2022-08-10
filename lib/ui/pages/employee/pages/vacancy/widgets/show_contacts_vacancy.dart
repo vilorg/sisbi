@@ -47,7 +47,7 @@ class ShowContactsVacancy extends StatelessWidget {
                 children: [
                   SvgPicture.asset("assets/icons/phone_icon.svg"),
                   const SizedBox(width: defaultPadding / 2),
-                  Text(
+                  SelectableText(
                     vacancy.phone,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w600,
@@ -70,7 +70,7 @@ class ShowContactsVacancy extends StatelessWidget {
                 children: [
                   SvgPicture.asset("assets/icons/main_icon.svg"),
                   const SizedBox(width: defaultPadding / 2),
-                  Text(
+                  SelectableText(
                     vacancy.email,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w600,

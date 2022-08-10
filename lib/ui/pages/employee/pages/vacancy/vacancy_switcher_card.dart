@@ -61,7 +61,7 @@ class VacancySwitcherCard extends StatelessWidget {
       });
 
   Widget _buildCard(BuildContext context) {
-    final date = vacancy.createdAt.substring(0, 10);
+    final date = vacancy.createdAt.toString().substring(0, 10);
     return ClipRRect(
       borderRadius:
           const BorderRadius.vertical(top: Radius.circular(borderRadius)),

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/domain/services/profile_service.dart';
+import 'package:sisbi/domain/services/profile_user_service.dart';
 import 'package:sisbi/models/object_id.dart';
 
 class _ViewModel extends ChangeNotifier {
-  final ProfileService _service = ProfileService();
+  final ProfileUserService _service = ProfileUserService();
 
   _ViewModel() {
     _init();
@@ -60,19 +60,19 @@ class _ViewModel extends ChangeNotifier {
   }
 }
 
-class CityProfileUser extends StatelessWidget {
-  const CityProfileUser({
+class CityProfilePage extends StatelessWidget {
+  const CityProfilePage({
     Key? key,
-    required this.initValue,
+    required this.initCity,
     required this.setCity,
   }) : super(key: key);
-  final ObjectId initValue;
+  final ObjectId initCity;
   final Function(ObjectId) setCity;
 
   static Widget create(ObjectId initValue, Function(ObjectId) setCity) =>
       ChangeNotifierProvider(
         create: (context) => _ViewModel(),
-        child: CityProfileUser(initValue: initValue, setCity: setCity),
+        child: CityProfilePage(initCity: initValue, setCity: setCity),
       );
 
   @override
@@ -111,7 +111,7 @@ class CityProfileUser extends StatelessWidget {
                 ),
                 const SizedBox(height: defaultPadding / 4),
                 Text(
-                  initValue.value.isEmpty ? "Не указано" : initValue.value,
+                  initCity.value.isEmpty ? "Не указано" : initCity.value,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: colorTextSecondary,
                       ),

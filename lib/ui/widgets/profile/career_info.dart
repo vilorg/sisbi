@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 
-import 'package:sisbi/domain/services/profile_service.dart';
+import 'package:sisbi/domain/services/profile_user_service.dart';
 import 'package:sisbi/models/object_id.dart';
 
 class _ViewModel extends ChangeNotifier {
@@ -17,7 +17,7 @@ class _ViewModel extends ChangeNotifier {
     _init();
   }
 
-  final ProfileService _service = ProfileService();
+  final ProfileUserService _service = ProfileUserService();
 
   final TextEditingController _vacancyController = TextEditingController();
   TextEditingController get vacancyController => _vacancyController;
@@ -95,17 +95,21 @@ class _ViewModel extends ChangeNotifier {
   }
 
   void onJobCategoryTap(ObjectId? jobCategory) {
+    if (jobCategory != null && jobCategory.value == "") return;
     _jobCategory = jobCategory;
     notifyListeners();
   }
 }
 
 class CareerInfo extends StatelessWidget {
-  final Function(String, int, int) setCareer;
+  final Function(String, int, ObjectId) setCareer;
   const CareerInfo({Key? key, required this.setCareer}) : super(key: key);
 
-  static Widget create(String initVacancy, int initCoast,
-          ObjectId initJobCategory, Function(String, int, int) setCareer) =>
+  static Widget create(
+          String initVacancy,
+          int initCoast,
+          ObjectId initJobCategory,
+          Function(String, int, ObjectId) setCareer) =>
       ChangeNotifierProvider(
         create: (context) =>
             _ViewModel(initVacancy, initCoast, initJobCategory),
@@ -165,7 +169,7 @@ class CareerInfo extends StatelessWidget {
                         setCareer(
                           vacancyController.text,
                           int.parse(coastController.text),
-                          jobCategory!.id,
+                          jobCategory!,
                         );
                         Navigator.of(context).pop();
                       },
@@ -230,6 +234,7 @@ class CareerInfo extends StatelessWidget {
                       const SizedBox(height: defaultPadding),
                       !isLoadingjobCategories
                           ? DropdownButton<String>(
+                              isExpanded: true,
                               value: jobCategory!.value,
                               elevation: 16,
                               style: Theme.of(context).textTheme.bodyText1,
@@ -246,7 +251,11 @@ class CareerInfo extends StatelessWidget {
                                   value: value,
                                   child: Text(value),
                                 );
-                              }).toList(),
+                              }).toList()
+                                ..add(const DropdownMenuItem<String>(
+                                  value: "",
+                                  child: Text(""),
+                                )),
                             )
                           : const CircularProgressIndicator(
                               color: colorAccentDarkBlue),

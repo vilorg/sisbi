@@ -14,7 +14,7 @@ class AuthService {
   }
 
   Future<String> getUserToken() async {
-    return await _sessionDataProvider.getUserToken();
+    return await _sessionDataProvider.getToken();
   }
 
   Future<void> getLoginCode(bool isEmployer, String phone) async {
@@ -45,7 +45,7 @@ class AuthService {
     required List<int> typeEmployments,
     required List<int> schedules,
   }) async {
-    String token = await _sessionDataProvider.getUserToken();
+    String token = await _sessionDataProvider.getToken();
     await _authApiProvider.saveUser(
       token,
       isUser,

@@ -1,23 +1,23 @@
-import 'package:sisbi/domain/data_providers/card_media_data_provider.dart';
+import 'package:sisbi/domain/data_providers/card_user_data_provider.dart';
 import 'package:sisbi/domain/data_providers/session_data_provider.dart';
 import 'package:sisbi/models/filter_vacancy_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
 class CardEmployeeService {
-  final CardMediaDataProvider _cardProvider = CardMediaDataProvider();
+  final CardUserDataProvider _cardProvider = CardUserDataProvider();
   final SessionDataProvider _sessionProvider = SessionDataProvider();
 
   Future<List<VacancyModel>> getActualVacancyList(
       int page, FilterVacancyModel filter) async {
-    String token = await _sessionProvider.getUserToken();
+    String token = await _sessionProvider.getToken();
     List<VacancyModel> cards =
         await _cardProvider.getActualVacancyList(page, filter, token);
     return cards;
   }
 
   Future<List<VacancyModel>> getFavouriteVacancyList() async {
-    String token = await _sessionProvider.getUserToken();
+    String token = await _sessionProvider.getToken();
     List<VacancyModel> cards =
         await _cardProvider.getFavouriteVacancyList(token);
     return cards;
@@ -36,7 +36,7 @@ class CardEmployeeService {
   }
 
   Future<UserDataModel> getUserGraph() async {
-    String token = await _sessionProvider.getUserToken();
+    String token = await _sessionProvider.getToken();
     return await _cardProvider.getUserData(token);
   }
 }

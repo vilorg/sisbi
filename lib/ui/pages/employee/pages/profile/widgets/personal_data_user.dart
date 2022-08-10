@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/profile/profile_view_model.dart';
+import 'package:sisbi/ui/pages/employee/pages/profile/profile_user_view_model.dart';
 import 'package:sisbi/ui/widgets/select_wrap_card.dart';
 import 'package:intl/intl.dart';
 
@@ -13,7 +13,7 @@ class PersonalDataUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<ProfileViewModel>(context);
+    final model = Provider.of<ProfileUserViewModel>(context);
     final UserDataModel? user = model.userModel;
     final bool isLoading = model.isLoading;
 
@@ -50,6 +50,16 @@ class PersonalDataUser extends StatelessWidget {
               ),
             ),
           );
+    String? region;
+    if (user!.region.value != "") {
+      region = user.region.value;
+      if (region.length > 20) {
+        region = region.split(", ")[region.split(", ").length - 1];
+      }
+      if (region.length > 20) {
+        region = region.substring(0, 17) + "...";
+      }
+    }
 
     return Expanded(
       child: ClipRRect(
@@ -73,20 +83,20 @@ class PersonalDataUser extends StatelessWidget {
                 nameCard,
                 SelectWrapCard(
                   title: "Пол",
-                  value: user!.isMale ? "Мужской" : "Женский",
+                  value: user.isMale ? "Мужской" : "Женский",
                   onTap: model.openGenroCard,
                 ),
                 SelectWrapCard(
                   title: "Дата рождения",
                   value: DateTime.now().difference(user.birthday) <
-                          const Duration(days: 365)
+                          const Duration(days: 3650)
                       ? null
                       : DateFormat('dd.MM.yyyy').format(user.birthday),
                   onTap: model.openBirthdayCard,
                 ),
                 SelectWrapCard(
                   title: "Город проживания",
-                  value: user.region.value != "" ? user.region.value : null,
+                  value: region,
                   onTap: model.openCityScreen,
                 ),
                 SelectWrapCard(

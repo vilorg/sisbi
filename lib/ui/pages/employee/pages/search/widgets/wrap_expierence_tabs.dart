@@ -8,6 +8,7 @@ class WrapExpierenceTabs extends StatelessWidget {
     Key? key,
     required this.model,
   }) : super(key: key);
+  
 
   final SearchViewModel model;
 

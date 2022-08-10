@@ -53,7 +53,7 @@ const double borderRadiusPage = 24.0;
 
 // mask Fomatter
 final TextInputFormatter phoneMask = MaskTextInputFormatter(
-  mask: '+# │ ###-###-##-##',
+  mask: '+7 │ ###-###-##-##',
   filter: {"#": RegExp(r'[0-9]')},
   type: MaskAutoCompletionType.lazy,
 );
@@ -62,6 +62,7 @@ final TextInputFormatter phoneMask = MaskTextInputFormatter(
 const String baseUri = "https://api.sisbi.ru/v1/";
 const String getUserUri = baseUri + "user";
 const String getEmployerUri = baseUri + "employer/profile";
+const String getEmployerVacanciesUri = baseUri + "employer/vacancies";
 const String getSmsUserUri = baseUri + "users_sms";
 const String getSmsEmployerUri = baseUri + "employer/employers_sms";
 const String getUserTokenUri = baseUri + "auth/user_token";

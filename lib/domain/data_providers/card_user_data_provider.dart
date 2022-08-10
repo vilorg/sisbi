@@ -8,7 +8,7 @@ import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
-class CardMediaDataProvider {
+class CardUserDataProvider {
   Future<List<VacancyModel>> getActualVacancyList(
       int page, FilterVacancyModel filter, String token) async {
     String uriString = getVacancyUri + "?";
@@ -128,75 +128,84 @@ class CardMediaDataProvider {
 
     final _decoded = jsonDecode(_response.body)["payload"];
 
-    try {
-      final String experience = _decoded["experience"];
-      final String education = _decoded['education'];
-      final List schedulesDatas = _decoded["schedules"];
-      final List typeEmploymentsDatas = _decoded["type_employments"];
-      final String skills = _decoded["skills"];
-      final int coast = _decoded["min_salary"];
-      final String drivingLicenceString = _decoded['driving_license'];
-      List<String> drivingLicenceList = [];
-      List<DrivingLicence> drivingLicence = [];
+    // try {
+    final String experience = _decoded["experience"];
+    final String education = _decoded['education'];
+    final List schedulesDatas = _decoded["schedules"];
+    final List typeEmploymentsDatas = _decoded["type_employments"];
+    final String skills = _decoded["skills"];
+    final int coast = _decoded["min_salary"];
+    final String drivingLicenceString = _decoded['driving_license'];
+    List<String> drivingLicenceList = [];
+    List<DrivingLicence> drivingLicence = [];
 
-      if (drivingLicenceString.isNotEmpty) {
-        drivingLicenceList = drivingLicenceString.split(" ");
-      }
-
-      for (String licence in drivingLicenceList) {
-        drivingLicence.add(DrivingLicence.values.firstWhere(
-            (element) => element.toString() == "DrivingLicence." + licence));
-      }
-
-      ObjectId city = ObjectId(0, "");
-      if (_decoded['city'] != null) {
-        city = ObjectId(
-            _decoded['city']['id'] as int, _decoded['city']['name'] as String);
-      }
-
-      List<String> birthdayList = _decoded['birthday'].split('.');
-
-      DateTime birthday = DateTime(int.parse(birthdayList[2]),
-          int.parse(birthdayList[1]), int.parse(birthdayList[0]));
-
-      List<ObjectId> schedules = [];
-      for (var i in schedulesDatas) {
-        schedules.add(ObjectId(i["id"] as int, i["name"] as String));
-      }
-
-      List<ObjectId> typeEmployments = [];
-      for (var i in typeEmploymentsDatas) {
-        typeEmployments.add(ObjectId(i["id"] as int, i["name"] as String));
-      }
-
-      return UserDataModel(
-        firstName: _decoded['first_name'],
-        surname: _decoded['surname'],
-        avatar: _decoded['avatar'],
-        birthday: birthday,
-        previusJob: _decoded['previous_job'],
-        isMale: _decoded['gender'] == "male",
-        email: _decoded["email"] ?? "",
-        phone: _decoded["phone"],
-        drivingLicence: drivingLicence,
-        education: Education.values.firstWhere(
-            (element) => element.toString() == "Education." + education),
-        experience: Expierence.values
-            .firstWhere((e) => e.toString() == "Expierence." + experience),
-        schedules: schedules,
-        skills: (_decoded['skills'] as String).split(" "),
-        region: city,
-        jobCategory: ObjectId(
-            _decoded['job_category']['id'], _decoded['job_category']['name']),
-        post: skills,
-        coast: coast,
-        typeEmployments: typeEmployments,
-        readyMission: _decoded['ready_mission'] as bool,
-        readyMove: _decoded['ready_move'] as bool,
-      );
-    } catch (e) {
-      return UserDataModel.deffault();
+    if (drivingLicenceString.isNotEmpty) {
+      drivingLicenceList = drivingLicenceString.split(" ");
     }
+
+    for (String licence in drivingLicenceList) {
+      drivingLicence.add(DrivingLicence.values.firstWhere(
+          (element) => element.toString() == "DrivingLicence." + licence));
+    }
+
+    ObjectId city = ObjectId(0, "");
+    if (_decoded['city'] != null) {
+      city = ObjectId(
+          _decoded['city']['id'] as int, _decoded['city']['name'] as String);
+    }
+
+    ObjectId jobCategory = ObjectId(0, "");
+    if (_decoded[''] != null) {
+      jobCategory = ObjectId(
+          _decoded['job_category']['id'], _decoded['job_category']['name']);
+    }
+
+    List<String> birthdayList = _decoded['birthday'].split('.');
+
+    DateTime birthday = DateTime(int.parse(birthdayList[2]),
+        int.parse(birthdayList[1]), int.parse(birthdayList[0]));
+
+    List<ObjectId> schedules = [];
+    for (var i in schedulesDatas) {
+      schedules.add(ObjectId(i["id"] as int, i["name"] as String));
+    }
+
+    List<ObjectId> typeEmployments = [];
+    for (var i in typeEmploymentsDatas) {
+      typeEmployments.add(ObjectId(i["id"] as int, i["name"] as String));
+    }
+
+    // print(_decoded['first_name'] as String);
+    // print(_decoded['surname'] as String);
+
+    return UserDataModel(
+      firstName: _decoded['first_name'] as String,
+      surname: _decoded['surname'] as String,
+      avatar: _decoded['avatar'],
+      birthday: birthday,
+      previusJob: _decoded['previous_job'],
+      isMale: _decoded['gender'] == "male",
+      email: _decoded["email"] ?? "",
+      phone: _decoded["phone"],
+      drivingLicence: drivingLicence,
+      education: Education.values.firstWhere(
+          (element) => element.toString() == "Education." + education),
+      experience: Expierence.values
+          .firstWhere((e) => e.toString() == "Expierence." + experience),
+      schedules: schedules,
+      skills: (_decoded['skills'] as String).split(" "),
+      region: city,
+      jobCategory: jobCategory,
+      post: skills,
+      coast: coast,
+      typeEmployments: typeEmployments,
+      readyMission: _decoded['ready_mission'] as bool,
+      readyMove: _decoded['ready_move'] as bool,
+    );
+    // } catch (e) {
+    //   print(e);
+    //   return UserDataModel.deffault();
+    // }
   }
 
   Future<List<ObjectId>> getCities(String search) async {
