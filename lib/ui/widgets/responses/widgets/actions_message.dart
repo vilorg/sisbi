@@ -4,8 +4,9 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/widgets/contacts_message.dart';
-import 'package:sisbi/ui/widgets/vacancy_static_card.dart';
+import 'package:sisbi/ui/widgets/vacancy/vacancy_static_card.dart';
+
+import 'contacts_message.dart';
 
 class ActionsMessage extends StatelessWidget {
   final ChatPreviewModel chat;
@@ -65,7 +66,7 @@ class ActionsMessage extends StatelessWidget {
           borderRadius:
               BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
       context: context,
-      builder: (context) => ContactssMessage(chat: chat, isUser: isUser),
+      builder: (context) => ContactsMessage(chat: chat, isUser: isUser),
     );
   }
 

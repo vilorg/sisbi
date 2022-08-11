@@ -176,6 +176,26 @@ class ProfileEmployerViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteVacancy(int chatId) async {
+    try {
+      await _service.deleteVacancy(chatId, _token!);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> logout() async {
     await _service.logout();
     Navigator.of(_context).pushNamedAndRemoveUntil(

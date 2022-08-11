@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/enum_classes.dart';
-import 'package:sisbi/models/filter_vacancy_model.dart';
+import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/coast_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/search/post_search_page.dart';
@@ -26,8 +26,8 @@ class SearchViewModel extends ChangeNotifier {
   final BuildContext context;
   final VacanciesSwitcherViewModel model;
 
-  FilterVacancyModel get filter => _filter;
-  late FilterVacancyModel _filter;
+  FilterModel get filter => _filter;
+  late FilterModel _filter;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -99,7 +99,7 @@ class SearchViewModel extends ChangeNotifier {
   }
 
   void clearFilter() {
-    _filter = FilterVacancyModel.deffault();
+    _filter = FilterModel.deffault();
     model.setFilter(_filter);
     notifyListeners();
   }

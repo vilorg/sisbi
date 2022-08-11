@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/widgets/message.dart';
+import 'package:sisbi/ui/widgets/responses/widgets/message.dart';
 
 import 'dialog_view_model.dart';
 

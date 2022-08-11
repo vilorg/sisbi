@@ -5,9 +5,11 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
 
-class ChatUserDataProvider {
-  Future<List<ChatPreviewModel>> getAllChats(String token) async {
-    Uri uri = Uri.parse(getAllChatsUri);
+class ChatDataProvider {
+  Future<List<ChatPreviewModel>> getAllChats(
+      bool isEmployer, String token) async {
+    Uri uri =
+        Uri.parse(isEmployer ? getAllChatsEmployerUri : getAllChatsEmployeeUri);
     var response = await http.get(uri, headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -26,8 +28,9 @@ class ChatUserDataProvider {
   }
 
   Future<List<MessageModel>> getAllMessages(
-      String token, int chatId, int page) async {
-    Uri uri = Uri.parse("$getMessagesUri/$chatId/?page=$page");
+      String token, bool isEmployer, int chatId, int page) async {
+    Uri uri = Uri.parse(
+        "${isEmployer ? getMessagesEmployerUri : getMessagesEmployeeUri}/$chatId/?page=$page");
     var response = await http.get(uri, headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -45,8 +48,10 @@ class ChatUserDataProvider {
     return data;
   }
 
-  Future<bool> sendMessage(String token, int chatId, String message) async {
-    Uri uri = Uri.parse(getMessagesUri);
+  Future<bool> sendMessage(
+      String token, bool isEmployer, int chatId, String message) async {
+    Uri uri =
+        Uri.parse(isEmployer ? getMessagesEmployerUri : getMessagesEmployeeUri);
     var body = jsonEncode({
       'message': {
         'content': message,

@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/vacancy_model.dart';
+import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancy_switcher_card.dart';
 
-import 'vacancuies_switcher_view_model.dart';
+import 'resume_switcher_card.dart';
+import 'resumes_switcher_view_model.dart';
 
-class VacanciesSwitcherPage extends StatelessWidget {
-  const VacanciesSwitcherPage({Key? key}) : super(key: key);
+class ResumesSwitcherPage extends StatelessWidget {
+  const ResumesSwitcherPage({Key? key}) : super(key: key);
 
   static Widget create() => ChangeNotifierProvider(
-        create: (context) => VacanciesSwitcherViewModel(context),
-        child: const VacanciesSwitcherPage(),
+        create: (context) => ResumesSwitcherViewModel(context),
+        child: const ResumesSwitcherPage(),
       );
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<VacanciesSwitcherViewModel>(context);
+    final model = Provider.of<ResumesSwitcherViewModel>(context);
     var appBar = AppBar(
       title: Text(
         "Вакансии",
@@ -48,31 +46,31 @@ class VacanciesSwitcherPage extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      actions: [
-        IconButton(
-          icon: SvgPicture.asset("assets/icons/search.svg"),
-          onPressed: () => Navigator.of(context).push(
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) =>
-                  SearchVacancyPage.create(model),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
+      // actions: [
+      // IconButton(
+      //   icon: SvgPicture.asset("assets/icons/search.svg"),
+      //   onPressed: () => Navigator.of(context).push(
+      //     PageRouteBuilder(
+      //       pageBuilder: (context, animation, secondaryAnimation) =>
+      //           SearchVacancyPage.create(model),
+      //       transitionsBuilder:
+      //           (context, animation, secondaryAnimation, child) {
+      //         const begin = Offset(1.0, 0.0);
+      //         const end = Offset.zero;
+      //         const curve = Curves.ease;
 
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
+      //         var tween = Tween(begin: begin, end: end)
+      //             .chain(CurveTween(curve: curve));
 
-                return SlideTransition(
-                  position: animation.drive(tween),
-                  child: child,
-                );
-              },
-            ),
-          ),
-        ),
-      ],
+      //         return SlideTransition(
+      //           position: animation.drive(tween),
+      //           child: child,
+      //         );
+      //       },
+      //     ),
+      //   ),
+      // ),
+      // ],
     );
 
     return Scaffold(
@@ -90,13 +88,13 @@ class VacanciesSwitcherPage extends StatelessWidget {
   }
 
   Widget _buildCards(BuildContext context) {
-    final model = Provider.of<VacanciesSwitcherViewModel>(context);
+    final model = Provider.of<ResumesSwitcherViewModel>(context);
     final bool isLoading = model.isLoading;
-    final vacancyes = model.vacancies;
+    final resumes = model.resumes;
 
-    List<Widget> data = vacancyes.map((VacancyModel vacancy) {
-      return VacancySwitcherCard(
-          isFront: vacancyes.last == vacancy, vacancy: vacancy);
+    List<Widget> data = resumes.map((UserDataModel resume) {
+      return ResumeSwitcherCard(
+          isFront: resumes.last == resume, resume: resume);
     }).toList();
 
     if (isLoading) {

@@ -1,17 +1,17 @@
-import 'package:sisbi/domain/data_providers/card_user_data_provider.dart';
+import 'package:sisbi/domain/data_providers/card_employer_provider.dart';
 import 'package:sisbi/domain/data_providers/session_data_provider.dart';
 import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
-class CardEmployeeService {
-  final CardUserDataProvider _cardProvider = CardUserDataProvider();
+class CardEmployerService {
+  final CardEmployerDataProvider _cardProvider = CardEmployerDataProvider();
   final SessionDataProvider _sessionProvider = SessionDataProvider();
 
-  Future<List<VacancyModel>> getActualVacancyList(
+  Future<List<UserDataModel>> getActualResumeList(
       int page, FilterModel filter) async {
     String token = await _sessionProvider.getToken();
-    List<VacancyModel> cards =
+    List<UserDataModel> cards =
         await _cardProvider.getActualVacancyList(page, filter, token);
     return cards;
   }

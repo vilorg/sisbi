@@ -8,10 +8,10 @@ import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
-class CardUserDataProvider {
-  Future<List<VacancyModel>> getActualVacancyList(
+class CardEmployerDataProvider {
+  Future<List<UserDataModel>> getActualVacancyList(
       int page, FilterModel filter, String token) async {
-    String uriString = getVacancyUri + "?";
+    String uriString = getResumeUri + "?";
     List<String> params = [];
 
     if (filter.post != "") {
@@ -54,11 +54,11 @@ class CardUserDataProvider {
 
     List dirtyData = jsonDecode(response.body)["payload"];
 
-    List<VacancyModel> data = [];
+    List<UserDataModel> data = [];
 
     for (var i in dirtyData) {
-      VacancyModel vacancy = VacancyModel.fromMap(i);
-      data.add(vacancy);
+      UserDataModel user = UserDataModel.fromMap(i);
+      data.add(user);
     }
     return data;
   }
@@ -179,7 +179,7 @@ class CardUserDataProvider {
     // print(_decoded['surname'] as String);
 
     return UserDataModel(
-      id: _decoded['id'],
+      id: _decoded['id'] as int,
       firstName: _decoded['first_name'] as String,
       surname: _decoded['surname'] as String,
       avatar: _decoded['avatar'],

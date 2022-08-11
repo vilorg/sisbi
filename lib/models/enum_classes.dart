@@ -180,52 +180,52 @@ Education getEducationFromInt(int? edu) {
 enum DrivingLicence { A, B, C, D, E, BE, CE, DE, TM, DB }
 
 List<ObjectId> getTypeEmploymentsString() => const [
-      ObjectId(4, 'Полная занятость'),
-      ObjectId(3, 'Частичная занятость'),
-      ObjectId(2, 'Проектная работа'),
-      ObjectId(1, 'Стажировка'),
+      ObjectId(1, 'Полная занятость'),
+      ObjectId(2, 'Частичная занятость'),
+      ObjectId(3, 'Проектная работа'),
+      ObjectId(4, 'Стажировка'),
     ];
 
 ObjectId getTypeEmploymentFromInt(int i) {
   ObjectId ans = const ObjectId(0, "");
   switch (i) {
     case 0:
-      ans = const ObjectId(4, 'Полная занятость');
+      ans = const ObjectId(1, 'Полная занятость');
       break;
     case 1:
-      ans = const ObjectId(3, 'Частичная занятость');
+      ans = const ObjectId(2, 'Частичная занятость');
       break;
     case 2:
-      ans = const ObjectId(2, 'Проектная работа');
+      ans = const ObjectId(3, 'Проектная работа');
       break;
     case 3:
-      ans = const ObjectId(1, 'Стажировка');
+      ans = const ObjectId(4, 'Стажировка');
       break;
   }
   return ans;
 }
 
 List<ObjectId> getSchedulesString() => const [
-      ObjectId(4, 'Удаленная работа'),
-      ObjectId(3, 'Полный день'),
-      ObjectId(2, 'Гибкий график'),
-      ObjectId(1, 'Сменный график'),
+      ObjectId(1, 'Удаленная работа'),
+      ObjectId(2, 'Полный день'),
+      ObjectId(3, 'Сменный график'),
+      ObjectId(4, 'Гибкий график'),
     ];
 
 ObjectId getSchedulesFromInt(int i) {
   ObjectId ans = const ObjectId(0, "");
   switch (i) {
     case 0:
-      ans = const ObjectId(4, 'Удаленная работа');
+      ans = const ObjectId(1, 'Удаленная работа');
       break;
     case 1:
-      ans = const ObjectId(3, 'Полный день');
+      ans = const ObjectId(2, 'Полный день');
       break;
     case 2:
-      ans = const ObjectId(2, 'Гибкий график');
+      ans = const ObjectId(3, 'Сменный график');
       break;
     case 3:
-      ans = const ObjectId(1, 'Сменный график');
+      ans = const ObjectId(4, 'Гибкий график');
       break;
   }
   return ans;

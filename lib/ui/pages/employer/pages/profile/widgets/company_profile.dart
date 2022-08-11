@@ -5,8 +5,11 @@ import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/employer_data_model.dart';
+import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/create_vacancy_page.dart';
+import 'package:sisbi/ui/pages/employer/pages/profile/edit_vacancy_page.dart';
+import 'package:sisbi/ui/widgets/action_bottom.dart';
 
 import '../profile_employer_page.dart';
 
@@ -41,7 +44,47 @@ class CompanyProfile extends StatelessWidget {
     List<Widget> vacanciesWidgets = [];
 
     for (VacancyModel vacancy in vacancies) {
-      vacanciesWidgets.add(_VacancyPreview(vacancy: vacancy));
+      vacanciesWidgets.add(
+        _VacancyPreview(
+          vacancy: vacancy,
+          onTap: () => showModalBottomSheet(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(borderRadiusPage),
+              ),
+            ),
+            context: context,
+            builder: (_context) => ActionButton(
+              tiles: [
+                TileData(
+                  title: "Изменить вакансию",
+                  asset: "assets/icons/arrow_forward.svg",
+                  isRed: false,
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (c) => EditVacancyPage.create(vacancy, () {
+                          model.reload();
+                          Navigator.of(context).pop();
+                        }),
+                      ),
+                    );
+                  },
+                ),
+                TileData(
+                  title: "Удалить вакансию",
+                  asset: "assets/icons/trash.svg",
+                  isRed: true,
+                  onTap: () {
+                    model.deleteVacancy(vacancy.id);
+                    Navigator.of(_context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
       vacanciesWidgets.add(const Divider());
     }
 
@@ -109,9 +152,11 @@ class CompanyProfile extends StatelessWidget {
 
 class _VacancyPreview extends StatelessWidget {
   final VacancyModel vacancy;
+  final VoidCallback onTap;
   const _VacancyPreview({
     Key? key,
     required this.vacancy,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -245,7 +290,7 @@ class _VacancyPreview extends StatelessWidget {
             flex: 1,
             child: Center(
               child: GestureDetector(
-                onTap: () {},
+                onTap: onTap,
                 child: SvgPicture.asset("assets/icons/detail_button.svg"),
               ),
             ),

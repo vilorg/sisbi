@@ -3,7 +3,8 @@ import 'package:sisbi/domain/services/chat_service.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 
 class ChatViewModel extends ChangeNotifier {
-  ChatViewModel() {
+  final bool isEmployer;
+  ChatViewModel(this.isEmployer) {
     _init();
   }
 
@@ -18,7 +19,7 @@ class ChatViewModel extends ChangeNotifier {
 
   Future<void> _init() async {
     _token = await _service.getUserToken();
-    _chatList = await _service.getAllChats(_token);
+    _chatList = await _service.getAllChats(isEmployer, _token);
     _isLoading = false;
     try {
       notifyListeners();
@@ -31,7 +32,7 @@ class ChatViewModel extends ChangeNotifier {
     try {
       _isLoading = true;
       notifyListeners();
-      _chatList = await _service.getAllChats(_token);
+      _chatList = await _service.getAllChats(isEmployer, _token);
       _isLoading = false;
       notifyListeners();
     } catch (e) {

@@ -10,6 +10,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/vacancy_employer_service.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
+import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/widgets/about_employer_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/widgets/contacts_employer_page.dart';
 import 'package:sisbi/ui/widgets/profile/career_info.dart';
@@ -17,92 +18,30 @@ import 'package:sisbi/ui/widgets/profile/city_profile_page.dart';
 import 'package:sisbi/ui/widgets/select_wrap_card.dart';
 import 'package:sisbi/ui/widgets/wrap_cards.dart';
 
-class VacancyState {
-  final String pathAvatar;
-  final String title;
-  final ObjectId jobCategory;
-  final int coast;
-  final String description;
-  final ObjectId city;
-  final Expierence expierence;
-  final List<ObjectId> typeEmployments;
-  final List<ObjectId> schedules;
-  final String fullName;
-  final String phone;
-  final String email;
-
-  VacancyState({
-    this.pathAvatar = "",
-    this.title = "",
-    this.jobCategory = const ObjectId(0, ""),
-    this.coast = 0,
-    this.description = "",
-    this.city = const ObjectId(0, ""),
-    this.expierence = Expierence.notChosed,
-    this.typeEmployments = const [],
-    this.schedules = const [],
-    this.fullName = "",
-    this.phone = "",
-    this.email = "",
-  });
-
-  VacancyState copyWith({
-    String? pathAvatar,
-    String? title,
-    ObjectId? jobCategory,
-    int? coast,
-    String? description,
-    ObjectId? city,
-    Expierence? expierence,
-    List<ObjectId>? typeEmployments,
-    List<ObjectId>? schedules,
-    String? fullName,
-    String? phone,
-    String? email,
-  }) {
-    return VacancyState(
-      pathAvatar: pathAvatar ?? this.pathAvatar,
-      title: title ?? this.title,
-      jobCategory: jobCategory ?? this.jobCategory,
-      coast: coast ?? this.coast,
-      description: description ?? this.description,
-      city: city ?? this.city,
-      expierence: expierence ?? this.expierence,
-      typeEmployments: typeEmployments ?? this.typeEmployments,
-      schedules: schedules ?? this.schedules,
-      fullName: fullName ?? this.fullName,
-      phone: phone ?? this.phone,
-      email: email ?? this.email,
-    );
-  }
-
-  bool isFullData() {
-    bool val = true;
-    if (pathAvatar == "") val = false;
-    if (title == "") val = false;
-    if (jobCategory.id == 0) val = false;
-    if (coast == 0) val = false;
-    if (description == "") val = false;
-    if (city.id == 0) val = false;
-    if (expierence == Expierence.notChosed) val = false;
-    if (typeEmployments.isEmpty) val = false;
-    if (schedules.isEmpty) val = false;
-    if (fullName == "") val = false;
-    if (phone == "") val = false;
-    if (email == "") val = false;
-    return val;
-  }
-
-  @override
-  String toString() {
-    return 'VacancyState(pathAvatar: $pathAvatar, title: $title, jobCategory: $jobCategory, coast: $coast, description: $description, city: $city, expierence: $expierence, typeEmployments: $typeEmployments, schedules: $schedules, fullName: $fullName, phone: $phone, email: $email)';
-  }
-}
+import 'create_vacancy_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   final VoidCallback onPop;
+  final VacancyModel vacancy;
   final BuildContext _context;
-  _ViewModel(this._context, this.onPop);
+  _ViewModel(this._context, this.vacancy, this.onPop) {
+    _state = _state.copyWith(
+      title: vacancy.title,
+      city: ObjectId(vacancy.cityId, vacancy.cityName),
+      coast: vacancy.salary,
+      description: vacancy.description,
+      email: vacancy.email,
+      expierence: vacancy.experience,
+      fullName: vacancy.fullName,
+      jobCategory: ObjectId(vacancy.jobCategoryId, vacancy.jobCategoryName),
+      pathAvatar: vacancy.avatar,
+      phone: vacancy.phone,
+      schedules: vacancy.schedules,
+      typeEmployments: vacancy.typeEmployments,
+    );
+  }
+
+  bool get isNetworkAvatar => vacancy.avatar == _state.pathAvatar;
 
   VacancyState _state = VacancyState();
 
@@ -137,7 +76,7 @@ class _ViewModel extends ChangeNotifier {
     }
 
     try {
-      await _service.saveVacancy(state);
+      await _service.updateVacancy(vacancy.id, state, isNetworkAvatar);
       onPop();
       ScaffoldMessenger.of(_context).showSnackBar(
         SnackBar(
@@ -157,7 +96,7 @@ class _ViewModel extends ChangeNotifier {
         SnackBar(
           backgroundColor: colorAccentRed,
           content: Text(
-            "Заполните данные полностью!",
+            "Ошибка!",
             style: Theme.of(_context).textTheme.subtitle2!.copyWith(
                   color: colorTextContrast,
                   fontWeight: FontWeight.w600,
@@ -222,12 +161,13 @@ class _ViewModel extends ChangeNotifier {
   }
 }
 
-class CreateVacancyPage extends StatelessWidget {
-  const CreateVacancyPage({Key? key}) : super(key: key);
+class EditVacancyPage extends StatelessWidget {
+  const EditVacancyPage({Key? key}) : super(key: key);
 
-  static Widget create(VoidCallback onPop) => ChangeNotifierProvider(
-        create: ((context) => _ViewModel(context, onPop)),
-        child: const CreateVacancyPage(),
+  static Widget create(VacancyModel vacancy, VoidCallback onPop) =>
+      ChangeNotifierProvider(
+        create: ((context) => _ViewModel(context, vacancy, onPop)),
+        child: const EditVacancyPage(),
       );
 
   @override
@@ -235,6 +175,7 @@ class CreateVacancyPage extends StatelessWidget {
     final model = Provider.of<_ViewModel>(context);
     final state = model.state;
     final bool isLoading = model.isLoading;
+    final bool isNetworkAvatar = model.isNetworkAvatar;
 
     Widget avatar = Container(
       width: 132,
@@ -262,11 +203,17 @@ class CreateVacancyPage extends StatelessWidget {
     if (state.pathAvatar != "") {
       avatar = ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: Image.file(
-          File(state.pathAvatar),
-          width: 132,
-          height: 132,
-        ),
+        child: isNetworkAvatar
+            ? Image.network(
+                state.pathAvatar,
+                width: 132,
+                height: 132,
+              )
+            : Image.file(
+                File(state.pathAvatar),
+                width: 132,
+                height: 132,
+              ),
       );
     }
 
@@ -414,7 +361,10 @@ class CreateVacancyPage extends StatelessWidget {
                             .map((e) => e.value)
                             .toList(),
                         values: getTypeEmploymentsString()
-                            .map((e) => state.typeEmployments.contains(e))
+                            .map((e) => state.typeEmployments
+                                .map((e) => e.id)
+                                .toList()
+                                .contains(e.id))
                             .toList(),
                         setValue: (int i) {
                           ObjectId typeEmployment = getTypeEmploymentFromInt(i);
@@ -437,7 +387,10 @@ class CreateVacancyPage extends StatelessWidget {
                         variants:
                             getSchedulesString().map((e) => e.value).toList(),
                         values: getSchedulesString()
-                            .map((e) => state.schedules.contains(e))
+                            .map((e) => state.schedules
+                                .map((e) => e.id)
+                                .toList()
+                                .contains(e.id))
                             .toList(),
                         setValue: (int i) {
                           ObjectId schedule = getSchedulesFromInt(i);

@@ -24,6 +24,7 @@ class ChatPreviewModel {
   final String userAvatar;
   final String userPhone;
   final String userEmail;
+  final String vacancyTitle;
   ChatPreviewModel({
     required this.chatId,
     required this.vacancyId,
@@ -45,6 +46,7 @@ class ChatPreviewModel {
     required this.userAvatar,
     required this.userPhone,
     required this.userEmail,
+    required this.vacancyTitle,
   });
 
   ChatPreviewModel copyWith({
@@ -68,6 +70,7 @@ class ChatPreviewModel {
     String? userAvatar,
     String? userPhone,
     String? userEmail,
+    String? vacancyTitle,
   }) {
     return ChatPreviewModel(
       chatId: chatId ?? this.chatId,
@@ -91,6 +94,7 @@ class ChatPreviewModel {
       userAvatar: userAvatar ?? this.userAvatar,
       userPhone: userPhone ?? this.userPhone,
       userEmail: userEmail ?? this.userEmail,
+      vacancyTitle: vacancyTitle ?? this.vacancyTitle,
     );
   }
 
@@ -133,7 +137,7 @@ class ChatPreviewModel {
       vacancyId: map['vacancy']['id'] as int,
       employerName: map['employer']['name'] as String,
       employerAvatar: map['employer']['avatar'] as String,
-      employerEmail: map['employer']['email'] as String,
+      employerEmail: map['employer']['email'] ?? "",
       employerPhone: map['employer']['phone'] as String,
       lastMessage: map['last_message']['content'] as String,
       lastMessageSenAt: dateTime,
@@ -149,6 +153,7 @@ class ChatPreviewModel {
       userAvatar: map['user']['avatar'] as String,
       userPhone: map['user']['phone'] as String,
       userEmail: map['user']['email'] ?? "",
+      vacancyTitle: map['vacancy']['title'] as String,
     );
   }
 
@@ -159,7 +164,7 @@ class ChatPreviewModel {
 
   @override
   String toString() {
-    return 'ChatPreviewModel(id: $chatId, employerName: $employerName, employerAvatar: $employerAvatar, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar)';
+    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, vacancyTitle: $vacancyTitle)';
   }
 
   @override

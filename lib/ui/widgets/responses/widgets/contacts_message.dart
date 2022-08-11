@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 
-class ContactssMessage extends StatelessWidget {
-  const ContactssMessage({
+class ContactsMessage extends StatelessWidget {
+  const ContactsMessage({
     Key? key,
     required this.chat,
     required this.isUser,
@@ -35,7 +35,7 @@ class ContactssMessage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: defaultPadding),
-          Text(
+          SelectableText(
             _name,
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: FontWeight.w700,

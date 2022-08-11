@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/profile_employer_page.dart';
+import 'package:sisbi/ui/widgets/responses/chat_page.dart';
+
+import 'pages/resume/resumes_switcher_page.dart';
 
 class _ViewModelState {
   final int selectedIndex;
@@ -23,6 +27,9 @@ class _ViewModel extends ChangeNotifier {
   _ViewModelState _state = _ViewModelState();
   _ViewModelState get state => _state;
 
+  String _token = "";
+  String get token => _token;
+
   void setSelectedIndex(int index) {
     _state = _state.copyWith(selectedIndex: index);
     notifyListeners();
@@ -40,19 +47,28 @@ class HomeEmployerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var model = context.read<_ViewModel>();
+    final Duration timeDifference =
+        DateTime.now().timeZoneOffset - const Duration(hours: 3);
     var state = context.select((_ViewModel model) => model.state);
 
     int selectedIndex = state.selectedIndex;
 
     List<Widget> pages = [
+      ResumesSwitcherPage.create(),
       Scaffold(appBar: AppBar()),
-      Scaffold(appBar: AppBar()),
-      Scaffold(appBar: AppBar()),
+      ChatPage.create(true),
       ProfileEmployerPage.create(),
     ];
 
     return Scaffold(
-      body: pages[selectedIndex],
+      body: HomeInheritedWidget(
+        child: pages[selectedIndex],
+        size: MediaQuery.of(context).size,
+        verticalPadding: MediaQuery.of(context).padding.vertical,
+        isEmployer: true,
+        timeDifference: timeDifference,
+        token: model.token,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         onTap: model.setSelectedIndex,

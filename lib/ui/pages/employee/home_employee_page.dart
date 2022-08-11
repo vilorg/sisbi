@@ -6,9 +6,9 @@ import 'package:sisbi/domain/services/auth_service.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/favourite/favourite_vacancy_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/profile_user_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/chat_page.dart';
 
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancies_switcher_page.dart';
+import 'package:sisbi/ui/widgets/responses/chat_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   int _selectedIndex = 0;
@@ -50,9 +50,9 @@ class HomeEmployeePage extends StatelessWidget {
     int selectedIndex = model.selectedIndex;
 
     List<Widget> pages = [
-      CardsSwitcherPage.create(),
+      VacanciesSwitcherPage.create(),
       FavouriteVacancyPage.create(),
-      ChatPage.create(),
+      ChatPage.create(false),
       ProfileUserPage.create(),
     ];
 

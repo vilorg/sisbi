@@ -40,7 +40,7 @@ class WrapVacancyCards extends StatelessWidget {
     List<ObjectId> _userSchedules =
         isAvaibleIsSelect ? userData!.schedules : [];
 
-    for (String i in vacancy.schedules) {
+    for (String i in vacancy.schedules.map((e) => e.value).toList()) {
       var key = false;
       for (var j in _userSchedules) {
         if (j.value == i) {

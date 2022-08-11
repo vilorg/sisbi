@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
@@ -104,6 +103,7 @@ class _ContactsEmployerPageState extends State<ContactsEmployerPage> {
                       controller: fullNameController,
                       decoration: const InputDecoration(hintText: "ФИО"),
                       style: Theme.of(context).textTheme.bodyText1,
+                      onChanged: (s) => setState(() {}),
                     ),
                     const SizedBox(height: defaultPadding),
                     TextField(
@@ -142,6 +142,7 @@ class _ContactsEmployerPageState extends State<ContactsEmployerPage> {
                       style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             color: colorText,
                           ),
+                      onChanged: (s) => setState(() {}),
                     ),
                     const SizedBox(height: defaultPadding),
                     TextField(
@@ -150,6 +151,7 @@ class _ContactsEmployerPageState extends State<ContactsEmployerPage> {
                           const InputDecoration(hintText: "Email-адрес"),
                       style: Theme.of(context).textTheme.bodyText1,
                       keyboardType: TextInputType.emailAddress,
+                      onChanged: (s) => setState(() {}),
                     ),
                   ],
                 ),

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 import 'package:sisbi/models/enum_classes.dart';
+import 'package:sisbi/models/object_id.dart';
 
 class VacancyModel {
   final int id;
@@ -17,8 +18,8 @@ class VacancyModel {
   final int salary;
   final String jobCategoryName;
   final int jobCategoryId;
-  final List<String> schedules;
-  final List<String> typeEmployments;
+  final List<ObjectId> schedules;
+  final List<ObjectId> typeEmployments;
   final int employerId;
   final String employerName;
   final String employerAvatar;
@@ -74,8 +75,8 @@ class VacancyModel {
     int? salary,
     String? jobCategoryName,
     int? jobCategoryId,
-    List<String>? schedules,
-    List<String>? typeEmployments,
+    List<ObjectId>? schedules,
+    List<ObjectId>? typeEmployments,
     int? employerId,
     String? employerName,
     String? employerAvatar,
@@ -121,15 +122,15 @@ class VacancyModel {
   }
 
   factory VacancyModel.fromMap(Map<String, dynamic> json) {
-    List<String> schedules = [];
+    List<ObjectId> schedules = [];
     for (var i in json['schedules']) {
-      schedules.add(i['name'] as String);
+      schedules.add(ObjectId(i['id'] as int, i['name'] as String));
       //hellojhbk hbh
     }
 
-    List<String> typeEmployments = [];
+    List<ObjectId> typeEmployments = [];
     for (var i in json['type_employments']) {
-      typeEmployments.add(i['name'] as String);
+      typeEmployments.add(ObjectId(i['id'] as int, i['name'] as String));
     }
 
     return VacancyModel(

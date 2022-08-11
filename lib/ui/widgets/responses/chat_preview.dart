@@ -29,6 +29,7 @@ class ChatPreview extends StatelessWidget {
         ? model.seenAt!
         : model.lastMessageSenAt
             .add(HomeInheritedWidget.of(context)!.timeDifference);
+
     String dateTimeText = "";
     if (isUser != model.isEmployerLastMessage) {
       if (dateTime.year == now.year &&
@@ -53,6 +54,7 @@ class ChatPreview extends StatelessWidget {
       dateTimeText =
           "${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year.toString().padLeft(2, '0')}";
     }
+
     String statusText = "";
     if (isUser != model.isEmployerLastMessage) {
       if (model.isSeen) {
@@ -73,6 +75,10 @@ class ChatPreview extends StatelessWidget {
             ? SvgPicture.asset("assets/icons/delivered.svg")
             : const SizedBox();
 
+    String avatarString = isUser ? model.employerAvatar : model.userAvatar;
+    Widget avatar = Image.asset("assets/images/avatar.png");
+    if (avatarString.isNotEmpty) avatar = Image.network(avatarString);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -91,8 +97,7 @@ class ChatPreview extends StatelessWidget {
                       height: 20,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(defaultPadding),
-                        child: Image.network(
-                            isUser ? model.employerAvatar : model.userAvatar),
+                        child: avatar,
                       ),
                     ),
                     const SizedBox(width: defaultPadding),

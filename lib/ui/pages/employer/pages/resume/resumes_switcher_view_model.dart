@@ -2,34 +2,33 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/domain/services/card_employee_service.dart';
+import 'package:sisbi/domain/services/card_employer_service.dart';
 import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 
-import 'widgets/respond_vacancy_bottom_sheet.dart';
-import 'widgets/show_contacts_vacancy.dart';
+import 'widgets/respond_resume_bottom_sheet.dart';
+import 'widgets/show_contacts_resume.dart';
 
 enum _CardStatus { like, dislike }
 
-class VacanciesSwitcherViewModel extends ChangeNotifier {
-  VacanciesSwitcherViewModel(this.context) {
+class ResumesSwitcherViewModel extends ChangeNotifier {
+  ResumesSwitcherViewModel(this.context) {
     resetCards();
   }
 
   final BuildContext context;
-  final CardEmployeeService _cardService = CardEmployeeService();
+  final CardEmployerService _cardService = CardEmployerService();
 
-  List<VacancyModel> _vacancies = [];
-  List<VacancyModel> get vacancies => _vacancies;
+  List<UserDataModel> _resumes = [];
+  List<UserDataModel> get resumes => _resumes;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
   int _page = 1;
 
-  VacancyModel? _lastVacancy;
+  UserDataModel? _lastVacancy;
   FilterModel _filter = FilterModel.deffault();
   FilterModel get filter => _filter;
 
@@ -122,7 +121,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
 
   Future starVacancy() async {
     String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.starVacancy(token, vacancies.last.id);
+    await _cardService.starVacancy(token, resumes.last.id);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: colorAccentDarkBlue,
@@ -143,18 +142,18 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future _nextCard() async {
-    if (_vacancies.isEmpty) return;
+    if (_resumes.isEmpty) return;
 
     await Future.delayed(const Duration(milliseconds: 200));
-    _lastVacancy = _vacancies.last;
-    _vacancies.removeLast();
+    _lastVacancy = _resumes.last;
+    _resumes.removeLast();
     resetPosition();
-    if (_vacancies.length == 1) await _loadMoreVacancies();
+    if (_resumes.length == 1) await _loadMoreVacancies();
   }
 
   Future resetLast() async {
     if (_lastVacancy == null) return;
-    _vacancies.add(_lastVacancy!);
+    _resumes.add(_lastVacancy!);
     _lastVacancy = null;
     resetPosition();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -172,6 +171,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
+    print(123);
     _isLoading = true;
     try {
       _userData = await _cardService.getUserGraph();
@@ -185,37 +185,37 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
       );
       await resetCards();
     } catch (e) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        NameRoutes.login,
-        (route) => false,
-      );
+      print(e);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //   NameRoutes.login,
+      //   (route) => false,
+      // );
     }
   }
 
   Future<void> resetCards() async {
-    try {
-      _vacancies = (await _cardService.getActualVacancyList(_page, _filter))
-          .reversed
-          .toList();
-      _isLoading = false;
-    } catch (e) {
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
-    }
+    // try {
+    _resumes = (await _cardService.getActualResumeList(_page, _filter))
+        .reversed
+        .toList();
+    _isLoading = false;
+    // } catch (e) {
+    // Navigator.of(context)
+    //     .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
+    // }
     try {
       notifyListeners();
     } catch (e) {
-      _vacancies = [];
+      _resumes = [];
     }
   }
 
   Future<void> _loadMoreVacancies() async {
     _page += 1;
     try {
-      _vacancies.addAll(
-          (await _cardService.getActualVacancyList(_page, _filter))
-              .reversed
-              .toList());
+      _resumes.addAll((await _cardService.getActualResumeList(_page, _filter))
+          .reversed
+          .toList());
       _isLoading = false;
     } catch (e) {
       Navigator.of(context)
@@ -224,7 +224,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     try {
       notifyListeners();
     } catch (e) {
-      _vacancies = [];
+      _resumes = [];
     }
   }
 
@@ -234,7 +234,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
             borderRadius:
                 BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
         context: context,
-        builder: (context) => ShowContactsVacancy(vacancy: vacancies.last));
+        builder: (context) => ShowContactsResume(resume: resumes.last));
   }
 
   void trySendMessage() {
@@ -244,13 +244,13 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
                 BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
         context: context,
         isScrollControlled: true,
-        builder: (context) => RespondVacancyBottomSheet(
-            vacancy: vacancies.last, sendMessage: sendMessage));
+        builder: (context) => RespondResumeBottomSheet(
+            resume: resumes.last, sendMessage: sendMessage));
   }
 
   Future<void> sendMessage(BuildContext curContext, String text) async {
     String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.respondVacancy(token, vacancies.last.id, text);
+    await _cardService.respondVacancy(token, resumes.last.id, text);
     Navigator.pop(curContext);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -274,8 +274,8 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         context: context,
         isScrollControlled: true,
         builder: (context) {
-          return RespondVacancyBottomSheet(
-              vacancy: vacancies.last, sendMessage: sendMessage);
+          return RespondResumeBottomSheet(
+              resume: resumes.last, sendMessage: sendMessage);
         });
   }
 }

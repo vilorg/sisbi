@@ -1,9 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+
 import 'package:sisbi/models/object_id.dart';
 
 import 'enum_classes.dart';
 
 class UserDataModel {
+  final int id;
   final String firstName;
   final String surname;
   final bool isMale;
@@ -24,7 +29,10 @@ class UserDataModel {
   final List<String> skills;
   final bool readyMission;
   final bool readyMove;
+  final String about;
+  final String createdAt;
   UserDataModel({
+    required this.id,
     required this.firstName,
     required this.surname,
     required this.isMale,
@@ -45,9 +53,12 @@ class UserDataModel {
     required this.skills,
     required this.readyMission,
     required this.readyMove,
+    required this.about,
+    required this.createdAt,
   });
 
   UserDataModel copyWith({
+    int? id,
     String? firstName,
     String? surname,
     bool? isMale,
@@ -68,8 +79,11 @@ class UserDataModel {
     List<String>? skills,
     bool? readyMission,
     bool? readyMove,
+    String? about,
+    String? createdAt,
   }) {
     return UserDataModel(
+      id: id ?? this.id,
       firstName: firstName ?? this.firstName,
       surname: surname ?? this.surname,
       isMale: isMale ?? this.isMale,
@@ -90,15 +104,18 @@ class UserDataModel {
       skills: skills ?? this.skills,
       readyMission: readyMission ?? this.readyMission,
       readyMove: readyMove ?? this.readyMove,
+      about: about ?? this.about,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
   @override
   String toString() {
-    return 'UserDataModel(firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove)';
+    return 'UserDataModel(id: $id, firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove, about: $about, createdAt: $createdAt)';
   }
 
   static UserDataModel deffault() => UserDataModel(
+        id: 0,
         firstName: "",
         surname: "",
         email: "",
@@ -113,11 +130,145 @@ class UserDataModel {
         schedules: [],
         typeEmployments: [],
         education: Education.secondary,
-        region: ObjectId(0, ""),
-        jobCategory: ObjectId(0, ""),
+        region: const ObjectId(0, ""),
+        jobCategory: const ObjectId(0, ""),
         post: "",
         coast: 0,
         readyMission: false,
         readyMove: false,
+        about: "",
+        createdAt: "",
       );
+
+  factory UserDataModel.fromMap(Map<String, dynamic> map) {
+    List<String> birthdayList = map['birthday'].split('.');
+    DateTime birthday;
+    if (birthdayList.length == 1) {
+      birthday = DateTime.now();
+    } else {
+      birthday = DateTime(int.parse(birthdayList[2]),
+          int.parse(birthdayList[1]), int.parse(birthdayList[0]));
+    }
+
+    ObjectId jobCategory = const ObjectId(0, "");
+    if (map[''] != null) {
+      jobCategory =
+          ObjectId(map['job_category']['id'], map['job_category']['name']);
+    }
+
+    ObjectId city = const ObjectId(0, "");
+    if (map['city'] != null) {
+      city = ObjectId(map['city']['id'] as int, map['city']['name'] as String);
+    }
+
+    final String drivingLicenceString = map['driving_license'];
+    List<String> drivingLicenceList = [];
+    List<DrivingLicence> drivingLicence = [];
+
+    if (drivingLicenceString.isNotEmpty) {
+      drivingLicenceList = drivingLicenceString.split(" ");
+    }
+
+    for (String licence in drivingLicenceList) {
+      drivingLicence.add(DrivingLicence.values.firstWhere(
+          (element) => element.toString() == "DrivingLicence." + licence));
+    }
+
+    final String education = map['education'];
+    final String experience = map["experience"];
+    final String skills = map["skills"];
+
+    final List schedulesDatas = map["schedules"];
+    final List typeEmploymentsDatas = map["type_employments"];
+    List<ObjectId> schedules = [];
+    for (var i in schedulesDatas) {
+      schedules.add(ObjectId(i["id"] as int, i["name"] as String));
+    }
+
+    List<ObjectId> typeEmployments = [];
+    for (var i in typeEmploymentsDatas) {
+      typeEmployments.add(ObjectId(i["id"] as int, i["name"] as String));
+    }
+
+    return UserDataModel(
+      id: map['id'] as int,
+      firstName: map['first_name'] as String,
+      surname: map['surname'] as String,
+      isMale: map['gender'] as String == "male",
+      avatar: map['avatar'] as String,
+      birthday: birthday,
+      coast: map['min_salary'] ?? 0,
+      phone: map['phone'] as String,
+      email: map['email'] ?? "",
+      jobCategory: jobCategory,
+      region: city,
+      post: skills,
+      drivingLicence: drivingLicence,
+      education: Education.values.firstWhere(
+          (element) => element.toString() == "Education." + education),
+      previusJob: map['previous_job'] as String,
+      experience: Expierence.values
+          .firstWhere((e) => e.toString() == "Expierence." + experience),
+      schedules: schedules,
+      typeEmployments: typeEmployments,
+      skills: (map['skills'] as String).split(" "),
+      readyMission: map['ready_mission'] as bool,
+      readyMove: map['ready_move'] as bool,
+      about: map['about'] ?? "",
+      createdAt: map['created_at'] as String,
+    );
+  }
+
+  factory UserDataModel.fromJson(String source) =>
+      UserDataModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  bool operator ==(covariant UserDataModel other) {
+    if (identical(this, other)) return true;
+
+    return other.firstName == firstName &&
+        other.surname == surname &&
+        other.isMale == isMale &&
+        other.avatar == avatar &&
+        other.birthday == birthday &&
+        other.coast == coast &&
+        other.phone == phone &&
+        other.email == email &&
+        other.jobCategory == jobCategory &&
+        other.region == region &&
+        other.post == post &&
+        listEquals(other.drivingLicence, drivingLicence) &&
+        other.education == education &&
+        other.previusJob == previusJob &&
+        other.experience == experience &&
+        listEquals(other.schedules, schedules) &&
+        listEquals(other.typeEmployments, typeEmployments) &&
+        listEquals(other.skills, skills) &&
+        other.readyMission == readyMission &&
+        other.readyMove == readyMove;
+  }
+
+  @override
+  int get hashCode {
+    return firstName.hashCode ^
+        surname.hashCode ^
+        isMale.hashCode ^
+        avatar.hashCode ^
+        birthday.hashCode ^
+        coast.hashCode ^
+        phone.hashCode ^
+        email.hashCode ^
+        jobCategory.hashCode ^
+        region.hashCode ^
+        post.hashCode ^
+        drivingLicence.hashCode ^
+        education.hashCode ^
+        previusJob.hashCode ^
+        experience.hashCode ^
+        schedules.hashCode ^
+        typeEmployments.hashCode ^
+        skills.hashCode ^
+        readyMission.hashCode ^
+        readyMove.hashCode;
+  }
 }

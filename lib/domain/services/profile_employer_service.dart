@@ -26,5 +26,8 @@ class ProfileEmployerService {
   Future<List<VacancyModel>> getEmployerVacancies(String token) async =>
       await _vacancyData.getEmployerVacancies(token);
 
+  Future<void> deleteVacancy(int chatId, String token) async =>
+      await _vacancyData.deleteVacancy(chatId, token);
+
   Future<void> logout() async => await _session.logout();
 }

@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/chat_view_model.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/dialog_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/widgets/chat_preview.dart';
+import 'package:sisbi/ui/widgets/responses/chat_preview.dart';
 
-// import 'widgets/header_responses_employee.dart';
+import 'chat_view_model.dart';
+import 'dialog_page.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
 
-  static Widget create() => ChangeNotifierProvider(
-        create: (context) => ChatViewModel(),
+  static Widget create(bool isEmployer) => ChangeNotifierProvider(
+        create: (context) => ChatViewModel(isEmployer),
         child: const ChatPage(),
       );
 
@@ -64,7 +62,7 @@ class ChatPage extends StatelessWidget {
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
         title: Text(
-          "Мои отклики",
+          "Сообщения",
           style: Theme.of(context).textTheme.headline3!.copyWith(
                 color: colorTextContrast,
               ),

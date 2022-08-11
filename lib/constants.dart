@@ -74,12 +74,15 @@ const String getAddTypeEmploymentsUri = baseUri + "user/add_type_employments";
 const String getRemoveTypeEmploymentsUri =
     baseUri + "user/remove_type_employments";
 const String getVacancyUri = baseUri + "vacancies";
+const String getResumeUri = baseUri + "employer/users";
 const String getFavouriteVacancyUri = baseUri + "favorite_vacancies";
 const String respondVacancyUri = baseUri + "responses";
 const String getCitiesUri = baseUri + "cities?page=1";
 const String getJobCategoriesUri = baseUri + "job_categories";
-const String getAllChatsUri = baseUri + "chats";
-const String getMessagesUri = baseUri + "messages";
+const String getAllChatsEmployeeUri = baseUri + "chats";
+const String getAllChatsEmployerUri = baseUri + "employer/chats";
+const String getMessagesEmployeeUri = baseUri + "messages";
+const String getMessagesEmployerUri = baseUri + "employer/messages";
 const String getCityUri = baseUri + "cities?page=1";
 const String getNameVacancyUri = baseUri + "name_vacancies?page=1";
 

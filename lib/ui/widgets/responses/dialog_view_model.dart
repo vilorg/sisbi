@@ -6,8 +6,9 @@ import 'package:sisbi/domain/services/chat_service.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
 import 'package:intl/intl.dart';
-import 'package:sisbi/ui/pages/employee/pages/responses/widgets/actions_message.dart';
 import 'package:web_socket_channel/io.dart';
+
+import 'widgets/actions_message.dart';
 
 class DialogViewModel extends ChangeNotifier {
   final BuildContext _context;
@@ -53,7 +54,7 @@ class DialogViewModel extends ChangeNotifier {
         {"channel": "ChatChannel", "chat_id": "$_chatId"},
       ),
     });
-    _messages = await _service.getMessages(_token!, _chatId, _page);
+    _messages = await _service.getMessages(_token!, !isUser, _chatId, _page);
     _page += 1;
     _isLoading = false;
     try {
@@ -105,7 +106,7 @@ class DialogViewModel extends ChangeNotifier {
       ),
     );
     List<MessageModel> _loadedMessage =
-        await _service.getMessages(_token!, _chatId, _page);
+        await _service.getMessages(_token!, !isUser, _chatId, _page);
     if (_loadedMessage.isEmpty) {
       _endPage = true;
       _isLoadingMore = false;
@@ -139,7 +140,7 @@ class DialogViewModel extends ChangeNotifier {
 
   void sendMessage(String message) async {
     if (_textController.text == "") return;
-    await _service.sendMessage(_token!, _chatId, message);
+    await _service.sendMessage(_token!, !isUser, _chatId, message);
     _textController.text = "";
     scrollController.animateTo(0,
         duration: const Duration(milliseconds: 300), curve: Curves.bounceInOut);

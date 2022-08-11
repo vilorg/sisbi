@@ -3,7 +3,7 @@ import 'package:sisbi/models/object_id.dart';
 
 import 'enum_classes.dart';
 
-class FilterVacancyModel {
+class FilterModel {
   final String post;
   final ObjectId region;
   final int coast;
@@ -12,7 +12,7 @@ class FilterVacancyModel {
   final List<ObjectId> typeEmployments;
   final List<ObjectId> schedules;
 
-  FilterVacancyModel({
+  FilterModel({
     required this.post,
     required this.region,
     required this.coast,
@@ -22,7 +22,7 @@ class FilterVacancyModel {
     required this.schedules,
   });
 
-  FilterVacancyModel copyWith({
+  FilterModel copyWith({
     String? post,
     ObjectId? region,
     int? coast,
@@ -31,7 +31,7 @@ class FilterVacancyModel {
     List<ObjectId>? typeEmployments,
     List<ObjectId>? schedules,
   }) {
-    return FilterVacancyModel(
+    return FilterModel(
       post: post ?? this.post,
       region: region ?? this.region,
       coast: coast ?? this.coast,
@@ -59,12 +59,12 @@ class FilterVacancyModel {
     return _count;
   }
 
-  static FilterVacancyModel deffault() => FilterVacancyModel(
+  static FilterModel deffault() => FilterModel(
       coast: 0,
       expierence: Expierence.notChosed,
       jobCategory: [],
       post: "",
-      region: ObjectId(0, ""),
+      region: const ObjectId(0, ""),
       schedules: [],
       typeEmployments: []);
 }
