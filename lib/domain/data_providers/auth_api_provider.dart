@@ -99,6 +99,20 @@ class AuthApiProvider {
     return token;
   }
 
+  Future<List<String>> getPosts(String s) async {
+    Uri uri = Uri.parse(getNameVacancyUri + "&q[name_cont]=$s");
+    var response = await http.get(uri);
+    if (response.statusCode != 200) throw Exception();
+    List<String> result = [];
+    var _decoded = jsonDecode(response.body)['payload'];
+
+    for (var post in _decoded) {
+      result.add(post['name']);
+    }
+
+    return result;
+  }
+
   Future<void> saveUser(
     String token,
     bool isUser,
@@ -125,6 +139,7 @@ class AuthApiProvider {
                   "birthday": DateFormat("dd.MM.yyyy").format(birthDay),
                   "gender": isMale ? "male" : "female",
                   "experience": experience,
+                  "email": email,
                 }
               })
             : jsonEncode({

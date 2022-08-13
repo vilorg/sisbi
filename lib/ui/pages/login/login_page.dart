@@ -155,10 +155,8 @@ class _RegisterButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                colorButtonSecondary,
-              ),
-            ),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(colorAccentDarkBlue)),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => RegisterPage.create(),
@@ -169,7 +167,7 @@ class _RegisterButton extends StatelessWidget {
           child: Text(
             'Создать аккаунт',
             style: Theme.of(context).textTheme.button!.copyWith(
-                  color: colorTextSecondary,
+                  color: colorTextContrast,
                   fontWeight: FontWeight.w600,
                 ),
           ),

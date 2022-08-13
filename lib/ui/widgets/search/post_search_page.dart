@@ -4,12 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/domain/services/auth_service.dart';
 
 import 'search_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   final SearchViewModel model;
   final BuildContext context;
+  final AuthService _service = AuthService();
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   List<String> _dataList = [];
   List<String> get dataList => _dataList;
@@ -19,13 +24,18 @@ class _ViewModel extends ChangeNotifier {
   _ViewModel(this.context, this.model);
 
   void onChanged(String s) async {
-    if (s == "") {
-      _dataList = [];
-      notifyListeners();
-      return;
-    }
-    _dataList = [s];
+    _isLoading = true;
     notifyListeners();
+    _dataList = await _service.getPosts(s);
+    _isLoading = false;
+    notifyListeners();
+    // if (s == "") {
+    //   _dataList = [];
+    //   notifyListeners();
+    //   return;
+    // }
+    // _dataList = [s];
+    // notifyListeners();
   }
 
   void onTap(String value) {
@@ -45,6 +55,7 @@ class PostSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<_ViewModel>(context);
+    final isLoading = model.isLoading;
     final List<String> dataList = model.dataList;
     final TextEditingController controller = model.controller;
 
@@ -103,6 +114,7 @@ class PostSearchPage extends StatelessWidget {
             ),
             Expanded(
               child: Container(
+                width: double.infinity,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(
                       top: Radius.circular(borderRadiusPage)),
@@ -124,39 +136,53 @@ class PostSearchPage extends StatelessWidget {
                     Expanded(
                       child: Material(
                         color: Colors.transparent,
-                        child: ListView.builder(
-                          itemCount: dataList.length,
-                          itemBuilder: (context, index) {
-                            var text = dataList[index];
-
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(defaultPadding),
-                                    child: Container(
-                                      width: 10,
-                                      height: 10,
-                                      color: colorAccentDarkBlue,
-                                    ),
-                                  ),
-                                  const SizedBox(width: defaultPadding / 2),
-                                  Text(
-                                    text,
+                        child: isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                    color: colorAccentDarkBlue),
+                              )
+                            : dataList.isEmpty
+                                ? Text(
+                                    "Ничего не найдено...",
                                     style:
                                         Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.start,
+                                  )
+                                : ListView.builder(
+                                    itemCount: dataList.length,
+                                    itemBuilder: (context, index) {
+                                      var text = dataList[index];
+
+                                      return ListTile(
+                                        contentPadding: EdgeInsets.zero,
+                                        title: Row(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      defaultPadding),
+                                              child: Container(
+                                                width: 10,
+                                                height: 10,
+                                                color: colorAccentDarkBlue,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                                width: defaultPadding / 2),
+                                            Text(
+                                              text,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1,
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          model.onTap(dataList[index]);
+                                        },
+                                      );
+                                    },
                                   ),
-                                ],
-                              ),
-                              onTap: () {
-                                model.onTap(dataList[index]);
-                              },
-                            );
-                          },
-                        ),
                       ),
                     ),
                   ],

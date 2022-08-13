@@ -11,7 +11,6 @@ import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_m
 import 'package:sisbi/ui/pages/employer/pages/resume/resumes_switcher_view_model.dart';
 import 'package:sisbi/ui/widgets/search/post_search_page.dart';
 import 'package:sisbi/ui/widgets/select_wrap_card.dart';
-import 'package:sisbi/ui/widgets/wrap_cards.dart';
 
 import 'coast_search_page.dart';
 import 'region_search_page.dart';
@@ -235,7 +234,7 @@ class SearchPage extends StatelessWidget {
                           PageRouteBuilder(
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    CoastSearchPage.create(model),
+                                    CoastSearchPage(model: model),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);

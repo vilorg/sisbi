@@ -99,7 +99,39 @@ class RegisterViewModel extends ChangeNotifier {
 
   _ViewModelState get state => _state;
 
+  List<String> _posts = [];
+  List<String> get posts => _posts;
+  TextEditingController postController = TextEditingController();
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+  bool _isSelected = true;
+  bool get isSelected => _isSelected;
+  set setSelect(bool isSelect) => _isSelected = isSelect;
+
+  Future<void> updatePosts(String s) async {
+    _isLoading = true;
+    notifyListeners();
+    _posts = await _authService.getPosts(s);
+    _isLoading = false;
+    notifyListeners();
+  }
+
   void nextPage() {
+    if (_state.isUser && _state.selectedIndex == 7 && _isSelected) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Заполните должность!",
+            style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+      return;
+    }
     _state = _state.copyWith(
         lastIndex: _state.selectedIndex,
         selectedIndex: _state.selectedIndex + 1);
@@ -238,8 +270,25 @@ class RegisterViewModel extends ChangeNotifier {
     _state = _state.copyWith(birthDay: value);
   }
 
+  // void setSkills(String value) {
+  //   _state = _state.copyWith(skills: value);
+  //   notifyListeners();
+  //   updatePosts();
+  // }
+
+  void onSkillsTap() {
+    if (!_isSelected) {
+      _isSelected = true;
+      notifyListeners();
+      postController.text = "";
+      updatePosts("");
+    }
+  }
+
   void setSkills(String value) {
     _state = _state.copyWith(skills: value);
+    postController.text = value;
+    _isSelected = false;
     notifyListeners();
   }
 
