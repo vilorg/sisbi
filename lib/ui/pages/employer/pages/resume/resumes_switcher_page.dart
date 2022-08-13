@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
+import 'package:sisbi/ui/widgets/search/search_page.dart';
 
 import 'resume_switcher_card.dart';
 import 'resumes_switcher_view_model.dart';
@@ -46,31 +48,31 @@ class ResumesSwitcherPage extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      // actions: [
-      // IconButton(
-      //   icon: SvgPicture.asset("assets/icons/search.svg"),
-      //   onPressed: () => Navigator.of(context).push(
-      //     PageRouteBuilder(
-      //       pageBuilder: (context, animation, secondaryAnimation) =>
-      //           SearchVacancyPage.create(model),
-      //       transitionsBuilder:
-      //           (context, animation, secondaryAnimation, child) {
-      //         const begin = Offset(1.0, 0.0);
-      //         const end = Offset.zero;
-      //         const curve = Curves.ease;
+      actions: [
+        IconButton(
+          icon: SvgPicture.asset("assets/icons/search.svg"),
+          onPressed: () => Navigator.of(context).push(
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  SearchPage.create(null, model),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                const begin = Offset(1.0, 0.0);
+                const end = Offset.zero;
+                const curve = Curves.ease;
 
-      //         var tween = Tween(begin: begin, end: end)
-      //             .chain(CurveTween(curve: curve));
+                var tween = Tween(begin: begin, end: end)
+                    .chain(CurveTween(curve: curve));
 
-      //         return SlideTransition(
-      //           position: animation.drive(tween),
-      //           child: child,
-      //         );
-      //       },
-      //     ),
-      //   ),
-      // ),
-      // ],
+                return SlideTransition(
+                  position: animation.drive(tween),
+                  child: child,
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
 
     return Scaffold(

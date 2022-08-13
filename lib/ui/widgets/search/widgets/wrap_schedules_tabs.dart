@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/enum_classes.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
+import 'package:sisbi/models/object_id.dart';
+import 'package:sisbi/ui/widgets/search/search_page.dart';
 
-class WrapExpierenceTabs extends StatelessWidget {
-  const WrapExpierenceTabs({
+class WrapSchedulesTabs extends StatelessWidget {
+  const WrapSchedulesTabs({
     Key? key,
     required this.model,
   }) : super(key: key);
-  
 
   final SearchViewModel model;
 
   @override
   Widget build(BuildContext context) {
-    Expierence expierence = model.filter.expierence;
+    final List<ObjectId> data = model.filter.schedules;
+    List<bool> values = [false, false, false, false];
+    List<String> titles = [
+      "Удаленная работа",
+      "Полный день",
+      "Гибкий график",
+      "Сменный график"
+    ];
+
+    for (int i = 0; i < titles.length; i++) {
+      for (var j in data) {
+        if (j.id == i) {
+          values[i] = true;
+          break;
+        }
+      }
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: defaultPadding),
           child: Text(
-            "Опыт работы",
+            "График работы",
             style: Theme.of(context).textTheme.subtitle2!.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -37,24 +53,20 @@ class WrapExpierenceTabs extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               GestureDetector(
-                onTap: () => model.setExpierence(Expierence.no),
-                child: _buildWrapCard(
-                    context, "Нет опыта", expierence == Expierence.no),
+                onTap: () => model.setSchedules(ObjectId(0, titles[0])),
+                child: _buildWrapCard(context, titles[0], values[0]),
               ),
               GestureDetector(
-                onTap: () => model.setExpierence(Expierence.y_1_3),
-                child: _buildWrapCard(
-                    context, "1 - 3 года", expierence == Expierence.y_1_3),
+                onTap: () => model.setSchedules(ObjectId(1, titles[1])),
+                child: _buildWrapCard(context, titles[1], values[1]),
               ),
               GestureDetector(
-                onTap: () => model.setExpierence(Expierence.y_2_6),
-                child: _buildWrapCard(
-                    context, "3 - 6 лет", expierence == Expierence.y_2_6),
+                onTap: () => model.setSchedules(ObjectId(2, titles[2])),
+                child: _buildWrapCard(context, titles[2], values[2]),
               ),
               GestureDetector(
-                onTap: () => model.setExpierence(Expierence.more_6),
-                child: _buildWrapCard(
-                    context, "более 6 лет", expierence == Expierence.more_6),
+                onTap: () => model.setSchedules(ObjectId(3, titles[3])),
+                child: _buildWrapCard(context, titles[3], values[3]),
               ),
             ],
           ),

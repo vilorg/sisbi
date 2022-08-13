@@ -7,24 +7,30 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/coast_search_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/post_search_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/region_search_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
+import 'package:sisbi/ui/pages/employer/pages/resume/resumes_switcher_view_model.dart';
+import 'package:sisbi/ui/widgets/search/post_search_page.dart';
 import 'package:sisbi/ui/widgets/select_wrap_card.dart';
+import 'package:sisbi/ui/widgets/wrap_cards.dart';
 
+import 'coast_search_page.dart';
+import 'region_search_page.dart';
 import 'widgets/fields_of_activity_tabs.dart';
 import 'widgets/wrap_expierence_tabs.dart';
 import 'widgets/wrap_schedules_tabs.dart';
 import 'widgets/wrap_type_employments_tabs.dart';
 
 class SearchViewModel extends ChangeNotifier {
-  SearchViewModel(this.context, this.model) {
-    _filter = model.filter;
+  SearchViewModel(this.context, this.userModel, this.employerModel) {
+    _isUser = userModel != null;
+    _filter = _isUser ? userModel!.filter : employerModel!.filter;
   }
 
   final BuildContext context;
-  final VacanciesSwitcherViewModel model;
+  final VacanciesSwitcherViewModel? userModel;
+  final ResumesSwitcherViewModel? employerModel;
+
+  bool _isUser = false;
 
   FilterModel get filter => _filter;
   late FilterModel _filter;
@@ -34,19 +40,19 @@ class SearchViewModel extends ChangeNotifier {
 
   void setRegion(ObjectId value) {
     _filter = _filter.copyWith(region: value);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
   void setCoast(int value) {
     _filter = _filter.copyWith(coast: value);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
   void setPost(String value) {
     _filter = _filter.copyWith(post: value);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
@@ -54,13 +60,13 @@ class SearchViewModel extends ChangeNotifier {
     List<ObjectId> arr = _filter.jobCategory;
     isRemove ? arr.remove(value) : arr.add(value);
     _filter = _filter.copyWith(jobCategory: arr);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
   void setExpierence(Expierence expierence) {
     _filter = _filter.copyWith(expierence: expierence);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
@@ -70,14 +76,16 @@ class SearchViewModel extends ChangeNotifier {
       if (i.id == value.id) {
         arr.remove(i);
         _filter = _filter.copyWith(typeEmployments: arr);
-        model.setFilter(_filter);
+        _isUser
+            ? userModel!.setFilter(_filter)
+            : employerModel!.setFilter(_filter);
         notifyListeners();
         return;
       }
     }
     arr.add(value);
     _filter = _filter.copyWith(typeEmployments: arr);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
@@ -87,40 +95,44 @@ class SearchViewModel extends ChangeNotifier {
       if (i.id == value.id) {
         arr.remove(i);
         _filter = _filter.copyWith(schedules: arr);
-        model.setFilter(_filter);
+        _isUser
+            ? userModel!.setFilter(_filter)
+            : employerModel!.setFilter(_filter);
         notifyListeners();
         return;
       }
     }
     arr.add(value);
     _filter = _filter.copyWith(schedules: arr);
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
   void clearFilter() {
     _filter = FilterModel.deffault();
-    model.setFilter(_filter);
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
     notifyListeners();
   }
 
   Future<void> onPop() async {
     _isLoading = true;
     notifyListeners();
-    await model.resetCards();
+    _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
+    _isUser ? await userModel!.resetCards() : await employerModel!.resetCards();
     _isLoading = false;
     notifyListeners();
     Navigator.pop(context);
   }
 }
 
-class SearchVacancyPage extends StatelessWidget {
-  const SearchVacancyPage({Key? key}) : super(key: key);
+class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key}) : super(key: key);
 
-  static Widget create(VacanciesSwitcherViewModel model) =>
+  static Widget create(VacanciesSwitcherViewModel? userModel,
+          ResumesSwitcherViewModel? employerMode) =>
       ChangeNotifierProvider(
-        create: (context) => SearchViewModel(context, model),
-        child: const SearchVacancyPage(),
+        create: (context) => SearchViewModel(context, userModel, employerMode),
+        child: const SearchPage(),
       );
 
   @override
@@ -246,6 +258,80 @@ class SearchVacancyPage extends StatelessWidget {
                             : null,
                       ),
                       FieldsOfActivityTabs(model: model),
+                      // WrapTabs(
+                      //   title: "Опыт работы",
+                      //   variants: Expierence.values
+                      //       .map((e) => getExpierenceString(e))
+                      //       .toList(),
+                      //   values: Expierence.values.map((e) {
+                      //     return false;
+                      //     // return e == state.expierence;
+                      //   }).toList(),
+                      //   // const [false, false, false, false, false],
+                      //   // setValue: (int i) => model.setState(
+                      //   //   expierence: getExpierenceFromInt(i - 1),
+                      //   // ),
+                      //   setValue: (i) {},
+                      // ),
+                      // WrapTabs(
+                      //   title: "Тип занятости",
+                      //   variants: getTypeEmploymentsString()
+                      //       .map((e) => e.value)
+                      //       .toList(),
+                      //   values: getTypeEmploymentsString()
+                      //       .map((e) => false
+                      //           //  state.typeEmployments
+                      //           //     .map((e) => e.id)
+                      //           //     .toList()
+                      //           //     .contains(e.id)
+                      //           )
+                      //       .toList(),
+                      //   setValue: (int i) {
+                      //     ObjectId typeEmployment = getTypeEmploymentFromInt(i);
+                      //     // List<ObjectId> newTypeEmployments =
+                      //     // state.typeEmployments;
+                      //     List<ObjectId> typeEmployments = [];
+                      //     // for (ObjectId typeEmp in newTypeEmployments) {
+                      //     //   typeEmployments.add(typeEmp);
+                      //     // }
+                      //     // if (newTypeEmployments.contains(typeEmployment)) {
+                      //     //   typeEmployments.remove(typeEmployment);
+                      //     // } else {
+                      //     //   typeEmployments.add(typeEmployment);
+                      //     // }
+                      //     // model.setState(typeEmployments: typeEmployments);
+                      //   },
+                      // ),
+                      // WrapTabs(
+                      //   title: "График работы",
+                      //   variants:
+                      //       getSchedulesString().map((e) => e.value).toList(),
+                      //   values: getSchedulesString()
+                      //       .map(
+                      //         (e) => false,
+                      //         // state.schedules
+                      //         //     .map((e) => e.id)
+                      //         //     .toList()
+                      //         //     .contains(e.id)
+                      //       )
+                      //       .toList(),
+                      //   setValue: (int i) {
+                      //     ObjectId schedule = getSchedulesFromInt(i);
+                      //     // List<ObjectId> newSchedules = state.schedules;
+                      //     // List<ObjectId> schedules = [];
+
+                      //     // for (ObjectId sched in newSchedules) {
+                      //     //   schedules.add(sched);
+                      //     // }
+
+                      //     // if (newSchedules.contains(schedule)) {
+                      //     //   schedules.remove(schedule);
+                      //     // } else {
+                      //     //   schedules.add(schedule);
+                      //     // }
+                      //     // model.setState(schedules: schedules);
+                      //   },
+                      // ),
                       WrapExpierenceTabs(model: model),
                       const SizedBox(height: defaultPadding),
                       WrapTypeEmploymentsTabs(model: model),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
+import 'package:sisbi/ui/widgets/search/search_page.dart';
 
-class WrapSchedulesTabs extends StatelessWidget {
-  const WrapSchedulesTabs({
+class WrapTypeEmploymentsTabs extends StatelessWidget {
+  const WrapTypeEmploymentsTabs({
     Key? key,
     required this.model,
   }) : super(key: key);
@@ -13,13 +13,13 @@ class WrapSchedulesTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ObjectId> data = model.filter.schedules;
+    final List<ObjectId> data = model.filter.typeEmployments;
     List<bool> values = [false, false, false, false];
     List<String> titles = [
-      "Удаленная работа",
-      "Полный день",
-      "Гибкий график",
-      "Сменный график"
+      "Полная занятость",
+      "Частичная занятость",
+      "Проектная работа",
+      "Стажировка"
     ];
 
     for (int i = 0; i < titles.length; i++) {
@@ -37,7 +37,7 @@ class WrapSchedulesTabs extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: defaultPadding),
           child: Text(
-            "График работы",
+            "Тип занятости",
             style: Theme.of(context).textTheme.subtitle2!.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -53,19 +53,19 @@ class WrapSchedulesTabs extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               GestureDetector(
-                onTap: () => model.setSchedules(ObjectId(0, titles[0])),
+                onTap: () => model.setTypeEmployments(ObjectId(0, titles[0])),
                 child: _buildWrapCard(context, titles[0], values[0]),
               ),
               GestureDetector(
-                onTap: () => model.setSchedules(ObjectId(1, titles[1])),
+                onTap: () => model.setTypeEmployments(ObjectId(1, titles[1])),
                 child: _buildWrapCard(context, titles[1], values[1]),
               ),
               GestureDetector(
-                onTap: () => model.setSchedules(ObjectId(2, titles[2])),
+                onTap: () => model.setTypeEmployments(ObjectId(2, titles[2])),
                 child: _buildWrapCard(context, titles[2], values[2]),
               ),
               GestureDetector(
-                onTap: () => model.setSchedules(ObjectId(3, titles[3])),
+                onTap: () => model.setTypeEmployments(ObjectId(3, titles[3])),
                 child: _buildWrapCard(context, titles[3], values[3]),
               ),
             ],

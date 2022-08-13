@@ -171,7 +171,6 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    print(123);
     _isLoading = true;
     try {
       _userData = await _cardService.getUserGraph();
@@ -185,24 +184,23 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
       );
       await resetCards();
     } catch (e) {
-      print(e);
-      // Navigator.of(context).pushNamedAndRemoveUntil(
-      //   NameRoutes.login,
-      //   (route) => false,
-      // );
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        NameRoutes.login,
+        (route) => false,
+      );
     }
   }
 
   Future<void> resetCards() async {
-    // try {
-    _resumes = (await _cardService.getActualResumeList(_page, _filter))
-        .reversed
-        .toList();
-    _isLoading = false;
-    // } catch (e) {
-    // Navigator.of(context)
-    //     .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
-    // }
+    try {
+      _resumes = (await _cardService.getActualResumeList(_page, _filter))
+          .reversed
+          .toList();
+      _isLoading = false;
+    } catch (e) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
+    }
     try {
       notifyListeners();
     } catch (e) {

@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
+import 'package:sisbi/ui/widgets/search/search_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   final SearchViewModel model;
+
   final BuildContext context;
 
   final List<int> _dataList = [

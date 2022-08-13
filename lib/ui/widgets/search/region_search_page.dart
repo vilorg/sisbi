@@ -4,55 +4,74 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
+import 'package:sisbi/domain/services/list_data_service.dart';
+import 'package:sisbi/models/object_id.dart';
+
+import 'search_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   final SearchViewModel model;
   final BuildContext context;
 
-  List<String> _dataList = [];
-  List<String> get dataList => _dataList;
+  bool _isLoaded = false;
+  bool get isLoaded => _isLoaded;
+
+  List<ObjectId> _dataList = [];
+  List<ObjectId> get dataList => _dataList;
 
   final TextEditingController controller = TextEditingController();
 
-  _ViewModel(this.context, this.model);
+  _ViewModel(this.context, this.model) {
+    _init();
+  }
+
+  final ListDataService _service = ListDataService();
 
   void onChanged(String s) async {
-    if (s == "") {
-      _dataList = [];
-      notifyListeners();
-      return;
-    }
-    _dataList = [s];
+    _isLoaded = false;
+    notifyListeners();
+    _dataList = await _service.getCities(s);
+    _isLoaded = true;
     notifyListeners();
   }
 
-  void onTap(String value) {
-    model.setPost(value);
+  Future<void> _init() async {
+    try {
+      _dataList = await _service.getCities("");
+      _isLoaded = true;
+      notifyListeners();
+    } catch (e) {
+      _isLoaded = true;
+    }
+  }
+
+  void onTap(ObjectId value) {
+    model.setRegion(value);
     Navigator.pop(context);
   }
 }
 
-class PostSearchPage extends StatelessWidget {
-  const PostSearchPage({Key? key}) : super(key: key);
+class RegionSearchPage extends StatelessWidget {
+  const RegionSearchPage({Key? key}) : super(key: key);
 
   static Widget create(SearchViewModel model) => ChangeNotifierProvider(
         create: (context) => _ViewModel(context, model),
-        child: const PostSearchPage(),
+        child: const RegionSearchPage(),
       );
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<_ViewModel>(context);
-    final List<String> dataList = model.dataList;
+    final List<ObjectId> dataList = model.dataList;
     final TextEditingController controller = model.controller;
+    final isLoaded = model.isLoaded;
 
     return Scaffold(
         backgroundColor: colorAccentDarkBlue,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text(
-            "Должность",
+            "Регион",
             style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   color: colorTextContrast,
                   fontWeight: FontWeight.w700,
@@ -75,7 +94,7 @@ class PostSearchPage extends StatelessWidget {
                       ),
                   onChanged: model.onChanged,
                   decoration: InputDecoration(
-                    hintText: "Желаемая должность",
+                    hintText: "Россия",
                     hintStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
                           color: colorTextContrast.withOpacity(0.6),
                         ),
@@ -114,49 +133,65 @@ class PostSearchPage extends StatelessWidget {
                     SizedBox(
                       height: 20,
                       child: Text(
-                        "Рекомендуемые вакансии",
+                        "Рекомендуемые запросы",
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                     ),
                     Expanded(
-                      child: Material(
-                        color: Colors.transparent,
-                        child: ListView.builder(
-                          itemCount: dataList.length,
-                          itemBuilder: (context, index) {
-                            var text = dataList[index];
-
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Row(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(defaultPadding),
-                                    child: Container(
-                                      width: 10,
-                                      height: 10,
-                                      color: colorAccentDarkBlue,
+                      child: isLoaded
+                          ? Material(
+                              color: Colors.transparent,
+                              child: ListView.builder(
+                                itemCount: dataList.length,
+                                itemBuilder: (context, index) {
+                                  var text = dataList[index].value;
+                                  if (text.length > 20) {
+                                    var arr = text.split(" ");
+                                    if (arr[arr.length - 3] == "г.") {
+                                      text =
+                                          "${arr[arr.length - 3]} ${arr[arr.length - 2]} ${arr[arr.length - 1]}";
+                                    } else {
+                                      text =
+                                          "${arr[arr.length - 2]} ${arr[arr.length - 1]}";
+                                    }
+                                  }
+                                  return ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                              defaultPadding),
+                                          child: Container(
+                                            width: 10,
+                                            height: 10,
+                                            color: colorAccentDarkBlue,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                            width: defaultPadding / 2),
+                                        Text(
+                                          text,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1,
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(width: defaultPadding / 2),
-                                  Text(
-                                    text,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ],
+                                    onTap: () {
+                                      model.onTap(
+                                          ObjectId(dataList[index].id, text));
+                                    },
+                                  );
+                                },
                               ),
-                              onTap: () {
-                                model.onTap(dataList[index]);
-                              },
-                            );
-                          },
-                        ),
-                      ),
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(
+                                  color: colorAccentDarkBlue)),
                     ),
                   ],
                 ),

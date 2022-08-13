@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/list_data_service.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
+
+import 'search_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   final SearchViewModel model;

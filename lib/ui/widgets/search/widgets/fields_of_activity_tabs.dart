@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/job_categories_search_page.dart';
-import 'package:sisbi/ui/pages/employee/pages/search/search_vacancy_page.dart';
+import 'package:sisbi/ui/widgets/search/job_categories_search_page.dart';
+import 'package:sisbi/ui/widgets/search/search_page.dart';
 
 class FieldsOfActivityTabs extends StatelessWidget {
   const FieldsOfActivityTabs({
