@@ -2,17 +2,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/chat_preview_model.dart';
 
 class ResumeStaticHeader extends StatelessWidget {
   const ResumeStaticHeader({
     Key? key,
-    required this.chat,
-    required this.isUser,
+    required this.avatar,
+    required this.name,
+    required this.title,
+    required this.salary,
   }) : super(key: key);
 
-  final ChatPreviewModel chat;
-  final bool isUser;
+  final String avatar;
+  final String name;
+  final String title;
+  final int salary;
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +28,27 @@ class ResumeStaticHeader extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Image.network(
-            chat.employerAvatar,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.vertical -
-                // VacancyInheritedWidget.of(context)!.appBarHeight -
-                60,
-            alignment: Alignment.center,
-          ),
+          avatar != ""
+              ? Image.network(
+                  avatar,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.vertical -
+                      // VacancyInheritedWidget.of(context)!.appBarHeight -
+                      60,
+                  alignment: Alignment.center,
+                )
+              : Image.asset(
+                  "assets/images/resume.png",
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.vertical -
+                      // VacancyInheritedWidget.of(context)!.appBarHeight -
+                      60,
+                  alignment: Alignment.center,
+                ),
           Container(
             width: double.infinity,
             height: double.infinity,
@@ -57,35 +71,23 @@ class ResumeStaticHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(300),
-                        child: Image.network(
-                          chat.employerAvatar,
-                          width: 25,
+                  Text(
+                    name,
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: colorTextContrast,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ),
-                      const SizedBox(width: defaultPadding / 2),
-                      Text(
-                        chat.employerName,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              color: colorTextContrast,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ],
                   ),
                   const SizedBox(height: defaultPadding),
                   Text(
-                    chat.title,
+                    title,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: colorTextContrast,
                         ),
                   ),
                   const SizedBox(height: defaultPadding),
                   Text(
-                    "От ${chat.salary} руб.",
+                    "От $salary руб.",
                     style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: colorTextContrast,
                         ),

@@ -4,6 +4,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employee_service.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/widgets/vacancy/vacancy_static_card.dart';
 
 class _ViewModel extends ChangeNotifier {
   _ViewModel(this._context) {
@@ -125,83 +126,96 @@ class _FavouriteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<_ViewModel>(context);
 
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(
-        horizontal: defaultPadding,
-        vertical: defaultPadding / 2,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 76,
-            height: 76,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.network(vacancy.avatar, fit: BoxFit.cover),
-            ),
-          ),
-          const SizedBox(width: defaultPadding),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(defaultPadding),
-                        child: Image.network(vacancy.employerAvatar),
-                      ),
-                    ),
-                    const SizedBox(width: defaultPadding),
-                    Text(
-                      vacancy.employerName,
-                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ],
-                ),
-                Text(
-                  vacancy.title,
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-                Text(
-                  "От ${vacancy.salary} руб.",
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: colorTextSecondary,
-                      ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              border: Border.all(
-                  color: const Color.fromRGBO(237, 237, 240, 1), width: 2),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: () => model.unstarVacancy(vacancy.id),
-              icon: const Icon(
-                Icons.clear,
-                color: colorIconSecondary,
-                size: 15,
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => VacancyStaticCard(
+          createdAt: vacancy.createdAt.toString(),
+          title: vacancy.title,
+          description: vacancy.description,
+          employerAvatar: vacancy.employerAvatar,
+          avatar: vacancy.avatar,
+          salary: vacancy.salary,
+          name: vacancy.fullName,
+        ),
+      )),
+      child: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(
+          horizontal: defaultPadding,
+          vertical: defaultPadding / 2,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 76,
+              height: 76,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.network(vacancy.avatar, fit: BoxFit.cover),
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: defaultPadding),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(defaultPadding),
+                          child: Image.network(vacancy.employerAvatar),
+                        ),
+                      ),
+                      const SizedBox(width: defaultPadding),
+                      Text(
+                        vacancy.employerName,
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    vacancy.title,
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  Text(
+                    "От ${vacancy.salary} руб.",
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorTextSecondary,
+                        ),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border.all(
+                    color: const Color.fromRGBO(237, 237, 240, 1), width: 2),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => model.unstarVacancy(vacancy.id),
+                icon: const Icon(
+                  Icons.clear,
+                  color: colorIconSecondary,
+                  size: 15,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

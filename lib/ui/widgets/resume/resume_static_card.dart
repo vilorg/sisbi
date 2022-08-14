@@ -1,27 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/chat_preview_model.dart';
+
 import 'resume_static_header.dart';
 
 class ResumeStaticCard extends StatelessWidget {
   const ResumeStaticCard({
     Key? key,
-    required this.chat,
-    required this.isUser,
+    required this.createdAt,
+    required this.title,
+    required this.description,
+    required this.avatar,
+    required this.salary,
+    required this.name,
   }) : super(key: key);
 
-  final ChatPreviewModel chat;
-  final bool isUser;
+  final String createdAt;
+  final String title;
+  final String description;
+  final String avatar;
+  final int salary;
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    final date = chat.createdAt.substring(0, 10);
+    final date = createdAt.substring(0, 10);
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
         title: Text(
-          "Просмотр вакансии",
+          "Просмотр резюме",
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: colorTextContrast,
                 fontWeight: FontWeight.w700,
@@ -37,7 +46,12 @@ class ResumeStaticCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ResumeStaticHeader(chat: chat, isUser: isUser),
+                ResumeStaticHeader(
+                  avatar: avatar,
+                  name: name,
+                  salary: salary,
+                  title: title,
+                ),
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),
                   child: Column(
@@ -51,14 +65,14 @@ class ResumeStaticCard extends StatelessWidget {
                       ),
                       const SizedBox(height: defaultPadding),
                       Text(
-                        chat.title,
+                        title,
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
                       ),
                       const SizedBox(height: defaultPadding / 2),
                       Text(
-                        chat.description,
+                        description,
                         style: Theme.of(context).textTheme.bodyText1,
                       )
                     ],

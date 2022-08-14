@@ -6,11 +6,10 @@ import 'package:sisbi/domain/services/card_employer_service.dart';
 import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 
 import 'widgets/respond_resume_bottom_sheet.dart';
 import 'widgets/show_contacts_resume.dart';
-
-enum _CardStatus { like, dislike }
 
 class ResumesSwitcherViewModel extends ChangeNotifier {
   ResumesSwitcherViewModel(this.context) {
@@ -75,10 +74,10 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
     final status = getCardStatus();
 
     switch (status) {
-      case _CardStatus.like:
+      case CardStatus.like:
         like();
         break;
-      case _CardStatus.dislike:
+      case CardStatus.dislike:
         dislike();
         break;
       default:
@@ -94,15 +93,15 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  _CardStatus? getCardStatus() {
+  CardStatus? getCardStatus() {
     final x = _position.dx;
 
     const delta = 100;
 
     if (x >= delta) {
-      return _CardStatus.like;
+      return CardStatus.like;
     } else if (x <= -delta) {
-      return _CardStatus.dislike;
+      return CardStatus.dislike;
     }
     return null;
   }
@@ -110,6 +109,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   void like() {
     _angle = 20;
     _position += Offset(2 * _width, 0);
+    starVacancy();
     _nextCard();
   }
 

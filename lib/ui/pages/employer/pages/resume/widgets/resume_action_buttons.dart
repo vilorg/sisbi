@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 import 'package:sisbi/ui/pages/employer/pages/resume/resumes_switcher_view_model.dart';
 
 class VacancyActionButtons extends StatelessWidget {
@@ -12,6 +13,14 @@ class VacancyActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<ResumesSwitcherViewModel>(context);
+    bool isLike = false;
+    bool isDislike = false;
+
+    final CardStatus? status = model.getCardStatus();
+    if (status != null) {
+      if (status.name == "like") isLike = true;
+      if (status.name == 'dislike') isDislike = true;
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,13 +48,17 @@ class VacancyActionButtons extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            "assets/icons/action_skip.svg",
+            isDislike
+                ? "assets/icons/action_skip_sel.svg"
+                : "assets/icons/action_skip.svg",
           ),
         ),
         GestureDetector(
           onTap: model.starVacancy,
           child: SvgPicture.asset(
-            "assets/icons/action_favourite.svg",
+            isLike
+                ? "assets/icons/action_favourite_sel.svg"
+                : "assets/icons/action_favourite.svg",
           ),
         ),
         GestureDetector(

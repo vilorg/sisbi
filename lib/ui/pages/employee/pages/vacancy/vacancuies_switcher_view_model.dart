@@ -11,7 +11,7 @@ import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'widgets/respond_vacancy_bottom_sheet.dart';
 import 'widgets/show_contacts_vacancy.dart';
 
-enum _CardStatus { like, dislike }
+enum CardStatus { like, dislike }
 
 class VacanciesSwitcherViewModel extends ChangeNotifier {
   VacanciesSwitcherViewModel(this.context) {
@@ -76,10 +76,10 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     final status = getCardStatus();
 
     switch (status) {
-      case _CardStatus.like:
+      case CardStatus.like:
         like();
         break;
-      case _CardStatus.dislike:
+      case CardStatus.dislike:
         dislike();
         break;
       default:
@@ -95,15 +95,15 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  _CardStatus? getCardStatus() {
+  CardStatus? getCardStatus() {
     final x = _position.dx;
 
     const delta = 100;
 
     if (x >= delta) {
-      return _CardStatus.like;
+      return CardStatus.like;
     } else if (x <= -delta) {
-      return _CardStatus.dislike;
+      return CardStatus.dislike;
     }
     return null;
   }
@@ -111,6 +111,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   void like() {
     _angle = 20;
     _position += Offset(2 * _width, 0);
+    starVacancy();
     _nextCard();
   }
 

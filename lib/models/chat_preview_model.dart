@@ -25,6 +25,7 @@ class ChatPreviewModel {
   final String userPhone;
   final String userEmail;
   final String vacancyTitle;
+  final String avatar;
   ChatPreviewModel({
     required this.chatId,
     required this.vacancyId,
@@ -47,6 +48,7 @@ class ChatPreviewModel {
     required this.userPhone,
     required this.userEmail,
     required this.vacancyTitle,
+    required this.avatar,
   });
 
   ChatPreviewModel copyWith({
@@ -71,6 +73,7 @@ class ChatPreviewModel {
     String? userPhone,
     String? userEmail,
     String? vacancyTitle,
+    String? avatar,
   }) {
     return ChatPreviewModel(
       chatId: chatId ?? this.chatId,
@@ -95,6 +98,7 @@ class ChatPreviewModel {
       userPhone: userPhone ?? this.userPhone,
       userEmail: userEmail ?? this.userEmail,
       vacancyTitle: vacancyTitle ?? this.vacancyTitle,
+      avatar: avatar ?? this.avatar,
     );
   }
 
@@ -154,6 +158,7 @@ class ChatPreviewModel {
       userPhone: map['user']['phone'] as String,
       userEmail: map['user']['email'] ?? "",
       vacancyTitle: map['vacancy']['title'] as String,
+      avatar: map['vacancy']['avatar'] as String,
     );
   }
 
@@ -164,7 +169,7 @@ class ChatPreviewModel {
 
   @override
   String toString() {
-    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, vacancyTitle: $vacancyTitle)';
+    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, vacancyTitle: $vacancyTitle, avatar: $avatar)';
   }
 
   @override

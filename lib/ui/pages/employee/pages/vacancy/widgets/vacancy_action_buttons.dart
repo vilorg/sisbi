@@ -12,6 +12,14 @@ class VacancyActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<VacanciesSwitcherViewModel>(context);
+    bool isLike = false;
+    bool isDislike = false;
+
+    final CardStatus? status = model.getCardStatus();
+    if (status != null) {
+      if (status.name == "like") isLike = true;
+      if (status.name == 'dislike') isDislike = true;
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,13 +47,17 @@ class VacancyActionButtons extends StatelessWidget {
             );
           },
           child: SvgPicture.asset(
-            "assets/icons/action_skip.svg",
+            isDislike
+                ? "assets/icons/action_skip_sel.svg"
+                : "assets/icons/action_skip.svg",
           ),
         ),
         GestureDetector(
           onTap: model.starVacancy,
           child: SvgPicture.asset(
-            "assets/icons/action_favourite.svg",
+            isLike
+                ? "assets/icons/action_favourite_sel.svg"
+                : "assets/icons/action_favourite.svg",
           ),
         ),
         GestureDetector(

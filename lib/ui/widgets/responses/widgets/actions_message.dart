@@ -39,8 +39,15 @@ class ActionsMessage extends StatelessWidget {
               asset: "assets/icons/arrow_forward.svg",
               isTrash: false,
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>
-                        VacancyStaticCard(chat: chat, isUser: isUser),
+                    builder: (context) => VacancyStaticCard(
+                      avatar: chat.avatar,
+                      employerAvatar: chat.employerAvatar,
+                      createdAt: chat.createdAt,
+                      description: chat.description,
+                      name: chat.employerName,
+                      salary: chat.salary,
+                      title: chat.title,
+                    ),
                   ))),
           const Divider(),
           _Tile(
