@@ -76,7 +76,9 @@ const String getRemoveTypeEmploymentsUri =
 const String getVacancyUri = baseUri + "vacancies";
 const String getResumeUri = baseUri + "employer/users";
 const String getFavouriteVacancyUri = baseUri + "favorite_vacancies";
+const String getFavouriteResumeUri = baseUri + "employer/favorite_users";
 const String respondVacancyUri = baseUri + "responses";
+const String respondResumeUri = baseUri + "employer/invites";
 const String getCitiesUri = baseUri + "cities?page=1";
 const String getJobCategoriesUri = baseUri + "job_categories";
 const String getAllChatsEmployeeUri = baseUri + "chats";

@@ -64,7 +64,7 @@ class ResumeStaticHeader extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.bottomLeft,
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: Column(

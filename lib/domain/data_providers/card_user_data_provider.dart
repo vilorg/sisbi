@@ -101,7 +101,7 @@ class CardUserDataProvider {
   }
 
   Future respondVacancy(String token, int vacancyId, String text) async {
-    Uri uri = Uri.parse(respondVacancyUri);
+    Uri uri = Uri.parse(respondResumeUri);
     return await http.post(uri,
         headers: {
           'Content-Type': 'application/json',

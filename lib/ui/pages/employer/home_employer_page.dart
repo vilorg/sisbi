@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/pages/employer/pages/favourite/favourite_resume_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/profile_employer_page.dart';
 import 'package:sisbi/ui/widgets/responses/chat_page.dart';
 
@@ -55,7 +56,7 @@ class HomeEmployerPage extends StatelessWidget {
 
     List<Widget> pages = [
       ResumesSwitcherPage.create(),
-      Scaffold(appBar: AppBar()),
+      FavouriteResumePage.create(),
       ChatPage.create(true),
       ProfileEmployerPage.create(),
     ];

@@ -9,7 +9,7 @@ import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 
 class CardEmployerDataProvider {
-  Future<List<UserDataModel>> getActualVacancyList(
+  Future<List<UserDataModel>> getActualResumeList(
       int page, FilterModel filter, String token) async {
     String uriString = getResumeUri + "?";
     List<String> params = [];
@@ -63,8 +63,8 @@ class CardEmployerDataProvider {
     return data;
   }
 
-  Future<List<VacancyModel>> getFavouriteVacancyList(String token) async {
-    String uriString = getFavouriteVacancyUri;
+  Future<List<UserDataModel>> getFavouriteResumeList(String token) async {
+    String uriString = getFavouriteResumeUri;
     Uri uri = Uri.parse(uriString);
     var response = await http.get(
       uri,
@@ -74,43 +74,45 @@ class CardEmployerDataProvider {
     if (response.statusCode != 200) throw Exception();
 
     List dirtyData = jsonDecode(response.body)["payload"];
-    List<VacancyModel> data = [];
+    List<UserDataModel> data = [];
 
     for (var i in dirtyData) {
-      VacancyModel vacancy = VacancyModel.fromMap(i);
-      data.add(vacancy);
+      UserDataModel user = UserDataModel.fromMap(i);
+      data.add(user);
     }
     return data;
   }
 
-  Future<void> starVacancy(String token, int vacancyId) async {
-    Uri uri = Uri.parse(getFavouriteVacancyUri);
+  Future<void> starResume(String token, int resumeId) async {
+    Uri uri = Uri.parse(getFavouriteResumeUri);
     await http.post(uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          "favorite_vacancy": {"vacancy_id": vacancyId}
+          "favorite_user": {"user_id": resumeId}
         }));
   }
 
-  Future<void> unstarVacancy(String token, int vacancyId) async {
-    Uri uri = Uri.parse("$getFavouriteVacancyUri/$vacancyId");
+  Future<void> unstarResume(String token, int resumeId) async {
+    Uri uri = Uri.parse("$getFavouriteResumeUri/$resumeId");
     await http.delete(uri, headers: {'Authorization': 'Bearer $token'});
   }
 
-  Future respondVacancy(String token, int vacancyId, String text) async {
-    Uri uri = Uri.parse(respondVacancyUri);
+  Future respondResume(
+      String token, int resumeId, int userId, String text) async {
+    Uri uri = Uri.parse(respondResumeUri);
     return await http.post(uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
-          "response": {
-            "vacancy_id": vacancyId,
+          "invite": {
             "message": text,
+            "vacancy_id": resumeId,
+            "user_id": userId,
           }
         }));
   }
@@ -231,6 +233,22 @@ class CardEmployerDataProvider {
     var decoded = jsonDecode(response.body)['payload'];
     for (var vacancyName in decoded) {
       vacancies.add(vacancyName['name'] as String);
+    }
+    return vacancies;
+  }
+
+  Future<List<ObjectId>> getVacancies(String token) async {
+    List<ObjectId> vacancies = [];
+    Uri uri = Uri.parse(getEmployerVacanciesUri);
+    var response = await http.get(uri, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode != 200) throw Exception;
+    var decoded = jsonDecode(response.body)['payload'];
+    for (var vacancyName in decoded) {
+      vacancies.add(
+          ObjectId(vacancyName['id'] as int, vacancyName['title'] as String));
     }
     return vacancies;
   }

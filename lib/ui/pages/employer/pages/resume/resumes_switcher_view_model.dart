@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employer_service.dart';
 import 'package:sisbi/models/filter_model.dart';
+import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
@@ -21,6 +22,8 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
 
   List<UserDataModel> _resumes = [];
   List<UserDataModel> get resumes => _resumes;
+
+  List<ObjectId> _vacancies = [];
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
@@ -121,7 +124,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
 
   Future starVacancy() async {
     String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.starVacancy(token, resumes.last.id);
+    await _cardService.starResume(token, resumes.last.id);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: colorAccentDarkBlue,
@@ -196,6 +199,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
       _resumes = (await _cardService.getActualResumeList(_page, _filter))
           .reversed
           .toList();
+      _vacancies = await _cardService.getVacancies();
       _isLoading = false;
     } catch (e) {
       Navigator.of(context)
@@ -237,18 +241,23 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
 
   void trySendMessage() {
     showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
-        context: context,
-        isScrollControlled: true,
-        builder: (context) => RespondResumeBottomSheet(
-            resume: resumes.last, sendMessage: sendMessage));
+      shape: const RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => RespondResumeBottomSheet(
+        vacancies: _vacancies,
+        resume: resumes.last,
+        sendMessage: sendMessage,
+      ),
+    );
   }
 
-  Future<void> sendMessage(BuildContext curContext, String text) async {
+  Future<void> sendMessage(
+      BuildContext curContext, String text, int vacancyId) async {
     String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.respondVacancy(token, resumes.last.id, text);
+    await _cardService.respondVacancy(token, vacancyId, resumes.last.id, text);
     Navigator.pop(curContext);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -273,7 +282,9 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
         isScrollControlled: true,
         builder: (context) {
           return RespondResumeBottomSheet(
-              resume: resumes.last, sendMessage: sendMessage);
+              vacancies: _vacancies,
+              resume: resumes.last,
+              sendMessage: sendMessage);
         });
   }
 }
