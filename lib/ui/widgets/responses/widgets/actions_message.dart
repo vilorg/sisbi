@@ -11,10 +11,12 @@ import 'contacts_message.dart';
 class ActionsMessage extends StatelessWidget {
   final ChatPreviewModel chat;
   final bool isUser;
+  final VoidCallback onDelete;
   const ActionsMessage({
     Key? key,
     required this.chat,
     required this.isUser,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class ActionsMessage extends StatelessWidget {
           const SizedBox(height: defaultPadding / 2),
           const Divider(),
           _Tile(
-              title: "Перейти в вакансию",
+              title: isUser ? "Перейти в вакансию" : "Перейти в резюме",
               asset: "assets/icons/arrow_forward.svg",
               isTrash: false,
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -95,7 +97,7 @@ class ActionsMessage extends StatelessWidget {
               ),
         ),
         content: Text(
-          "Работодатель больше не сможет вам писать, все материалы будут удалены",
+          "${isUser ? "Работадатель" : "Соискатель"} больше не сможет вам писать, все материалы будут удалены",
           style: Theme.of(context).textTheme.bodyText1,
         ),
         actions: [
@@ -119,6 +121,7 @@ class ActionsMessage extends StatelessWidget {
                     ),
               ),
               onPressed: () {
+                onDelete();
                 Navigator.of(context).pop();
               })
         ],

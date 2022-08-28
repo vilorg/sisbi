@@ -6,7 +6,6 @@ import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
-import 'package:sisbi/models/vacancy_model.dart';
 
 class CardEmployerDataProvider {
   Future<List<UserDataModel>> getActualResumeList(
@@ -43,6 +42,7 @@ class CardEmployerDataProvider {
       }
     }
     params.add("page=$page");
+    params.add("limit=7");
 
     Uri uri = Uri.parse(uriString + params.join("&"));
     var response = await http.get(
@@ -85,7 +85,7 @@ class CardEmployerDataProvider {
 
   Future<void> starResume(String token, int resumeId) async {
     Uri uri = Uri.parse(getFavouriteResumeUri);
-    await http.post(uri,
+    final response = await http.post(uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -93,28 +93,37 @@ class CardEmployerDataProvider {
         body: jsonEncode({
           "favorite_user": {"user_id": resumeId}
         }));
+    // print(response.statusCode);
+    // print(response.body);
+    if (response.statusCode != 200) throw Exception();
   }
 
   Future<void> unstarResume(String token, int resumeId) async {
     Uri uri = Uri.parse("$getFavouriteResumeUri/$resumeId");
-    await http.delete(uri, headers: {'Authorization': 'Bearer $token'});
+    final response =
+        await http.delete(uri, headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode != 200) throw Exception();
   }
 
   Future respondResume(
       String token, int resumeId, int userId, String text) async {
-    Uri uri = Uri.parse(respondResumeUri);
-    return await http.post(uri,
+    Uri uri = Uri.parse(getRespondResumeUri);
+    final response = await http.post(uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
           "invite": {
-            "message": text,
             "vacancy_id": resumeId,
             "user_id": userId,
+            "message": text,
           }
         }));
+    if (response.statusCode == 422) throw DoubleResponseException();
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 
   Future<UserDataModel> getUserData(String token) async {
@@ -206,6 +215,7 @@ class CardEmployerDataProvider {
       readyMove: _decoded['ready_move'] as bool,
       about: _decoded['about'] ?? "",
       createdAt: _decoded['created_at'] as String,
+      isFavourite: _decoded['is_favorite'] as bool,
     );
     // } catch (e) {
     //   print(e);
@@ -246,6 +256,8 @@ class CardEmployerDataProvider {
     });
     if (response.statusCode != 200) throw Exception;
     var decoded = jsonDecode(response.body)['payload'];
+    // print(response.statusCode);
+    // print(decoded);
     for (var vacancyName in decoded) {
       vacancies.add(
           ObjectId(vacancyName['id'] as int, vacancyName['title'] as String));

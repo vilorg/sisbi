@@ -44,6 +44,7 @@ class _ViewModel extends ChangeNotifier {
   ObjectId? get jobCategory => _jobCategory;
 
   Future<void> _init() async {
+    if (_vacancyController.text != "") _isAvaibleVacancies = false;
     _isLoadingVacancies = true;
     _isLoadingjobCategories = true;
     try {
@@ -91,7 +92,7 @@ class _ViewModel extends ChangeNotifier {
   Future<void> onTap() async {
     _isAvaibleVacancies = true;
     _vacancyController.clear();
-    await _init();
+    await refreshVacancies();
   }
 
   void onJobCategoryTap(ObjectId? jobCategory) {
@@ -162,17 +163,44 @@ class CareerInfo extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: isAvaible
-                ? null
-                : int.tryParse(coastController.text) == null
-                    ? null
-                    : () {
-                        setCareer(
-                          vacancyController.text,
-                          int.parse(coastController.text),
-                          jobCategory!,
-                        );
-                        Navigator.of(context).pop();
-                      },
+                ? () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: colorAccentRed,
+                    content: Text("Заполните должность!",
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                              color: colorTextContrast,
+                              fontWeight: FontWeight.w600,
+                            ))))
+                : int.tryParse(coastController.text) == null ||
+                        int.tryParse(coastController.text) == 0 ||
+                        coastController.text[0] == "0"
+                    ? () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: colorAccentRed,
+                        content: Text("Заполните корректно зарплату!",
+                            style:
+                                Theme.of(context).textTheme.subtitle2!.copyWith(
+                                      color: colorTextContrast,
+                                      fontWeight: FontWeight.w600,
+                                    ))))
+                    : jobCategory!.value != ""
+                        ? () {
+                            setCareer(
+                              vacancyController.text,
+                              int.parse(coastController.text),
+                              jobCategory,
+                            );
+                            Navigator.of(context).pop();
+                          }
+                        : () => ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                                backgroundColor: colorAccentRed,
+                                content: Text("Заполните сферу!",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .copyWith(
+                                          color: colorTextContrast,
+                                          fontWeight: FontWeight.w600,
+                                        )))),
             child: Text(
               "Сохранить",
               style: Theme.of(context).textTheme.button,
@@ -230,6 +258,7 @@ class CareerInfo extends StatelessWidget {
                             )),
                         style: Theme.of(context).textTheme.bodyText1,
                         keyboardType: TextInputType.number,
+                        onChanged: (s) => model.refreshVacancies(),
                       ),
                       const SizedBox(height: defaultPadding),
                       !isLoadingjobCategories

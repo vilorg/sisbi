@@ -43,6 +43,7 @@ class DialogPage extends StatelessWidget {
     final bool isUser = model.isUser;
     final TextEditingController textController = model.controller;
     final ScrollController scrollController = model.scrollController;
+    final ChatPreviewModel chat = model.chat;
     DateTime lastData = DateTime.parse("0001-01-01");
 
     List<Widget> data = [];
@@ -158,23 +159,65 @@ class DialogPage extends StatelessWidget {
                     ],
                   ),
                   padding: const EdgeInsets.all(defaultPadding / 2),
-                  child: TextField(
-                    controller: textController,
-                    onSubmitted: model.sendMessage,
-                    maxLines: 1,
-                    cursorColor: colorAccentDarkBlue,
-                    decoration: const InputDecoration(
-                      hintText: " Сообщение",
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: defaultPadding),
-                      border: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      focusedErrorBorder: InputBorder.none,
-                      fillColor: Colors.white,
-                    ),
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
+                  child: !isUser && chat.responseState == ResponseState.created
+                      ? Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: model.accept,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(
+                                      defaultButtonPadding / 2),
+                                  child: Text(
+                                    "Пригласить на работу",
+                                    style: Theme.of(context).textTheme.button,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: defaultPadding / 2),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: model.decline,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(
+                                      defaultButtonPadding / 2),
+                                  child: Text(
+                                    "Отказать",
+                                    style: Theme.of(context).textTheme.button,
+                                  ),
+                                ),
+                                style: Theme.of(context)
+                                    .elevatedButtonTheme
+                                    .style!
+                                    .copyWith(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              colorAccentRed),
+                                    ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : TextField(
+                          controller: textController,
+                          onSubmitted: model.sendMessage,
+                          maxLines: 1,
+                          cursorColor: colorAccentDarkBlue,
+                          decoration: const InputDecoration(
+                            hintText: " Сообщение",
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: defaultPadding),
+                            border: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            focusedErrorBorder: InputBorder.none,
+                            fillColor: Colors.white,
+                          ),
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                 ),
               ],
             ),

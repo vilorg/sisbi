@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class ResumesSwitcherPage extends StatelessWidget {
     final model = Provider.of<ResumesSwitcherViewModel>(context);
     var appBar = AppBar(
       title: Text(
-        "Вакансии",
+        "Резюме",
         style: Theme.of(context).textTheme.headline3!.copyWith(
               color: colorTextContrast,
               fontWeight: FontWeight.w700,
@@ -114,9 +115,59 @@ class ResumesSwitcherPage extends StatelessWidget {
             color: Colors.white,
             child: Padding(
               padding: const EdgeInsets.all(defaultPadding),
-              child: Text(
-                "Вы посмотрели все вакансии...",
-                style: Theme.of(context).textTheme.headline6,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/register_target.png",
+                    width: MediaQuery.of(context).size.width * 0.56,
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Больше резюме не найдено. Вы можете изменить ',
+                      children: [
+                        TextSpan(
+                          text: 'настройки фильтра',
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                            secondaryAnimation) =>
+                                        SearchPage.create(null, model),
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.ease;
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+
+                                      return SlideTransition(
+                                        position: animation.drive(tween),
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                ),
+                          style:
+                              Theme.of(context).textTheme.subtitle2!.copyWith(
+                                    color: colorLink,
+                                  ),
+                        ),
+                        TextSpan(
+                          text: ', чтобы расширить область поиска.',
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      ],
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                  ),
+                ],
               ),
             ),
           ),

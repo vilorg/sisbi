@@ -8,7 +8,7 @@ import 'package:sisbi/models/object_id.dart';
 
 class ProfileUserProvider {
   Future respondVacancy(String token, int vacancyId, String text) async {
-    Uri uri = Uri.parse(respondResumeUri);
+    Uri uri = Uri.parse(getRespondResumeUri);
     return await http.post(uri,
         headers: {
           'Content-Type': 'application/json',

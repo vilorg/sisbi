@@ -43,6 +43,7 @@ class CardUserDataProvider {
       }
     }
     params.add("page=$page");
+    params.add("limit=7");
 
     Uri uri = Uri.parse(uriString + params.join("&"));
     var response = await http.get(
@@ -101,18 +102,22 @@ class CardUserDataProvider {
   }
 
   Future respondVacancy(String token, int vacancyId, String text) async {
-    Uri uri = Uri.parse(respondResumeUri);
-    return await http.post(uri,
+    Uri uri = Uri.parse(getRespondVacancyUri);
+    final response = await http.post(uri,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
         body: jsonEncode({
           "response": {
-            "vacancy_id": vacancyId,
             "message": text,
+            "vacancy_id": vacancyId,
           }
         }));
+    if (response.statusCode == 422) throw DoubleResponseException();
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
   }
 
   Future<UserDataModel> getUserData(String token) async {
@@ -204,6 +209,7 @@ class CardUserDataProvider {
       readyMove: _decoded['ready_move'] as bool,
       about: _decoded['about'] ?? "",
       createdAt: _decoded['created_at'] as String,
+      isFavourite: _decoded['is_favorite'] as bool? ?? false,
     );
     // } catch (e) {
     //   print(e);

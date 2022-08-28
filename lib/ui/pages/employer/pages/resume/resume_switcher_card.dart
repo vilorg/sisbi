@@ -78,7 +78,7 @@ class ResumeSwitcherCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Вакансия опубликована $date в ${resume.region.value}',
+                      'Резюме опубликовано $date в ${resume.region.value}',
                       style: Theme.of(context).textTheme.bodyText2!.copyWith(
                             color: colorTextSecondary,
                           ),

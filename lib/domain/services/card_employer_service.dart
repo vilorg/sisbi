@@ -8,6 +8,8 @@ class CardEmployerService {
   final CardEmployerDataProvider _cardProvider = CardEmployerDataProvider();
   final SessionDataProvider _sessionProvider = SessionDataProvider();
 
+  Future<String> getToken() async => await _sessionProvider.getToken();
+
   Future<List<UserDataModel>> getActualResumeList(
       int page, FilterModel filter) async {
     String token = await _sessionProvider.getToken();
@@ -23,11 +25,13 @@ class CardEmployerService {
     return cards;
   }
 
-  Future<void> starResume(String token, int resumeId) async {
+  Future<void> starResume(int resumeId) async {
+    String token = await _sessionProvider.getToken();
     return await _cardProvider.starResume(token, resumeId);
   }
 
-  Future<void> unstarResume(String token, int resumeId) async {
+  Future<void> unstarResume(int resumeId) async {
+    String token = await _sessionProvider.getToken();
     return await _cardProvider.unstarResume(token, resumeId);
   }
 

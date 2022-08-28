@@ -33,6 +33,7 @@ class VacancyModel {
   final int countResponse;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final bool isFavourite;
 
   VacancyModel({
     required this.id,
@@ -61,6 +62,7 @@ class VacancyModel {
     required this.countResponse,
     required this.createdAt,
     required this.updatedAt,
+    required this.isFavourite,
   });
 
   VacancyModel copyWith({
@@ -90,6 +92,7 @@ class VacancyModel {
     int? countResponse,
     DateTime? createdAt,
     DateTime? updatedAt,
+    bool? isFavourite,
   }) {
     return VacancyModel(
       id: id ?? this.id,
@@ -118,6 +121,7 @@ class VacancyModel {
       countResponse: countResponse ?? this.countResponse,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      isFavourite: isFavourite ?? this.isFavourite,
     );
   }
 
@@ -163,6 +167,7 @@ class VacancyModel {
           .parse((json['created_at'] as String).substring(0, 19)),
       updatedAt: DateFormat("yyyy-MM-ddTHH:mm:ss")
           .parse((json['updated_at'] as String).substring(0, 19)),
+      isFavourite: json['is_favorite'] as bool? ?? false,
     );
   }
 

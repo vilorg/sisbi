@@ -81,6 +81,7 @@ class ResumeUser extends StatelessWidget {
                       color: colorTextContrast,
                       fontWeight: FontWeight.w700,
                     ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: defaultPadding),
               Text(
@@ -88,6 +89,7 @@ class ResumeUser extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle2!.copyWith(
                       color: colorTextContrast,
                     ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: defaultPadding / 2),
               Text(
@@ -95,6 +97,7 @@ class ResumeUser extends StatelessWidget {
                 style: Theme.of(context).textTheme.subtitle2!.copyWith(
                       color: colorTextContrast,
                     ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: defaultPadding),
               ClipRRect(

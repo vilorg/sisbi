@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employer_service.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
@@ -29,6 +30,8 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   int _page = 1;
+  bool _isLastPage = false;
+  bool _isLoadingMore = false;
 
   UserDataModel? _lastVacancy;
   FilterModel _filter = FilterModel.deffault();
@@ -123,20 +126,46 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future starVacancy() async {
-    String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.starResume(token, resumes.last.id);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: colorAccentDarkBlue,
-        content: Text(
-          "Вакансия успешно добавлена в изрбранное!",
-          style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: colorTextContrast,
-                fontWeight: FontWeight.w600,
-              ),
+    try {
+      resumes.last.isFavourite
+          ? await _cardService.unstarResume(resumes.last.id)
+          : await _cardService.starResume(resumes.last.id);
+      resumes.last =
+          resumes.last.copyWith(isFavourite: !resumes.last.isFavourite);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentDarkBlue,
+          content: Text(
+            resumes.last.isFavourite
+                ? "Резюме успешно добавлено в изрбранное!"
+                : "Резюме успешно удалено из избранного!",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
         ),
-      ),
-    );
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Произошла ошибка",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+    }
   }
 
   Future nextCard() async {
@@ -151,7 +180,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
     _lastVacancy = _resumes.last;
     _resumes.removeLast();
     resetPosition();
-    if (_resumes.length == 1) await _loadMoreVacancies();
+    if (_resumes.length <= 4) await _loadMoreVacancies();
   }
 
   Future resetLast() async {
@@ -163,7 +192,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
       SnackBar(
         backgroundColor: colorAccentSoftGold,
         content: Text(
-          "Вакансия восстановлена!",
+          "Резюме восстановлено!",
           style: Theme.of(context).textTheme.headline6!.copyWith(
                 color: colorTextSecondary,
                 fontWeight: FontWeight.w600,
@@ -196,10 +225,13 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
 
   Future<void> resetCards() async {
     try {
+      _page = 1;
+      _isLastPage = false;
+      _isLoadingMore = false;
+      _vacancies = await _cardService.getVacancies();
       _resumes = (await _cardService.getActualResumeList(_page, _filter))
           .reversed
           .toList();
-      _vacancies = await _cardService.getVacancies();
       _isLoading = false;
     } catch (e) {
       Navigator.of(context)
@@ -213,16 +245,21 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future<void> _loadMoreVacancies() async {
+    if (_isLoadingMore || _isLastPage) return;
+    _isLoadingMore = true;
     _page += 1;
     try {
-      _resumes.addAll((await _cardService.getActualResumeList(_page, _filter))
-          .reversed
-          .toList());
-      _isLoading = false;
+      List<UserDataModel> data =
+          (await _cardService.getActualResumeList(_page, _filter))
+              .reversed
+              .toList();
+      if (data.isEmpty) _isLastPage = true;
+      _resumes.insertAll(0, data);
     } catch (e) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
     }
+    _isLoadingMore = false;
     try {
       notifyListeners();
     } catch (e) {
@@ -240,6 +277,21 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   void trySendMessage() {
+    if (_vacancies.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "У вас нет действующий вакансий!",
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+      return;
+    }
     showModalBottomSheet(
       shape: const RoundedRectangleBorder(
           borderRadius:
@@ -256,21 +308,52 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
 
   Future<void> sendMessage(
       BuildContext curContext, String text, int vacancyId) async {
-    String token = HomeInheritedWidget.of(context)!.token;
-    await _cardService.respondVacancy(token, vacancyId, resumes.last.id, text);
-    Navigator.pop(curContext);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: colorAccentDarkBlue,
-        content: Text(
-          "Вы успешно откликнулись на вакансию!",
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                color: colorTextContrast,
-                fontWeight: FontWeight.w700,
-              ),
+    String token = await _cardService.getToken();
+    try {
+      await _cardService.respondVacancy(
+          token, vacancyId, resumes.last.id, text);
+      Navigator.pop(curContext);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentDarkBlue,
+          content: Text(
+            "Вы успешно откликнулись на резюме!",
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
         ),
-      ),
-    );
+      );
+    } on DoubleResponseException {
+      Navigator.pop(curContext);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Вы уже откликались на это резюме!",
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    } catch (e) {
+      Navigator.pop(curContext);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Произошла ошибка!",
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    }
   }
 
   void getContacts() {

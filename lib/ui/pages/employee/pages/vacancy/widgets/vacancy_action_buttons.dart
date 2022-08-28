@@ -14,6 +14,7 @@ class VacancyActionButtons extends StatelessWidget {
     final model = Provider.of<VacanciesSwitcherViewModel>(context);
     bool isLike = false;
     bool isDislike = false;
+    final bool isLiked = model.vacancies.last.isFavourite;
 
     final CardStatus? status = model.getCardStatus();
     if (status != null) {
@@ -55,7 +56,7 @@ class VacancyActionButtons extends StatelessWidget {
         GestureDetector(
           onTap: model.starVacancy,
           child: SvgPicture.asset(
-            isLike
+            isLike || isLiked
                 ? "assets/icons/action_favourite_sel.svg"
                 : "assets/icons/action_favourite.svg",
           ),

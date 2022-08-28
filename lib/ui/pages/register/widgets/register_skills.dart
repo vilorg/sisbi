@@ -31,6 +31,7 @@ class RegisterSkills extends StatelessWidget {
         for (String post in posts) {
           data.add(
             ListTile(
+              tileColor: colorAccentDarkBlue,
               title: Text(
                 post,
                 style: Theme.of(context)
@@ -62,7 +63,10 @@ class RegisterSkills extends StatelessWidget {
         ),
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 3 * defaultPadding),
+            padding: const EdgeInsets.only(
+              top: 3 * defaultPadding,
+              bottom: 5 * defaultPadding,
+            ),
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(defaultPadding),
               child: Column(
@@ -95,7 +99,7 @@ class RegisterSkills extends StatelessWidget {
                       onChanged: model.updatePosts,
                     ),
                   ),
-                  const SizedBox(height: defaultPadding),
+                  const SizedBox(height: defaultPadding / 4),
                   ...data,
                   const SizedBox(height: defaultPadding),
                   Text(

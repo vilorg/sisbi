@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employee_service.dart';
 import 'package:sisbi/models/vacancy_model.dart';
-import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/widgets/vacancy/vacancy_static_card.dart';
 
 class _ViewModel extends ChangeNotifier {
@@ -36,9 +35,8 @@ class _ViewModel extends ChangeNotifier {
   }
 
   Future<void> unstarVacancy(int vacancyId) async {
-    String token = HomeInheritedWidget.of(_context)!.token;
     _isLoading = true;
-    await _cardService.unstarVacancy(token, vacancyId);
+    await _cardService.unstarVacancy(vacancyId);
     _vacancies = await _cardService.getFavouriteVacancyList();
     _isLoading = false;
     try {

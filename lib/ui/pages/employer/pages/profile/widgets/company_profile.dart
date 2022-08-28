@@ -127,6 +127,7 @@ class CompanyProfile extends StatelessWidget {
                   color: colorTextContrast,
                   fontWeight: FontWeight.w700,
                 ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: defaultPadding),
           Expanded(

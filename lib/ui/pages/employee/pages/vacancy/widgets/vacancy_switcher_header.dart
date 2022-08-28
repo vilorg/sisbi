@@ -8,7 +8,7 @@ import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 
 import 'vacancy_action_buttons.dart';
-import '../../../../../widgets/wrap_vacancy_cards.dart';
+import 'wrap_vacancy_cards.dart';
 
 class VacancySwitcherHeader extends StatelessWidget {
   const VacancySwitcherHeader({Key? key, required this.vacancy})
@@ -64,10 +64,15 @@ class VacancySwitcherHeader extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(300),
-                        child: Image.network(
-                          vacancy.employerAvatar,
-                          width: 25,
-                        ),
+                        child: vacancy.employerAvatar != ""
+                            ? Image.network(
+                                vacancy.employerAvatar,
+                                width: 25,
+                              )
+                            : Image.asset(
+                                "assets/images/logo.png",
+                                width: 25,
+                              ),
                       ),
                       const SizedBox(width: defaultPadding / 2),
                       Text(

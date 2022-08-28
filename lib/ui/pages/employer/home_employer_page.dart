@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sisbi/domain/data_providers/session_data_provider.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employer/pages/favourite/favourite_resume_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/profile_employer_page.dart';
@@ -28,8 +29,19 @@ class _ViewModel extends ChangeNotifier {
   _ViewModelState _state = _ViewModelState();
   _ViewModelState get state => _state;
 
+  final SessionDataProvider _service = SessionDataProvider();
+
   String _token = "";
   String get token => _token;
+
+  _ViewModel() {
+    _init();
+  }
+
+  Future<void> _init() async {
+    _token = _service.toString();
+    notifyListeners();
+  }
 
   void setSelectedIndex(int index) {
     _state = _state.copyWith(selectedIndex: index);

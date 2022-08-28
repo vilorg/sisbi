@@ -17,19 +17,18 @@ class VacancyActionButtons extends StatelessWidget {
     bool isDislike = false;
 
     final CardStatus? status = model.getCardStatus();
+    final bool isLiked = model.resumes.last.isFavourite;
     if (status != null) {
       if (status.name == "like") isLike = true;
       if (status.name == 'dislike') isDislike = true;
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         GestureDetector(
           onTap: model.resetLast,
-          child: SvgPicture.asset(
-            "assets/icons/action_return.svg",
-          ),
+          child: SvgPicture.asset("assets/icons/action_return.svg"),
         ),
         GestureDetector(
           onTap: () {
@@ -56,7 +55,7 @@ class VacancyActionButtons extends StatelessWidget {
         GestureDetector(
           onTap: model.starVacancy,
           child: SvgPicture.asset(
-            isLike
+            isLike || isLiked
                 ? "assets/icons/action_favourite_sel.svg"
                 : "assets/icons/action_favourite.svg",
           ),
@@ -65,12 +64,6 @@ class VacancyActionButtons extends StatelessWidget {
           onTap: model.trySendMessage,
           child: SvgPicture.asset(
             "assets/icons/action_message.svg",
-          ),
-        ),
-        GestureDetector(
-          onTap: model.showContacts,
-          child: SvgPicture.asset(
-            "assets/icons/action_call.svg",
           ),
         ),
       ],

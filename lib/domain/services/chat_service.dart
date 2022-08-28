@@ -25,4 +25,10 @@ class ChatService {
       String token, bool isEmployer, int chatId, String message) async {
     return await _mediaProvider.sendMessage(token, isEmployer, chatId, message);
   }
+
+  Future<void> actionUser(bool isAccept, int resumeId, String token) async =>
+      await _mediaProvider.actionUser(isAccept, resumeId, token);
+
+  Future<void> deleteChat(int chatId, bool isUser, String token) async =>
+      await _mediaProvider.deleteChat(chatId, isUser, token);
 }

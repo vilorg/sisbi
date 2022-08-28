@@ -74,4 +74,25 @@ class ChatDataProvider {
     if (decoded["result_code"] != "ok") return false;
     return true;
   }
+
+  Future<void> actionUser(bool isAccept, int resumeId, String token) async {
+    Uri uri = Uri.parse(getActionUserResponseUri +
+        "/$resumeId/${isAccept ? "accept" : "decline"}");
+    final response = await http.put(uri, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode != 200) throw Exception();
+  }
+
+  Future<void> deleteChat(int chatId, bool isUser, String token) async {
+    Uri uri = Uri.parse(
+        (isUser ? getDeleteDialogEmployeeUri : getDeleteDialogEmployerUri) +
+            "/$chatId");
+    final response = await http.delete(uri, headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode != 200) throw Exception();
+  }
 }

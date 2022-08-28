@@ -31,6 +31,7 @@ class UserDataModel {
   final bool readyMove;
   final String about;
   final String createdAt;
+  final bool isFavourite;
   UserDataModel({
     required this.id,
     required this.firstName,
@@ -55,6 +56,7 @@ class UserDataModel {
     required this.readyMove,
     required this.about,
     required this.createdAt,
+    required this.isFavourite,
   });
 
   UserDataModel copyWith({
@@ -81,6 +83,7 @@ class UserDataModel {
     bool? readyMove,
     String? about,
     String? createdAt,
+    bool? isFavourite,
   }) {
     return UserDataModel(
       id: id ?? this.id,
@@ -106,12 +109,13 @@ class UserDataModel {
       readyMove: readyMove ?? this.readyMove,
       about: about ?? this.about,
       createdAt: createdAt ?? this.createdAt,
+      isFavourite: isFavourite ?? this.isFavourite,
     );
   }
 
   @override
   String toString() {
-    return 'UserDataModel(id: $id, firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove, about: $about, createdAt: $createdAt)';
+    return 'UserDataModel(id: $id, firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove, about: $about, createdAt: $createdAt, isFavourite: $isFavourite)';
   }
 
   static UserDataModel deffault() => UserDataModel(
@@ -138,6 +142,7 @@ class UserDataModel {
         readyMove: false,
         about: "",
         createdAt: "",
+        isFavourite: false,
       );
 
   factory UserDataModel.fromMap(Map<String, dynamic> map) {
@@ -216,6 +221,7 @@ class UserDataModel {
       readyMove: map['ready_move'] as bool,
       about: map['about'] ?? "",
       createdAt: map['created_at'] as String,
+      isFavourite: map['is_favorite'] as bool,
     );
   }
 
@@ -226,7 +232,8 @@ class UserDataModel {
   bool operator ==(covariant UserDataModel other) {
     if (identical(this, other)) return true;
 
-    return other.firstName == firstName &&
+    return other.id == id &&
+        other.firstName == firstName &&
         other.surname == surname &&
         other.isMale == isMale &&
         other.avatar == avatar &&
@@ -245,12 +252,16 @@ class UserDataModel {
         listEquals(other.typeEmployments, typeEmployments) &&
         listEquals(other.skills, skills) &&
         other.readyMission == readyMission &&
-        other.readyMove == readyMove;
+        other.readyMove == readyMove &&
+        other.about == about &&
+        other.createdAt == createdAt &&
+        other.isFavourite == isFavourite;
   }
 
   @override
   int get hashCode {
-    return firstName.hashCode ^
+    return id.hashCode ^
+        firstName.hashCode ^
         surname.hashCode ^
         isMale.hashCode ^
         avatar.hashCode ^
@@ -269,6 +280,9 @@ class UserDataModel {
         typeEmployments.hashCode ^
         skills.hashCode ^
         readyMission.hashCode ^
-        readyMove.hashCode;
+        readyMove.hashCode ^
+        about.hashCode ^
+        createdAt.hashCode ^
+        isFavourite.hashCode;
   }
 }

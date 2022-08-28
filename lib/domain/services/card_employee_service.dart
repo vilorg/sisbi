@@ -23,11 +23,13 @@ class CardEmployeeService {
     return cards;
   }
 
-  Future<void> starVacancy(String token, int vacancyId) async {
+  Future<void> starVacancy(int vacancyId) async {
+    String token = await _sessionProvider.getToken();
     return await _cardProvider.starVacancy(token, vacancyId);
   }
 
-  Future<void> unstarVacancy(String token, int vacancyId) async {
+  Future<void> unstarVacancy(int vacancyId) async {
+    String token = await _sessionProvider.getToken();
     return await _cardProvider.unstarVacancy(token, vacancyId);
   }
 

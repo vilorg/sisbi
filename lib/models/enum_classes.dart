@@ -231,4 +231,6 @@ ObjectId getSchedulesFromInt(int i) {
   return ans;
 }
 
+class DoubleResponseException {}
+
 //TODO: пофиксить y_2_6 а не y_3_6

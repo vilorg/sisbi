@@ -6,6 +6,7 @@ import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 
 import 'resume_action_buttons.dart';
+import 'wrap_resume_cards.dart';
 
 class ResumeSwitcherHeader extends StatelessWidget {
   const ResumeSwitcherHeader({Key? key, required this.resume})
@@ -94,11 +95,8 @@ class ResumeSwitcherHeader extends StatelessWidget {
                           color: colorTextContrast,
                         ),
                   ),
-                  // WrapVacancyCards(
-                  //   vacancy: resume,
-                  //   userData: Provider.of<VacanciesSwitcherViewModel>(context)
-                  //       .userData,
-                  // ),
+                  const SizedBox(height: defaultPadding),
+                  WrapResumeCards(userData: resume),
                   const SizedBox(height: 2 * defaultPadding),
                   const VacancyActionButtons(),
                 ],

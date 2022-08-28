@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
+enum ResponseState { created, accepted, declined, no }
+
 class ChatPreviewModel {
   final int chatId;
   final int vacancyId;
@@ -26,6 +28,9 @@ class ChatPreviewModel {
   final String userEmail;
   final String vacancyTitle;
   final String avatar;
+  final ResponseState responseState;
+  final bool isInvite;
+  final int responseId;
   ChatPreviewModel({
     required this.chatId,
     required this.vacancyId,
@@ -49,6 +54,9 @@ class ChatPreviewModel {
     required this.userEmail,
     required this.vacancyTitle,
     required this.avatar,
+    required this.responseState,
+    required this.isInvite,
+    required this.responseId,
   });
 
   ChatPreviewModel copyWith({
@@ -74,6 +82,9 @@ class ChatPreviewModel {
     String? userEmail,
     String? vacancyTitle,
     String? avatar,
+    ResponseState? responseState,
+    bool? isInvite,
+    int? responseId,
   }) {
     return ChatPreviewModel(
       chatId: chatId ?? this.chatId,
@@ -99,6 +110,9 @@ class ChatPreviewModel {
       userEmail: userEmail ?? this.userEmail,
       vacancyTitle: vacancyTitle ?? this.vacancyTitle,
       avatar: avatar ?? this.avatar,
+      responseState: responseState ?? this.responseState,
+      isInvite: isInvite ?? this.isInvite,
+      responseId: responseId ?? this.responseId,
     );
   }
 
@@ -136,6 +150,8 @@ class ChatPreviewModel {
     // createdAtString = createdAtString.substring(0, 19);
     // createdAt = DateFormat('yyyy-MM-ddTHH:mm:ss').parse(createdAtString);
 
+    bool isInvite = map['last_response'] == null;
+
     return ChatPreviewModel(
       chatId: map['id'] as int,
       vacancyId: map['vacancy']['id'] as int,
@@ -159,6 +175,15 @@ class ChatPreviewModel {
       userEmail: map['user']['email'] ?? "",
       vacancyTitle: map['vacancy']['title'] as String,
       avatar: map['vacancy']['avatar'] as String,
+      responseState: !isInvite
+          ? ResponseState.values.firstWhere(
+              (element) =>
+                  element.toString() ==
+                  "ResponseState." + map['last_response']['state'],
+            )
+          : ResponseState.no,
+      isInvite: isInvite,
+      responseId: !isInvite ? map['last_response']['id'] as int : 0,
     );
   }
 
@@ -169,7 +194,7 @@ class ChatPreviewModel {
 
   @override
   String toString() {
-    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, vacancyTitle: $vacancyTitle, avatar: $avatar)';
+    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, vacancyTitle: $vacancyTitle, avatar: $avatar, responseState: $responseState, isInvite: $isInvite, reponseId: $responseId)';
   }
 
   @override

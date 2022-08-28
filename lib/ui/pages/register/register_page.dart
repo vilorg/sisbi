@@ -90,8 +90,13 @@ class RegisterPage extends StatelessWidget {
             RegisterTopInfo(
               length: widgets.length,
               setSelectedIndex: (bool isLow) {
-                if (isLow && (selectedIndex - 1) >= 0) {
-                  return model.previousPage;
+                if (isLow) {
+                  if ((selectedIndex - 1) >= 0) {
+                    return model.previousPage;
+                  } else {
+                    Navigator.of(context).pop();
+                    return null;
+                  }
                 } else if (!isLow && (selectedIndex + 1) < widgets.length) {
                   if (selectedIndex == 1) {
                     return model.onSubmitPhoneButton;

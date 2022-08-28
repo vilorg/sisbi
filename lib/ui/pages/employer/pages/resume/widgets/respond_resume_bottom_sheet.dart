@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
@@ -29,7 +28,11 @@ class _RespondResumeBottomSheetState extends State<RespondResumeBottomSheet> {
 
   @override
   void initState() {
-    selectedVacancy = widget.vacancies[0];
+    try {
+      selectedVacancy = widget.vacancies[0];
+    } catch (e) {
+      selectedVacancy = const ObjectId(0, "");
+    }
     super.initState();
   }
 

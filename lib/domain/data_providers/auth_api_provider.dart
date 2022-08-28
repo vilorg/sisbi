@@ -29,6 +29,7 @@ class AuthApiProvider {
           isEmployer ? "employer" : "user": {"phone": phone}
         }),
         headers: {"Content-Type": "application/json"});
+
     if (response.statusCode != 201 && response.statusCode != 422) {
       throw AuthFetchDataError();
     }

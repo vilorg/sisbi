@@ -153,8 +153,77 @@ class DialogViewModel extends ChangeNotifier {
           borderRadius:
               BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
       context: _context,
-      builder: (context) => ActionsMessage(chat: chat, isUser: isUser),
+      builder: (context) => ActionsMessage(
+        chat: chat,
+        isUser: isUser,
+        onDelete: _deleteChat,
+      ),
       // ActionsMessage(vacancy: ,)
     );
+  }
+
+  Future<void> _deleteChat() async {
+    try {
+      await _service.deleteChat(chat.chatId, isUser, _token!);
+      onClose();
+      Navigator.of(_context).pop();
+      Navigator.of(_context).pop();
+    } catch (e) {
+      Navigator.of(_context).pop();
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> accept() async {
+    try {
+      await _service.actionUser(true, chat.responseId, _token!);
+      onClose();
+      Navigator.of(_context).pop();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> decline() async {
+    try {
+      await _service.actionUser(false, chat.responseId, _token!);
+      onClose();
+      Navigator.of(_context).pop();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
   }
 }
