@@ -157,11 +157,13 @@ class _RegisterButton extends StatelessWidget {
         style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
             backgroundColor:
                 MaterialStateProperty.all<Color>(colorAccentDarkBlue)),
-        onPressed: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => RegisterPage.create(),
-          ),
-        ),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => RegisterPage.create(),
+            ),
+          );
+        },
         child: Padding(
           padding: const EdgeInsets.all(defaultButtonPadding),
           child: Text(

@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
+import 'package:sisbi/models/object_id.dart';
+import 'package:sisbi/ui/widgets/vacancy/vacancy_static_action_buttons.dart';
+import 'package:sisbi/ui/widgets/wrap_static_cards.dart';
 
 class VacancyStaticHeader extends StatelessWidget {
   const VacancyStaticHeader({
@@ -11,6 +15,11 @@ class VacancyStaticHeader extends StatelessWidget {
     required this.name,
     required this.title,
     required this.salary,
+    required this.expierence,
+    required this.email,
+    required this.phone,
+    required this.sendMessage,
+    required this.isChat,
   }) : super(key: key);
 
   final String employerAvatar;
@@ -18,6 +27,11 @@ class VacancyStaticHeader extends StatelessWidget {
   final String name;
   final String title;
   final int salary;
+  final Expierence expierence;
+  final String email;
+  final String phone;
+  final Function(BuildContext, String) sendMessage;
+  final bool isChat;
 
   @override
   Widget build(BuildContext context) {
@@ -113,11 +127,20 @@ class VacancyStaticHeader extends StatelessWidget {
                           color: colorTextContrast,
                         ),
                   ),
-                  // const SizedBox(height: defaultPadding),
-                  // WrapVacancyCards(
-                  //   vacancy: vacancy,
-                  //   userData: userData,
-                  // ),
+                  const SizedBox(height: defaultPadding),
+                  WrapStaticCards(
+                    expierence: expierence,
+                    region: const ObjectId(0, ""),
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  VacancyStaticActionButtons(
+                      title: title,
+                      salary: salary,
+                      sendMessage: sendMessage,
+                      name: name,
+                      phone: phone,
+                      email: email,
+                      isChat: isChat),
                   const SizedBox(height: 2 * defaultPadding),
                 ],
               ),

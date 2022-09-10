@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
+import 'package:sisbi/models/object_id.dart';
 
 import 'resume_static_header.dart';
 
@@ -14,6 +16,13 @@ class ResumeStaticCard extends StatelessWidget {
     required this.avatar,
     required this.salary,
     required this.name,
+    required this.expierence,
+    required this.region,
+    required this.phone,
+    required this.email,
+    required this.sendMessage,
+    required this.isChat,
+    required this.vacancies,
   }) : super(key: key);
 
   final String createdAt;
@@ -22,6 +31,13 @@ class ResumeStaticCard extends StatelessWidget {
   final String avatar;
   final int salary;
   final String name;
+  final Expierence expierence;
+  final ObjectId region;
+  final String phone;
+  final String email;
+  final Function(BuildContext, String, int) sendMessage;
+  final bool isChat;
+  final List<ObjectId> vacancies;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +67,13 @@ class ResumeStaticCard extends StatelessWidget {
                   name: name,
                   salary: salary,
                   title: title,
+                  expierence: expierence,
+                  region: region,
+                  email: email,
+                  phone: phone,
+                  sendMessage: sendMessage,
+                  isChat: isChat,
+                  vacancies: vacancies,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),

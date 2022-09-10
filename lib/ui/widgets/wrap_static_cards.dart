@@ -4,32 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/models/user_data_model.dart';
 
-class WrapResumeCards extends StatelessWidget {
-  const WrapResumeCards({
+class WrapStaticCards extends StatelessWidget {
+  const WrapStaticCards({
     Key? key,
-    required this.userData,
+    required this.expierence,
+    required this.region,
   }) : super(key: key);
 
-  final UserDataModel userData;
+  final Expierence expierence;
+  final ObjectId region;
 
   @override
   Widget build(BuildContext context) {
     List<Container> data = [];
 
-    if (_stringExp(userData.experience) != "") {
-      data.add(_buildWrapCard(context, _stringExp(userData.experience), false));
+    if (_stringExp(expierence) != "") {
+      data.add(_buildWrapCard(context, _stringExp(expierence), false));
     }
 
-    if (userData.region.value != "") {
-      data.add(_buildWrapCard(context, userData.region.value, false));
-    }
-
-    List<ObjectId> schedules = userData.schedules;
-
-    for (ObjectId i in schedules) {
-      data.add(_buildWrapCard(context, i.value, false));
+    if (region.value != "") {
+      data.add(_buildWrapCard(context, region.value, false));
     }
 
     return Wrap(

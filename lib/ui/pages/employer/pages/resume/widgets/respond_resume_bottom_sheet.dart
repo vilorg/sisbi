@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/models/user_data_model.dart';
 
 class RespondResumeBottomSheet extends StatefulWidget {
   const RespondResumeBottomSheet({
     Key? key,
-    required this.resume,
     required this.sendMessage,
     required this.vacancies,
   }) : super(key: key);
 
-  final UserDataModel resume;
   final Function(BuildContext, String, int) sendMessage;
   final List<ObjectId> vacancies;
 

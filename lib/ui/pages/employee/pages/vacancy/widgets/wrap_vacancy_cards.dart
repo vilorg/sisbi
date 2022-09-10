@@ -22,20 +22,24 @@ class WrapVacancyCards extends StatelessWidget {
     bool isAvaibleIsSelect = userData != null;
     List<Container> data = [];
 
-    data.add(_buildWrapCard(
-      context,
-      _stringExp(vacancy.experience),
-      isAvaibleIsSelect
-          ? _isExpierence(userData!.experience, vacancy.experience)
-          : false,
-    ));
-
-    data.add(_buildWrapCard(
+    if (_stringExp(vacancy.experience) != "") {
+      data.add(_buildWrapCard(
         context,
-        vacancy.cityName,
+        _stringExp(vacancy.experience),
         isAvaibleIsSelect
-            ? (vacancy.cityName == userData!.region.value)
-            : false));
+            ? _isExpierence(userData!.experience, vacancy.experience)
+            : false,
+      ));
+    }
+
+    if (vacancy.cityName != "") {
+      data.add(_buildWrapCard(
+          context,
+          vacancy.cityName,
+          isAvaibleIsSelect
+              ? (vacancy.cityName == userData!.region.value)
+              : false));
+    }
 
     List<ObjectId> _userSchedules =
         isAvaibleIsSelect ? userData!.schedules : [];

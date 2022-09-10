@@ -9,9 +9,9 @@ import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
+import 'package:sisbi/ui/widgets/show_contacts.dart';
 
 import 'widgets/respond_resume_bottom_sheet.dart';
-import 'widgets/show_contacts_resume.dart';
 
 class ResumesSwitcherViewModel extends ChangeNotifier {
   ResumesSwitcherViewModel(this.context) {
@@ -273,7 +273,11 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
             borderRadius:
                 BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
         context: context,
-        builder: (context) => ShowContactsResume(resume: resumes.last));
+        builder: (context) => ShowContacts(
+              name: "${resumes.last.firstName} ${resumes.last.surname}",
+              email: resumes.last.email,
+              phone: resumes.last.phone,
+            ));
   }
 
   void trySendMessage() {
@@ -300,7 +304,6 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
       isScrollControlled: true,
       builder: (context) => RespondResumeBottomSheet(
         vacancies: _vacancies,
-        resume: resumes.last,
         sendMessage: sendMessage,
       ),
     );
@@ -308,10 +311,8 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
 
   Future<void> sendMessage(
       BuildContext curContext, String text, int vacancyId) async {
-    String token = await _cardService.getToken();
     try {
-      await _cardService.respondVacancy(
-          token, vacancyId, resumes.last.id, text);
+      await _cardService.respondResume(vacancyId, resumes.last.id, text);
       Navigator.pop(curContext);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -365,9 +366,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
         isScrollControlled: true,
         builder: (context) {
           return RespondResumeBottomSheet(
-              vacancies: _vacancies,
-              resume: resumes.last,
-              sendMessage: sendMessage);
+              vacancies: _vacancies, sendMessage: sendMessage);
         });
   }
 }

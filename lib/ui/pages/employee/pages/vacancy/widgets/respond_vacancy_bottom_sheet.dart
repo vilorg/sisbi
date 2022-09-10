@@ -1,18 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/vacancy_model.dart';
 
 class RespondVacancyBottomSheet extends StatefulWidget {
   const RespondVacancyBottomSheet({
     Key? key,
-    required this.vacancy,
+    required this.title,
+    required this.salary,
     required this.sendMessage,
   }) : super(key: key);
 
-  final VacancyModel vacancy;
+  final String title;
+  final int salary;
   final Function(BuildContext, String) sendMessage;
 
   @override
@@ -29,7 +29,7 @@ class _RespondVacancyBottomSheetState extends State<RespondVacancyBottomSheet> {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Container(
-        height: 445.5,
+        height: 350,
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
@@ -55,37 +55,10 @@ class _RespondVacancyBottomSheetState extends State<RespondVacancyBottomSheet> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "${widget.vacancy.title}, зарплата от ${widget.vacancy.salary} руб.",
+                "${widget.title}, зарплата от ${widget.salary} руб.",
                 style: Theme.of(context).textTheme.bodyText1,
                 maxLines: 2,
               ),
-            ),
-            const SizedBox(height: defaultPadding / 2),
-            const Divider(),
-            const SizedBox(height: defaultPadding / 2),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  flex: 5,
-                  child: Text(
-                    "Предоставить контакты работодателю",
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                ),
-                Flexible(
-                  child: CupertinoSwitch(
-                    activeColor: colorAccentLightBlue,
-                    value: sendContacts,
-                    onChanged: (v) {
-                      sendContacts = v;
-                      setState(() {});
-                    },
-                  ),
-                ),
-              ],
             ),
             const SizedBox(height: defaultPadding / 2),
             const Divider(),

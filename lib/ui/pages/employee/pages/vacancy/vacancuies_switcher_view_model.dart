@@ -10,7 +10,7 @@ import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 
 import 'widgets/respond_vacancy_bottom_sheet.dart';
-import 'widgets/show_contacts_vacancy.dart';
+import '../../../../widgets/show_contacts.dart';
 
 enum CardStatus { like, dislike }
 
@@ -283,7 +283,10 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
             borderRadius:
                 BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
         context: context,
-        builder: (context) => ShowContactsVacancy(vacancy: vacancies.last));
+        builder: (context) => ShowContacts(
+            email: vacancies.last.email,
+            name: vacancies.last.fullName,
+            phone: vacancies.last.phone));
   }
 
   void trySendMessage() {
@@ -294,13 +297,15 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         context: context,
         isScrollControlled: true,
         builder: (context) => RespondVacancyBottomSheet(
-            vacancy: vacancies.last, sendMessage: sendMessage));
+              title: vacancies.last.title,
+              salary: vacancies.last.salary,
+              sendMessage: sendMessage,
+            ));
   }
 
   Future<void> sendMessage(BuildContext curContext, String text) async {
-    String token = HomeInheritedWidget.of(context)!.token;
     try {
-      await _cardService.respondVacancy(token, vacancies.last.id, text);
+      await _cardService.respondVacancy(vacancies.last.id, text);
       Navigator.pop(curContext);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -329,6 +334,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         ),
       );
     } catch (e) {
+      Navigator.pop(curContext);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: colorAccentRed,
@@ -342,18 +348,5 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
         ),
       );
     }
-  }
-
-  void getContacts() {
-    showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.vertical(top: Radius.circular(borderRadiusPage))),
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return RespondVacancyBottomSheet(
-              vacancy: vacancies.last, sendMessage: sendMessage);
-        });
   }
 }

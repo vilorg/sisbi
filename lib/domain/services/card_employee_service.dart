@@ -33,7 +33,8 @@ class CardEmployeeService {
     return await _cardProvider.unstarVacancy(token, vacancyId);
   }
 
-  Future respondVacancy(String token, int vacancyId, String text) async {
+  Future respondVacancy(int vacancyId, String text) async {
+    String token = await _sessionProvider.getToken();
     return await _cardProvider.respondVacancy(token, vacancyId, text);
   }
 

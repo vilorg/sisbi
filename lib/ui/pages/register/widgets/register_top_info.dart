@@ -86,7 +86,9 @@ class RegisterTopInfo extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: defaultButtonPadding),
                         child: Text(
-                          "Искать работу",
+                          model.state.isUser
+                              ? "Искать работу"
+                              : "Поиск сотрудников",
                           style: Theme.of(context).textTheme.button!.copyWith(
                                 color: colorAccentDarkBlue,
                               ),
@@ -107,7 +109,7 @@ class RegisterTopInfo extends StatelessWidget {
                       SizedBox(
                         width: buttonWidth,
                         child: ElevatedButton(
-                          onPressed: setSelectedIndex(true),
+                          onPressed: () => setSelectedIndex(true),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: defaultButtonPadding),
@@ -131,7 +133,7 @@ class RegisterTopInfo extends StatelessWidget {
                       SizedBox(
                         width: buttonWidth,
                         child: ElevatedButton(
-                          onPressed: setSelectedIndex(false),
+                          onPressed: () => setSelectedIndex(false),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: defaultButtonPadding),

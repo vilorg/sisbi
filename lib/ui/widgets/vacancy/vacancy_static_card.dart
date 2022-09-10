@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
 
 import 'vacancy_static_header.dart';
 
@@ -15,6 +16,11 @@ class VacancyStaticCard extends StatelessWidget {
     required this.employerAvatar,
     required this.salary,
     required this.name,
+    required this.expierence,
+    required this.email,
+    required this.phone,
+    required this.sendMessage,
+    required this.isChat,
   }) : super(key: key);
 
   final String createdAt;
@@ -24,6 +30,11 @@ class VacancyStaticCard extends StatelessWidget {
   final String employerAvatar;
   final int salary;
   final String name;
+  final Expierence expierence;
+  final String email;
+  final String phone;
+  final Function(BuildContext, String) sendMessage;
+  final bool isChat;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +65,11 @@ class VacancyStaticCard extends StatelessWidget {
                   name: name,
                   salary: salary,
                   title: title,
+                  expierence: expierence,
+                  email: email,
+                  phone: phone,
+                  sendMessage: sendMessage,
+                  isChat: isChat,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),

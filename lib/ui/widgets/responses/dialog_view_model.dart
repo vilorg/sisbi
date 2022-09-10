@@ -6,6 +6,7 @@ import 'package:sisbi/domain/services/chat_service.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:sisbi/models/message_model.dart';
 import 'package:intl/intl.dart';
+import 'package:sisbi/models/object_id.dart';
 import 'package:web_socket_channel/io.dart';
 
 import 'widgets/actions_message.dart';
@@ -37,6 +38,7 @@ class DialogViewModel extends ChangeNotifier {
   bool get isLoadingMore => _isLoadingMore;
   int _chatId = 0;
   final ScrollController scrollController = ScrollController();
+  List<ObjectId> vacancies = [];
 
   Future<void> _init() async {
     scrollController.addListener(() {

@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employee_service.dart';
+import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/widgets/vacancy/vacancy_static_card.dart';
 
@@ -45,6 +48,54 @@ class _ViewModel extends ChangeNotifier {
       _isLoading = false;
     }
   }
+
+  Future<void> sendMessage(
+      BuildContext newContext, String text, int vacancyId) async {
+    try {
+      await _cardService.respondVacancy(vacancyId, text);
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentDarkBlue,
+          content: Text(
+            "Вы успешно откликнулись на вакансию!",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    } on DoubleResponseException {
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Вы уже откликались на эту вакансию!",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    } catch (e) {
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Произошла ошибка!",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    }
+  }
 }
 
 class FavouriteVacancyPage extends StatelessWidget {
@@ -62,8 +113,12 @@ class FavouriteVacancyPage extends StatelessWidget {
     final bool isLoading = model.isLoading;
 
     List<Widget> data = [];
-    for (var vacancy in vacancies) {
-      data.add(_FavouriteCard(vacancy: vacancy));
+    for (VacancyModel vacancy in vacancies) {
+      data.add(_FavouriteCard(
+        vacancy: vacancy,
+        sendMessage: (BuildContext newContext, String message) =>
+            model.sendMessage(newContext, message, vacancy.id),
+      ));
       data.add(const Divider());
     }
 
@@ -114,10 +169,12 @@ class FavouriteVacancyPage extends StatelessWidget {
 
 class _FavouriteCard extends StatelessWidget {
   final VacancyModel vacancy;
+  final Function(BuildContext, String) sendMessage;
 
   const _FavouriteCard({
     Key? key,
     required this.vacancy,
+    required this.sendMessage,
   }) : super(key: key);
 
   @override
@@ -134,6 +191,11 @@ class _FavouriteCard extends StatelessWidget {
           avatar: vacancy.avatar,
           salary: vacancy.salary,
           name: vacancy.fullName,
+          expierence: vacancy.experience,
+          email: vacancy.email,
+          phone: vacancy.phone,
+          sendMessage: sendMessage,
+          isChat: false,
         ),
       )),
       child: Container(

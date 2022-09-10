@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
+import 'package:sisbi/ui/widgets/resume/resume_static_card.dart';
 import 'package:sisbi/ui/widgets/vacancy/vacancy_static_card.dart';
 
 import 'contacts_message.dart';
@@ -40,17 +41,38 @@ class ActionsMessage extends StatelessWidget {
               title: isUser ? "Перейти в вакансию" : "Перейти в резюме",
               asset: "assets/icons/arrow_forward.svg",
               isTrash: false,
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => VacancyStaticCard(
-                      avatar: chat.avatar,
-                      employerAvatar: chat.employerAvatar,
-                      createdAt: chat.createdAt,
-                      description: chat.description,
-                      name: chat.employerName,
-                      salary: chat.salary,
-                      title: chat.title,
-                    ),
-                  ))),
+              onTap: () =>
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => isUser
+                          ? VacancyStaticCard(
+                              avatar: chat.avatar,
+                              employerAvatar: chat.employerAvatar,
+                              createdAt: chat.createdAt,
+                              description: chat.description,
+                              name: chat.employerName,
+                              salary: chat.salary,
+                              title: chat.title,
+                              expierence: chat.vacancyExpierence,
+                              email: chat.userEmail,
+                              phone: chat.userPhone,
+                              sendMessage: (a, b) {},
+                              isChat: true,
+                            )
+                          : ResumeStaticCard(
+                              createdAt: chat.createdAt,
+                              title: chat.title,
+                              description: chat.description,
+                              avatar: chat.userAvatar,
+                              salary: chat.salary,
+                              name: "${chat.userFirstName} ${chat.userSurname}",
+                              expierence: chat.userExpierence,
+                              region: chat.region,
+                              vacancies: const [],
+                              email: chat.userEmail,
+                              isChat: true,
+                              phone: chat.userPhone,
+                              sendMessage: (a, b, c) {},
+                            )))),
           const Divider(),
           _Tile(
               title: "Посмотреть контакты",

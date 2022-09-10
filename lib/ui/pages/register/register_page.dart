@@ -22,10 +22,12 @@ import 'widgets/register_top_info.dart';
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
-  static Widget create() => ChangeNotifierProvider(
-        create: (context) => RegisterViewModel(context),
-        child: const RegisterPage(),
-      );
+  static Widget create() {
+    return ChangeNotifierProvider(
+      create: (context) => RegisterViewModel(context),
+      child: const RegisterPage(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,26 +94,33 @@ class RegisterPage extends StatelessWidget {
               setSelectedIndex: (bool isLow) {
                 if (isLow) {
                   if ((selectedIndex - 1) >= 0) {
-                    return model.previousPage;
+                    model.previousPage();
+                    return null;
                   } else {
                     Navigator.of(context).pop();
                     return null;
                   }
                 } else if (!isLow && (selectedIndex + 1) < widgets.length) {
                   if (selectedIndex == 1) {
-                    return model.onSubmitPhoneButton;
+                    model.onSubmitPhoneButton();
+                    return null;
                   } else if (selectedIndex == 2) {
                     return null;
                   } else if (selectedIndex == 3) {
-                    return model.validateEmail;
-                  } else if (selectedIndex == 5 && isUser) {
-                    return model.validateName;
-                  } else if (selectedIndex == 7 && isUser) {
-                    return model.validateSkills;
+                    model.validateEmail();
+                    return null;
                   } else if (selectedIndex == 4 && !isUser) {
-                    return model.validateCompanyName;
+                    model.validateCompanyName();
+                    return null;
+                  } else if (selectedIndex == 5 && isUser) {
+                    model.validateName();
+                    return null;
+                  } else if (selectedIndex == 7 && isUser) {
+                    model.validateSkills();
+                    return null;
                   }
-                  return model.nextPage;
+                  model.nextPage();
+                  return null;
                 }
               },
             ),

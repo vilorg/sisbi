@@ -25,21 +25,26 @@ class RegisterSkills extends StatelessWidget {
 
     if (isLoading) {
       data.add(const Center(
-          child: CircularProgressIndicator(color: colorIconContrast)));
+          child: Padding(
+        padding: EdgeInsets.all(defaultPadding),
+        child: CircularProgressIndicator(color: colorIconContrast),
+      )));
     } else {
       if (isSelected) {
         for (String post in posts) {
           data.add(
-            ListTile(
-              tileColor: colorAccentDarkBlue,
-              title: Text(
-                post,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: colorTextContrast),
+            ColoredBox(
+              color: colorAccentDarkBlue,
+              child: ListTile(
+                title: Text(
+                  post,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: colorTextContrast),
+                ),
+                onTap: () => model.setSkills(post),
               ),
-              onTap: () => model.setSkills(post),
             ),
           );
         }
@@ -65,7 +70,7 @@ class RegisterSkills extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(
               top: 3 * defaultPadding,
-              bottom: 5 * defaultPadding,
+              bottom: 7 * defaultPadding,
             ),
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(defaultPadding),

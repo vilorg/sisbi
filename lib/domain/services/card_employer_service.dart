@@ -35,9 +35,9 @@ class CardEmployerService {
     return await _cardProvider.unstarResume(token, resumeId);
   }
 
-  Future respondVacancy(
-      String token, int resumeId, int userId, String text) async {
-    return await _cardProvider.respondResume(token, resumeId, userId, text);
+  Future respondResume(int vacancyId, int userId, String text) async {
+    String token = await _sessionProvider.getToken();
+    return await _cardProvider.respondResume(token, vacancyId, userId, text);
   }
 
   Future<List<ObjectId>> getVacancies() async {

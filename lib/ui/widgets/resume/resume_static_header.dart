@@ -2,6 +2,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/enum_classes.dart';
+import 'package:sisbi/models/object_id.dart';
+
+import '../wrap_static_cards.dart';
+import 'resume_static_action_buttons.dart';
 
 class ResumeStaticHeader extends StatelessWidget {
   const ResumeStaticHeader({
@@ -10,12 +15,26 @@ class ResumeStaticHeader extends StatelessWidget {
     required this.name,
     required this.title,
     required this.salary,
+    required this.expierence,
+    required this.region,
+    required this.phone,
+    required this.email,
+    required this.sendMessage,
+    required this.isChat,
+    required this.vacancies,
   }) : super(key: key);
 
   final String avatar;
   final String name;
   final String title;
   final int salary;
+  final Expierence expierence;
+  final ObjectId region;
+  final String phone;
+  final String email;
+  final Function(BuildContext, String, int) sendMessage;
+  final bool isChat;
+  final List<ObjectId> vacancies;
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +111,16 @@ class ResumeStaticHeader extends StatelessWidget {
                           color: colorTextContrast,
                         ),
                   ),
-                  // const SizedBox(height: defaultPadding),
-                  // WrapVacancyCards(
-                  //   vacancy: vacancy,
-                  //   userData: userData,
-                  // ),
+                  const SizedBox(height: defaultPadding),
+                  WrapStaticCards(expierence: expierence, region: region),
+                  const SizedBox(height: defaultPadding),
+                  ResumeStaticActionButtons(
+                    vacancies: vacancies,
+                    title: title,
+                    salary: salary,
+                    sendMessage: sendMessage,
+                    isChat: isChat,
+                  ),
                   const SizedBox(height: 2 * defaultPadding),
                 ],
               ),

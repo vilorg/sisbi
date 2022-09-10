@@ -1,16 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/user_data_model.dart';
 
-class ShowContactsResume extends StatelessWidget {
-  const ShowContactsResume({
+import 'package:sisbi/constants.dart';
+
+class ShowContacts extends StatelessWidget {
+  const ShowContacts({
     Key? key,
-    required this.resume,
+    required this.name,
+    required this.phone,
+    required this.email,
   }) : super(key: key);
 
-  final UserDataModel resume;
+  final String name;
+  final String phone;
+  final String email;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -28,7 +32,7 @@ class ShowContactsResume extends StatelessWidget {
             ),
             const SizedBox(height: defaultPadding),
             Text(
-              "${resume.firstName} ${resume.surname}",
+              name,
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
@@ -47,7 +51,7 @@ class ShowContactsResume extends StatelessWidget {
                   SvgPicture.asset("assets/icons/phone_icon.svg"),
                   const SizedBox(width: defaultPadding / 2),
                   SelectableText(
-                    resume.phone,
+                    phone,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorTextContrast,
@@ -70,7 +74,7 @@ class ShowContactsResume extends StatelessWidget {
                   SvgPicture.asset("assets/icons/main_icon.svg"),
                   const SizedBox(width: defaultPadding / 2),
                   SelectableText(
-                    resume.email,
+                    email,
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontWeight: FontWeight.w600,
                         ),

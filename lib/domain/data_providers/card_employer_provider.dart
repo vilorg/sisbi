@@ -106,7 +106,7 @@ class CardEmployerDataProvider {
   }
 
   Future respondResume(
-      String token, int resumeId, int userId, String text) async {
+      String token, int vacancyId, int userId, String text) async {
     Uri uri = Uri.parse(getRespondResumeUri);
     final response = await http.post(uri,
         headers: {
@@ -115,7 +115,7 @@ class CardEmployerDataProvider {
         },
         body: jsonEncode({
           "invite": {
-            "vacancy_id": resumeId,
+            "vacancy_id": vacancyId,
             "user_id": userId,
             "message": text,
           }

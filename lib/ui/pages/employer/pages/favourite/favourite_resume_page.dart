@@ -1,7 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employer_service.dart';
+import 'package:sisbi/models/enum_classes.dart';
+import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/widgets/resume/resume_static_card.dart';
 
@@ -16,12 +20,16 @@ class _ViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  List<UserDataModel> _resume = [];
-  List<UserDataModel> get resumes => _resume;
+  List<UserDataModel> _resumes = [];
+  List<UserDataModel> get resumes => _resumes;
+
+  List<ObjectId> _vacancies = [];
+  List<ObjectId> get vacancies => _vacancies;
 
   Future<void> _init() async {
     try {
-      _resume = await _cardService.getFavouriteResumeList();
+      _resumes = await _cardService.getFavouriteResumeList();
+      _vacancies = await _cardService.getVacancies();
     } catch (e) {
       Navigator.of(_context)
           .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
@@ -37,12 +45,60 @@ class _ViewModel extends ChangeNotifier {
   Future<void> unstarVacancy(int resumeId) async {
     _isLoading = true;
     await _cardService.unstarResume(resumeId);
-    _resume = await _cardService.getFavouriteResumeList();
+    _resumes = await _cardService.getFavouriteResumeList();
     _isLoading = false;
     try {
       notifyListeners();
     } catch (e) {
       _isLoading = false;
+    }
+  }
+
+  Future<void> sendMessage(
+      BuildContext newContext, String text, int vacancyId, int userId) async {
+    try {
+      await _cardService.respondResume(vacancyId, userId, text);
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentDarkBlue,
+          content: Text(
+            "Вы успешно откликнулись на резюме!",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    } on DoubleResponseException {
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Вы уже откликались на это резюме!",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+    } catch (e) {
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Произошла ошибка!",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
     }
   }
 }
@@ -63,7 +119,16 @@ class FavouriteResumePage extends StatelessWidget {
 
     List<Widget> data = [];
     for (var resume in resumes) {
-      data.add(_FavouriteCard(resume: resume));
+      data.add(_FavouriteCard(
+        resume: resume,
+        sendMessage: (BuildContext newContext, String message, int vacancyId) =>
+            model.sendMessage(
+          newContext,
+          message,
+          vacancyId,
+          resume.id,
+        ),
+      ));
       data.add(const Divider());
     }
 
@@ -114,10 +179,12 @@ class FavouriteResumePage extends StatelessWidget {
 
 class _FavouriteCard extends StatelessWidget {
   final UserDataModel resume;
+  final Function(BuildContext, String, int) sendMessage;
 
   const _FavouriteCard({
     Key? key,
     required this.resume,
+    required this.sendMessage,
   }) : super(key: key);
 
   @override
@@ -133,6 +200,13 @@ class _FavouriteCard extends StatelessWidget {
           avatar: resume.avatar,
           salary: resume.coast,
           name: "${resume.firstName} ${resume.surname}",
+          expierence: resume.experience,
+          region: resume.region,
+          email: resume.email,
+          phone: resume.phone,
+          sendMessage: sendMessage,
+          isChat: false,
+          vacancies: model.vacancies,
         ),
       )),
       child: Container(

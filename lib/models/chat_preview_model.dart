@@ -3,6 +3,10 @@ import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
+import 'package:sisbi/models/enum_classes.dart';
+
+import 'object_id.dart';
+
 enum ResponseState { created, accepted, declined, no }
 
 class ChatPreviewModel {
@@ -26,11 +30,15 @@ class ChatPreviewModel {
   final String userAvatar;
   final String userPhone;
   final String userEmail;
-  final String vacancyTitle;
+  final Expierence userExpierence;
+  final ObjectId region;
+
   final String avatar;
   final ResponseState responseState;
   final bool isInvite;
   final int responseId;
+  final Expierence vacancyExpierence;
+
   ChatPreviewModel({
     required this.chatId,
     required this.vacancyId,
@@ -52,11 +60,13 @@ class ChatPreviewModel {
     required this.userAvatar,
     required this.userPhone,
     required this.userEmail,
-    required this.vacancyTitle,
+    required this.userExpierence,
+    required this.region,
     required this.avatar,
     required this.responseState,
     required this.isInvite,
     required this.responseId,
+    required this.vacancyExpierence,
   });
 
   ChatPreviewModel copyWith({
@@ -80,11 +90,13 @@ class ChatPreviewModel {
     String? userAvatar,
     String? userPhone,
     String? userEmail,
-    String? vacancyTitle,
+    Expierence? userExpierence,
+    ObjectId? region,
     String? avatar,
     ResponseState? responseState,
     bool? isInvite,
     int? responseId,
+    Expierence? vacancyExpierence,
   }) {
     return ChatPreviewModel(
       chatId: chatId ?? this.chatId,
@@ -108,11 +120,13 @@ class ChatPreviewModel {
       userAvatar: userAvatar ?? this.userAvatar,
       userPhone: userPhone ?? this.userPhone,
       userEmail: userEmail ?? this.userEmail,
-      vacancyTitle: vacancyTitle ?? this.vacancyTitle,
+      userExpierence: userExpierence ?? this.userExpierence,
+      region: region ?? this.region,
       avatar: avatar ?? this.avatar,
       responseState: responseState ?? this.responseState,
       isInvite: isInvite ?? this.isInvite,
       responseId: responseId ?? this.responseId,
+      vacancyExpierence: vacancyExpierence ?? this.vacancyExpierence,
     );
   }
 
@@ -151,6 +165,10 @@ class ChatPreviewModel {
     // createdAt = DateFormat('yyyy-MM-ddTHH:mm:ss').parse(createdAtString);
 
     bool isInvite = map['last_response'] == null;
+    ObjectId city = const ObjectId(0, "");
+    if (map['city'] != null) {
+      city = ObjectId(map['city']['id'] as int, map['city']['name'] as String);
+    }
 
     return ChatPreviewModel(
       chatId: map['id'] as int,
@@ -172,8 +190,11 @@ class ChatPreviewModel {
       userSurname: map['user']['surname'] as String,
       userAvatar: map['user']['avatar'] as String,
       userPhone: map['user']['phone'] as String,
-      userEmail: map['user']['email'] ?? "",
-      vacancyTitle: map['vacancy']['title'] as String,
+      userEmail: map['user']['email'] as String? ?? "",
+      userExpierence: Expierence.values.firstWhere((element) =>
+          element.toString() ==
+          "Expierence." +
+              (map['user']["experience"] as String? ?? "notChosed")),
       avatar: map['vacancy']['avatar'] as String,
       responseState: !isInvite
           ? ResponseState.values.firstWhere(
@@ -184,6 +205,11 @@ class ChatPreviewModel {
           : ResponseState.no,
       isInvite: isInvite,
       responseId: !isInvite ? map['last_response']['id'] as int : 0,
+      region: city,
+      vacancyExpierence: Expierence.values.firstWhere((element) =>
+          element.toString() ==
+          "Expierence." +
+              (map['vacancy']["experience"] as String? ?? "notChosed")),
     );
   }
 
@@ -194,41 +220,70 @@ class ChatPreviewModel {
 
   @override
   String toString() {
-    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, vacancyTitle: $vacancyTitle, avatar: $avatar, responseState: $responseState, isInvite: $isInvite, reponseId: $responseId)';
+    return 'ChatPreviewModel(chatId: $chatId, vacancyId: $vacancyId, employerName: $employerName, employerAvatar: $employerAvatar, employerPhone: $employerPhone, employerEmail: $employerEmail, lastMessage: $lastMessage, lastMessageSenAt: $lastMessageSenAt, isEmployerLastMessage: $isEmployerLastMessage, isSeen: $isSeen, title: $title, description: $description, createdAt: $createdAt, salary: $salary, seenAt: $seenAt, userFirstName: $userFirstName, userSurname: $userSurname, userAvatar: $userAvatar, userPhone: $userPhone, userEmail: $userEmail, userExpierence: $userExpierence, region: $region, avatar: $avatar, responseState: $responseState, isInvite: $isInvite, responseId: $responseId, vacancyExpierence: $vacancyExpierence)';
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant ChatPreviewModel other) {
     if (identical(this, other)) return true;
 
-    return other is ChatPreviewModel &&
-        other.chatId == chatId &&
+    return other.chatId == chatId &&
+        other.vacancyId == vacancyId &&
         other.employerName == employerName &&
         other.employerAvatar == employerAvatar &&
+        other.employerPhone == employerPhone &&
+        other.employerEmail == employerEmail &&
         other.lastMessage == lastMessage &&
         other.lastMessageSenAt == lastMessageSenAt &&
         other.isEmployerLastMessage == isEmployerLastMessage &&
         other.isSeen == isSeen &&
         other.title == title &&
+        other.description == description &&
+        other.createdAt == createdAt &&
+        other.salary == salary &&
         other.seenAt == seenAt &&
         other.userFirstName == userFirstName &&
         other.userSurname == userSurname &&
-        other.userAvatar == userAvatar;
+        other.userAvatar == userAvatar &&
+        other.userPhone == userPhone &&
+        other.userEmail == userEmail &&
+        other.userExpierence == userExpierence &&
+        other.region == region &&
+        other.avatar == avatar &&
+        other.responseState == responseState &&
+        other.isInvite == isInvite &&
+        other.responseId == responseId &&
+        other.vacancyExpierence == vacancyExpierence;
   }
 
   @override
   int get hashCode {
     return chatId.hashCode ^
+        vacancyId.hashCode ^
         employerName.hashCode ^
         employerAvatar.hashCode ^
+        employerPhone.hashCode ^
+        employerEmail.hashCode ^
         lastMessage.hashCode ^
         lastMessageSenAt.hashCode ^
         isEmployerLastMessage.hashCode ^
         isSeen.hashCode ^
         title.hashCode ^
+        description.hashCode ^
+        createdAt.hashCode ^
+        salary.hashCode ^
         seenAt.hashCode ^
         userFirstName.hashCode ^
         userSurname.hashCode ^
-        userAvatar.hashCode;
+        userAvatar.hashCode ^
+        userPhone.hashCode ^
+        userEmail.hashCode ^
+        userExpierence.hashCode ^
+        region.hashCode ^
+        avatar.hashCode ^
+        responseState.hashCode ^
+        isInvite.hashCode ^
+        responseId.hashCode ^
+        vacancyExpierence.hashCode;
   }
 }
