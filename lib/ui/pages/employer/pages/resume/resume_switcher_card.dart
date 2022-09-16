@@ -31,14 +31,14 @@ class ResumeSwitcherCard extends StatelessWidget {
         final angle = model.angle;
         final rotatedMatrix = Matrix4.identity()
           ..translate(center.dx, center.dy)
-          ..rotateZ(angle / 3)
+          ..rotateZ(-angle / 6)
           ..translate(-center.dx, -center.dy);
 
         return AnimatedContainer(
           curve: Curves.easeInOut,
           duration: Duration(milliseconds: milliseconds),
           transform: rotatedMatrix
-            ..translate(position.dx / 3, position.dy / 50),
+            ..translate(position.dx / 2, position.dy / 10),
           child: GestureDetector(
             child: _buildCard(context),
             onPanStart: (details) {

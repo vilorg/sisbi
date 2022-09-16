@@ -196,6 +196,7 @@ class _FavouriteCard extends StatelessWidget {
           phone: vacancy.phone,
           sendMessage: sendMessage,
           isChat: false,
+          removeFavourite: () => model.unstarVacancy(vacancy.id),
         ),
       )),
       child: Container(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ShowContacts extends StatelessWidget {
   const ShowContacts({
@@ -38,49 +39,59 @@ class ShowContacts extends StatelessWidget {
                   ),
             ),
             const SizedBox(height: defaultPadding),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(defaultPadding * 1.5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius),
-                color: colorAccentLightBlue,
+            GestureDetector(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(defaultPadding * 1.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  color: colorAccentLightBlue,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset("assets/icons/phone_icon.svg"),
+                    const SizedBox(width: defaultPadding / 2),
+                    SelectableText(
+                      phone,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: colorTextContrast,
+                          ),
+                    )
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SvgPicture.asset("assets/icons/phone_icon.svg"),
-                  const SizedBox(width: defaultPadding / 2),
-                  SelectableText(
-                    phone,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorTextContrast,
-                        ),
-                  )
-                ],
-              ),
+              onTap: () {
+                launchUrl(Uri.parse('tel:+$phone'));
+              },
             ),
             const SizedBox(height: defaultPadding / 2),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(defaultPadding * 1.5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius),
-                border: Border.all(color: colorBorder),
+            GestureDetector(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(defaultPadding * 1.5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  border: Border.all(color: colorBorder),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset("assets/icons/main_icon.svg"),
+                    const SizedBox(width: defaultPadding / 2),
+                    SelectableText(
+                      email,
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    )
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SvgPicture.asset("assets/icons/main_icon.svg"),
-                  const SizedBox(width: defaultPadding / 2),
-                  SelectableText(
-                    email,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                  )
-                ],
-              ),
+              onTap: () {
+                launchUrl(Uri.parse('mailto:$email'));
+              },
             ),
             const SizedBox(height: defaultPadding * 2),
             SizedBox(

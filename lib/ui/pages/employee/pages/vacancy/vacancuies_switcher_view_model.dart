@@ -54,12 +54,10 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   double get angle => _angle;
 
   double _width = 0;
-  double _height = 0;
 
   void startPosition(DragStartDetails details) {
     _isDragging = true;
     _width = HomeInheritedWidget.of(context)!.size.width;
-    _height = HomeInheritedWidget.of(context)!.size.height;
 
     notifyListeners();
   }
@@ -112,15 +110,23 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   }
 
   void like() {
-    _angle = 20;
-    _position += Offset(2 * _width, 0);
-    starVacancy();
+    _position = Offset(_position.dx + _width, _position.dy);
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
+    }
+    likeVacancyAction();
     _nextCard();
   }
 
   void dislike() {
-    _angle = -20;
-    _position -= Offset(2 * _width, 0);
+    _position = Offset(_position.dx - _width, _position.dy);
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
+    }
     _nextCard();
   }
 
@@ -136,8 +142,8 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
           backgroundColor: colorAccentDarkBlue,
           content: Text(
             vacancies.last.isFavourite
-                ? "Резюме успешно добавлено в изрбранное!"
-                : "Резюме успешно удалено из избранного!",
+                ? "Вакансия успешно добавлена в изрбранное!"
+                : "Вакансия успешно удалена из избранного!",
             style: Theme.of(context).textTheme.headline6!.copyWith(
                   color: colorTextContrast,
                   fontWeight: FontWeight.w600,
@@ -165,23 +171,47 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     } catch (e) {
       _isLoading = false;
     }
-    await _cardService.starVacancy(vacancies.last.id);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: colorAccentDarkBlue,
-        content: Text(
-          "Вакансия успешно добавлена в изрбранное!",
-          style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: colorTextContrast,
-                fontWeight: FontWeight.w600,
-              ),
+  }
+
+  Future likeVacancyAction() async {
+    if (vacancies.last.isFavourite) return;
+    try {
+      await _cardService.starVacancy(vacancies.last.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentDarkBlue,
+          content: Text(
+            "Вакансия успешно добавлена в изрбранное!",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
         ),
-      ),
-    );
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Произошла ошибка",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+    }
   }
 
   Future nextCard() async {
-    _position -= Offset(0, 2 * _height);
     await _nextCard();
   }
 
@@ -192,7 +222,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     _lastVacancy = _vacancies.last;
     _vacancies.removeLast();
     resetPosition();
-    if (_vacancies.length == 1) await _loadMoreVacancies();
+    if (_vacancies.length <= 4) await _loadMoreVacancies();
   }
 
   Future resetLast() async {
@@ -235,9 +265,15 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> resetCards() async {
+  Future resetCards() async {
     _isLoadingMore = false;
     _isLastPage = false;
+    _page = 1;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
+    }
     try {
       _vacancies = (await _cardService.getActualVacancyList(_page, _filter))
           .reversed

@@ -20,6 +20,7 @@ class VacancyStaticHeader extends StatelessWidget {
     required this.phone,
     required this.sendMessage,
     required this.isChat,
+    required this.removeFavourite,
   }) : super(key: key);
 
   final String employerAvatar;
@@ -32,6 +33,7 @@ class VacancyStaticHeader extends StatelessWidget {
   final String phone;
   final Function(BuildContext, String) sendMessage;
   final bool isChat;
+  final VoidCallback removeFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -134,13 +136,15 @@ class VacancyStaticHeader extends StatelessWidget {
                   ),
                   const SizedBox(height: defaultPadding),
                   VacancyStaticActionButtons(
-                      title: title,
-                      salary: salary,
-                      sendMessage: sendMessage,
-                      name: name,
-                      phone: phone,
-                      email: email,
-                      isChat: isChat),
+                    title: title,
+                    salary: salary,
+                    sendMessage: sendMessage,
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    isChat: isChat,
+                    removeFavourite: removeFavourite,
+                  ),
                   const SizedBox(height: 2 * defaultPadding),
                 ],
               ),

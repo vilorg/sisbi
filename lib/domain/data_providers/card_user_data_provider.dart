@@ -24,7 +24,7 @@ class CardUserDataProvider {
       params.add("q[salary_gteq]=${filter.coast}");
     }
     if (filter.expierence != Expierence.notChosed) {
-      params.add("q[experience_eq]=${filter.expierence}");
+      params.add("q[experience_eq]=${filter.expierence.index - 1}");
     }
 
     if (filter.jobCategory != []) {

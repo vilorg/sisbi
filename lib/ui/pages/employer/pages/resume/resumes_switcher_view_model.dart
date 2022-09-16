@@ -55,12 +55,10 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   double get angle => _angle;
 
   double _width = 0;
-  double _height = 0;
 
   void startPosition(DragStartDetails details) {
     _isDragging = true;
     _width = HomeInheritedWidget.of(context)!.size.width;
-    _height = HomeInheritedWidget.of(context)!.size.height;
 
     notifyListeners();
   }
@@ -113,19 +111,65 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   void like() {
-    _angle = 20;
-    _position += Offset(2 * _width, 0);
-    starVacancy();
+    _position = Offset(_position.dx + _width, _position.dy);
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
+    }
+    likeResumeAction();
     _nextCard();
   }
 
   void dislike() {
-    _angle = -20;
-    _position -= Offset(2 * _width, 0);
+    _position = Offset(_position.dx - _width, _position.dy);
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
+    }
     _nextCard();
   }
 
-  Future starVacancy() async {
+  Future likeResumeAction() async {
+    if (resumes.last.isFavourite) return;
+    try {
+      await _cardService.starResume(resumes.last.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentDarkBlue,
+          content: Text(
+            "Резюме успешно добавлено в изрбранное!",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Произошла ошибка",
+            style: Theme.of(context).textTheme.headline6!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+
+    try {
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+    }
+  }
+
+  Future starResume() async {
     try {
       resumes.last.isFavourite
           ? await _cardService.unstarResume(resumes.last.id)
@@ -169,7 +213,6 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future nextCard() async {
-    _position -= Offset(0, 2 * _height);
     await _nextCard();
   }
 
@@ -224,19 +267,25 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future<void> resetCards() async {
+    _page = 1;
+    _isLastPage = false;
+    _isLoadingMore = false;
     try {
-      _page = 1;
-      _isLastPage = false;
-      _isLoadingMore = false;
+      notifyListeners();
+    } catch (e) {
+      _resumes = [];
+    }
+    try {
       _vacancies = await _cardService.getVacancies();
       _resumes = (await _cardService.getActualResumeList(_page, _filter))
           .reversed
           .toList();
-      _isLoading = false;
     } catch (e) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
     }
+    _isLoading = false;
+
     try {
       notifyListeners();
     } catch (e) {

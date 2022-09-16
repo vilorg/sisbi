@@ -53,7 +53,7 @@ class VacancyActionButtons extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: model.starVacancy,
+          onTap: model.starResume,
           child: SvgPicture.asset(
             isLike || isLiked
                 ? "assets/icons/action_favourite_sel.svg"

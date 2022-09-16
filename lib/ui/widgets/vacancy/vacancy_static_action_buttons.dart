@@ -14,6 +14,7 @@ class VacancyStaticActionButtons extends StatelessWidget {
   final String phone;
   final String email;
   final bool isChat;
+  final VoidCallback removeFavourite;
   const VacancyStaticActionButtons({
     Key? key,
     required this.title,
@@ -23,6 +24,7 @@ class VacancyStaticActionButtons extends StatelessWidget {
     required this.phone,
     required this.email,
     required this.isChat,
+    required this.removeFavourite,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,15 @@ class VacancyStaticActionButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: !isChat
             ? [
+                GestureDetector(
+                  onTap: () {
+                    removeFavourite();
+                    Navigator.of(context).pop();
+                  },
+                  child: SvgPicture.asset(
+                    "assets/icons/action_favourite_sel.svg",
+                  ),
+                ),
                 GestureDetector(
                   onTap: () => showModalBottomSheet(
                       shape: const RoundedRectangleBorder(

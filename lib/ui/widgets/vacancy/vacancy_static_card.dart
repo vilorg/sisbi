@@ -21,6 +21,7 @@ class VacancyStaticCard extends StatelessWidget {
     required this.phone,
     required this.sendMessage,
     required this.isChat,
+    required this.removeFavourite,
   }) : super(key: key);
 
   final String createdAt;
@@ -35,6 +36,7 @@ class VacancyStaticCard extends StatelessWidget {
   final String phone;
   final Function(BuildContext, String) sendMessage;
   final bool isChat;
+  final VoidCallback removeFavourite;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +72,7 @@ class VacancyStaticCard extends StatelessWidget {
                   phone: phone,
                   sendMessage: sendMessage,
                   isChat: isChat,
+                  removeFavourite: removeFavourite,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(defaultPadding),

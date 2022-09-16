@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ContactsMessage extends StatelessWidget {
   const ContactsMessage({
@@ -42,49 +44,61 @@ class ContactsMessage extends StatelessWidget {
                 ),
           ),
           const SizedBox(height: defaultPadding),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(defaultPadding * 1.5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              color: colorAccentLightBlue,
+          GestureDetector(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(defaultPadding * 1.5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(borderRadius),
+                color: colorAccentLightBlue,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SvgPicture.asset("assets/icons/phone_icon.svg"),
+                  const SizedBox(width: defaultPadding / 2),
+                  SelectableText(
+                    isUser ? chat.employerPhone : chat.userPhone,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorTextContrast,
+                        ),
+                  )
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SvgPicture.asset("assets/icons/phone_icon.svg"),
-                const SizedBox(width: defaultPadding / 2),
-                SelectableText(
-                  isUser ? chat.employerPhone : chat.userPhone,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: colorTextContrast,
-                      ),
-                )
-              ],
-            ),
+            onTap: () {
+              launchUrl(Uri.parse(
+                  'tel:+${isUser ? chat.employerPhone : chat.userPhone}'));
+            },
           ),
           const SizedBox(height: defaultPadding / 2),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(defaultPadding * 1.5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              border: Border.all(color: colorBorder),
+          GestureDetector(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(defaultPadding * 1.5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(borderRadius),
+                border: Border.all(color: colorBorder),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SvgPicture.asset("assets/icons/main_icon.svg"),
+                  const SizedBox(width: defaultPadding / 2),
+                  SelectableText(
+                    isUser ? chat.employerEmail : chat.userEmail,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                  )
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SvgPicture.asset("assets/icons/main_icon.svg"),
-                const SizedBox(width: defaultPadding / 2),
-                SelectableText(
-                  isUser ? chat.employerEmail : chat.userEmail,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                )
-              ],
-            ),
+            onTap: () {
+              launchUrl(Uri.parse(
+                  'mailto:${isUser ? chat.employerEmail : chat.userEmail}'));
+            },
           ),
           const SizedBox(height: defaultPadding * 2),
           SizedBox(

@@ -57,6 +57,7 @@ class ActionsMessage extends StatelessWidget {
                               phone: chat.userPhone,
                               sendMessage: (a, b) {},
                               isChat: true,
+                              removeFavourite: () {},
                             )
                           : ResumeStaticCard(
                               createdAt: chat.createdAt,
