@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancy_switcher_card.dart';
@@ -14,8 +15,10 @@ import 'vacancuies_switcher_view_model.dart';
 class VacanciesSwitcherPage extends StatelessWidget {
   const VacanciesSwitcherPage({Key? key}) : super(key: key);
 
-  static Widget create() => ChangeNotifierProvider(
-        create: (context) => VacanciesSwitcherViewModel(context),
+  static Widget create(FilterModel filter, Function(FilterModel) setFilter) =>
+      ChangeNotifierProvider(
+        create: (context) =>
+            VacanciesSwitcherViewModel(context, filter, setFilter),
         child: const VacanciesSwitcherPage(),
       );
 

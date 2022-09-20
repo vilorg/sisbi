@@ -63,10 +63,8 @@ class CompanyProfile extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (c) => EditVacancyPage.create(vacancy, () {
-                          model.reload();
-                          Navigator.of(context).pop();
-                        }),
+                        builder: (c) =>
+                            EditVacancyPage.create(vacancy, model.reload),
                       ),
                     );
                   },

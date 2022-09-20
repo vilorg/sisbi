@@ -229,7 +229,9 @@ class _FavouriteCard extends StatelessWidget {
                         height: 20,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(defaultPadding),
-                          child: Image.network(vacancy.employerAvatar),
+                          child: vacancy.employerAvatar != ""
+                              ? Image.network(vacancy.employerAvatar)
+                              : Image.asset("assets/images/logo.png"),
                         ),
                       ),
                       const SizedBox(width: defaultPadding),

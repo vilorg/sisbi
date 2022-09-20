@@ -10,7 +10,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/vacancy_employer_service.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
-import 'package:sisbi/ui/pages/employer/pages/profile/widgets/about_employer_page.dart';
+import 'package:sisbi/ui/widgets/about_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/widgets/contacts_employer_page.dart';
 import 'package:sisbi/ui/widgets/profile/career_info.dart';
 import 'package:sisbi/ui/widgets/profile/city_profile_page.dart';
@@ -373,11 +373,12 @@ class CreateVacancyPage extends StatelessWidget {
                             state.description == "" ? null : state.description,
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => AboutEmployerPage(
+                            builder: (context) => AboutPage(
                               initAbout: state.description,
                               isVacancy: true,
                               onSave: (String about) =>
                                   model.setState(description: about),
+                              isEmployee: false,
                             ),
                           ),
                         ),

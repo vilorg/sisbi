@@ -65,322 +65,418 @@ class ResumeUser extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(borderRadiusPage),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: avatar,
-                ),
-              ),
-              Text(
-                user.previusJob,
-                style: Theme.of(context).textTheme.headline2!.copyWith(
-                      color: colorTextContrast,
-                      fontWeight: FontWeight.w700,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: defaultPadding),
-              Text(
-                "${user.firstName} ${user.surname}, $years лет",
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      color: colorTextContrast,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: defaultPadding / 2),
-              Text(
-                user.region.value,
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      color: colorTextContrast,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: defaultPadding),
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(borderRadiusPage),
-                ),
-                child: Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: defaultPadding),
-                      Center(
-                        child: Container(
-                          width: 50,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(borderRadius),
-                            color: Colors.grey[300],
-                          ),
-                        ),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(defaultPadding),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: GestureDetector(
+                        onTap: model.pickAvatar,
+                        child: avatar,
                       ),
-                      _GroupTile(
-                        title: "Должность",
-                        tiles: [
-                          _Tile(
-                            title: user.previusJob,
-                            subtitle:
-                                "Зарплата от ${user.coast} руб.\n${user.jobCategory.value == "" ? "Не указано" : user.jobCategory.value}",
-                            onTap: () =>
-                                Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CareerInfo.create(
-                                user.previusJob,
-                                user.coast,
-                                user.jobCategory,
-                                model.saveCareer,
-                              ),
-                            )),
-                          ),
-                          _Tile(
-                            title: "Профессиональные навыки",
-                            subtitle: skills,
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => SkillsProfile(
-                                  initSkills: skills,
-                                  setSkills: model.saveSkills,
+                    ),
+                  ),
+                  Text(
+                    user.previusJob,
+                    style: Theme.of(context).textTheme.headline2!.copyWith(
+                          color: colorTextContrast,
+                          fontWeight: FontWeight.w700,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: defaultPadding),
+                  Text(
+                    "${user.firstName} ${user.surname}, $years лет",
+                    style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                          color: colorTextContrast,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: defaultPadding / 2),
+                  Text(
+                    user.region.value,
+                    style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                          color: colorTextContrast,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(defaultPadding),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(borderRadius),
+                        color: colorIconContrast,
+                      ),
+                      padding: const EdgeInsets.all(defaultPadding),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Показы",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                        color: colorTextSecondary,
+                                      ),
                                 ),
+                                Text(
+                                  user.views.toString(),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: colorAccentDarkBlue,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const VerticalDivider(),
+                          Expanded(
+                            child: Column(children: [
+                              Text(
+                                "Просмотры",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      color: colorTextSecondary,
+                                    ),
+                              ),
+                              Text(
+                                user.shows.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: colorAccentDarkBlue,
+                                    ),
+                              ),
+                            ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(borderRadiusPage),
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: defaultPadding),
+                          Center(
+                            child: Container(
+                              width: 50,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(borderRadius),
+                                color: Colors.grey[300],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      _GroupTile(
-                        title: "Опыт работы",
-                        tiles: [
-                          _Tile(
-                            title: getExpierenceString(user.experience),
-                            onTap: () {
-                              showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(borderRadiusPage),
+                          _GroupTile(
+                            title: "Должность",
+                            tiles: [
+                              _Tile(
+                                title: user.previusJob,
+                                subtitle:
+                                    "Зарплата от ${user.coast} руб.\n${user.jobCategory.value == "" ? "Не указано" : user.jobCategory.value}",
+                                onTap: () => Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                  builder: (context) => CareerInfo.create(
+                                    user.previusJob,
+                                    user.coast,
+                                    user.jobCategory,
+                                    model.saveCareer,
+                                  ),
+                                )),
+                              ),
+                              _Tile(
+                                title: "Профессиональные навыки",
+                                subtitle: skills,
+                                onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => SkillsProfile(
+                                      initSkills: skills,
+                                      setSkills: model.saveSkills,
+                                    ),
                                   ),
                                 ),
-                                context: context,
-                                builder: (context) => RadioActionButton(
-                                  radios: RadioData(
-                                    onTap: (int? value) {
-                                      Expierence exp =
-                                          getExpierenceFromInt(value);
-                                      model.saveExp(exp);
-                                    },
-                                    titles: [
-                                      "Нет опыта",
-                                      "1 - 3 года",
-                                      "3 - 6 лет",
-                                      "более 6 лет",
-                                    ],
-                                    initValue:
-                                        getIntFromExpierence(user.experience),
-                                  ),
-                                ),
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      _GroupTile(
-                        title: "Образование",
-                        tiles: [
-                          _Tile(
-                            title: getEducationString(user.education),
-                            onTap: () {
-                              showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(borderRadiusPage),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) => RadioActionButton(
-                                  radios: RadioData(
-                                    onTap: (int? value) {
-                                      Education education =
-                                          getEducationFromInt(value);
-                                      model.saveEducation(education);
-                                    },
-                                    titles: [
-                                      "Среднее",
-                                      "Среднее специальное",
-                                      "Неоконченное высшее",
-                                      "Высшее",
-                                      "Бакалавр",
-                                      "Магистр",
-                                      "Кандидат наук",
-                                      "Доктор наук",
-                                    ],
-                                    initValue:
-                                        getIntFromEducation(user.education),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      _GroupTile(
-                        title: "Дополнительно",
-                        tiles: [
-                          _Tile(
-                            title: "Занятость",
-                            subtitle: typeEmployments.join(", "),
-                            onTap: () {
-                              showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(borderRadiusPage),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) {
-                                  List<String> titles = [
-                                    "Полная занятость",
-                                    "Частичная занятость",
-                                    "Проектная работа",
-                                    "Стажировка",
-                                  ];
-                                  return CheckActionButton(
-                                    checks: CheckData(
-                                      onTap: (List<String> typeEmployments) {
-                                        List<int> values = [];
-                                        for (int i = 1;
-                                            i <= titles.length;
-                                            i++) {
-                                          if (typeEmployments
-                                              .contains(titles[i - 1])) {
-                                            values.add(i);
-                                          }
-                                        }
-                                        model.saveTypeEmployments(values);
-                                      },
-                                      titles: titles,
-                                      initValue: typeEmployments,
+                          _GroupTile(
+                            title: "Опыт работы",
+                            tiles: [
+                              _Tile(
+                                title: getExpierenceString(user.experience),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(borderRadiusPage),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) => RadioActionButton(
+                                      radios: RadioData(
+                                        onTap: (int? value) {
+                                          Expierence exp =
+                                              getExpierenceFromInt(value);
+                                          model.saveExp(exp);
+                                        },
+                                        titles: [
+                                          "Нет опыта",
+                                          "1 - 3 года",
+                                          "3 - 6 лет",
+                                          "более 6 лет",
+                                        ],
+                                        initValue: getIntFromExpierence(
+                                            user.experience),
+                                      ),
                                     ),
                                   );
                                 },
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                          _Tile(
-                            title: "График работы",
-                            subtitle: schedules.join(", "),
-                            onTap: () {
-                              showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(borderRadiusPage),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) {
-                                  List<String> titles = [
-                                    "Удаленная работа",
-                                    "Полный день",
-                                    "Гибкий график",
-                                    "Сменный график",
-                                  ];
-                                  return CheckActionButton(
-                                    checks: CheckData(
-                                      onTap: (List<String> typeEmployments) {
-                                        List<int> values = [];
-                                        for (int i = 1;
-                                            i <= titles.length;
-                                            i++) {
-                                          if (typeEmployments
-                                              .contains(titles[i - 1])) {
-                                            values.add(i);
-                                          }
-                                        }
-                                        model.saveSchedules(values);
-                                      },
-                                      titles: titles,
-                                      initValue: schedules,
+                          _GroupTile(
+                            title: "Образование",
+                            tiles: [
+                              _Tile(
+                                title: getEducationString(user.education),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(borderRadiusPage),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) => RadioActionButton(
+                                      radios: RadioData(
+                                        onTap: (int? value) {
+                                          Education education =
+                                              getEducationFromInt(value);
+                                          model.saveEducation(education);
+                                        },
+                                        titles: [
+                                          "Среднее",
+                                          "Среднее специальное",
+                                          "Неоконченное высшее",
+                                          "Высшее",
+                                          "Бакалавр",
+                                          "Магистр",
+                                          "Кандидат наук",
+                                          "Доктор наук",
+                                        ],
+                                        initValue:
+                                            getIntFromEducation(user.education),
+                                      ),
                                     ),
                                   );
                                 },
-                              );
-                            },
+                              ),
+                            ],
                           ),
-                          _Tile(
-                            title: "Категория прав",
-                            subtitle: drivingLicence.join(", "),
-                            onTap: () {
-                              showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(borderRadiusPage),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) {
-                                  List<String> titles = DrivingLicence.values
-                                      .map((e) => e.name)
-                                      .toList();
-
-                                  return CheckActionButton(
-                                    checks: CheckData(
-                                      onTap: (List<String> licences) {
-                                        model.saveLicences(licences);
-                                      },
-                                      titles: titles,
-                                      initValue: user.drivingLicence
+                          _GroupTile(
+                            title: "Дополнительно",
+                            tiles: [
+                              _Tile(
+                                title: "Занятость",
+                                subtitle: typeEmployments.join(", "),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(borderRadiusPage),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) {
+                                      List<String> titles = [
+                                        "Полная занятость",
+                                        "Частичная занятость",
+                                        "Проектная работа",
+                                        "Стажировка",
+                                      ];
+                                      return CheckActionButton(
+                                        checks: CheckData(
+                                          onTap:
+                                              (List<String> typeEmployments) {
+                                            List<int> values = [];
+                                            for (int i = 1;
+                                                i <= titles.length;
+                                                i++) {
+                                              if (typeEmployments
+                                                  .contains(titles[i - 1])) {
+                                                values.add(i);
+                                              }
+                                            }
+                                            model.saveTypeEmployments(values);
+                                          },
+                                          titles: titles,
+                                          initValue: typeEmployments,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              _Tile(
+                                title: "График работы",
+                                subtitle: schedules.join(", "),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(borderRadiusPage),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) {
+                                      List<String> titles = [
+                                        "Удаленная работа",
+                                        "Полный день",
+                                        "Гибкий график",
+                                        "Сменный график",
+                                      ];
+                                      return CheckActionButton(
+                                        checks: CheckData(
+                                          onTap:
+                                              (List<String> typeEmployments) {
+                                            List<int> values = [];
+                                            for (int i = 1;
+                                                i <= titles.length;
+                                                i++) {
+                                              if (typeEmployments
+                                                  .contains(titles[i - 1])) {
+                                                values.add(i);
+                                              }
+                                            }
+                                            model.saveSchedules(values);
+                                          },
+                                          titles: titles,
+                                          initValue: schedules,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              _Tile(
+                                title: "Категория прав",
+                                subtitle: drivingLicence.join(", "),
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(borderRadiusPage),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) {
+                                      List<String> titles = DrivingLicence
+                                          .values
                                           .map((e) => e.name)
-                                          .toList(),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                          _Tile(
-                            title: "Командировки и переезд",
-                            subtitle: mission,
-                            onTap: () {
-                              showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(borderRadiusPage),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) {
-                                  List<String> titles = [
-                                    "к командировкам",
-                                    "к переезду",
-                                  ];
+                                          .toList();
 
-                                  return SwitchActionButton(
-                                    switchs: SwitchData(
-                                      onTap: (List<bool> missioins) {
-                                        model.saveMission(missioins);
-                                      },
-                                      titles: titles,
-                                      initValue: [
-                                        user.readyMission,
-                                        user.readyMove,
-                                      ],
-                                    ),
+                                      return CheckActionButton(
+                                        checks: CheckData(
+                                          onTap: (List<String> licences) {
+                                            model.saveLicences(licences);
+                                          },
+                                          titles: titles,
+                                          initValue: user.drivingLicence
+                                              .map((e) => e.name)
+                                              .toList(),
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
+                              ),
+                              _Tile(
+                                title: "Командировки и переезд",
+                                subtitle: mission,
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(borderRadiusPage),
+                                      ),
+                                    ),
+                                    context: context,
+                                    builder: (context) {
+                                      List<String> titles = [
+                                        "к командировкам",
+                                        "к переезду",
+                                      ];
+
+                                      return SwitchActionButton(
+                                        switchs: SwitchData(
+                                          onTap: (List<bool> missioins) {
+                                            model.saveMission(missioins);
+                                          },
+                                          titles: titles,
+                                          initValue: [
+                                            user.readyMission,
+                                            user.readyMove,
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                              _Tile(
+                                title: "Описание о себе",
+                                onTap: model.openAbout,
+                                subtitle: user.about,
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: defaultPadding * 4.5),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                  padding: const EdgeInsets.all(defaultPadding),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      child: Padding(
+                        padding: const EdgeInsets.all(defaultButtonPadding),
+                        child: Text(
+                            "${user.about != "" ? "Изменить" : "Добавить"} описание о себе",
+                            style: Theme.of(context).textTheme.button),
+                      ),
+                      onPressed: model.openAbout,
+                    ),
+                  )),
+            ),
+          ],
         ),
       ),
     );
@@ -388,7 +484,7 @@ class ResumeUser extends StatelessWidget {
 }
 
 class _GroupTile extends StatelessWidget {
-  final List<_Tile> tiles;
+  final List<_Tile?> tiles;
   final String title;
   const _GroupTile({
     Key? key,
@@ -411,9 +507,13 @@ class _GroupTile extends StatelessWidget {
       ),
       const Divider(),
     ];
-    for (_Tile tile in tiles) {
-      data.add(tile);
-      data.add(const Divider());
+    for (_Tile? tile in tiles) {
+      if (tile != null) {
+        data.add(tile);
+        data.add(const Divider());
+      } else {
+        data.add(const SizedBox(height: defaultPadding * 3));
+      }
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -15,12 +15,14 @@ import '../../../../widgets/show_contacts.dart';
 enum CardStatus { like, dislike }
 
 class VacanciesSwitcherViewModel extends ChangeNotifier {
-  VacanciesSwitcherViewModel(this.context) {
+  VacanciesSwitcherViewModel(
+      this.context, this._filter, this.setGeneralFilter) {
     resetCards();
   }
 
   final BuildContext context;
   final CardEmployeeService _cardService = CardEmployeeService();
+  final Function(FilterModel) setGeneralFilter;
 
   List<VacancyModel> _vacancies = [];
   List<VacancyModel> get vacancies => _vacancies;
@@ -33,11 +35,12 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   bool _isLastPage = false;
 
   VacancyModel? _lastVacancy;
-  FilterModel _filter = FilterModel.deffault();
+  FilterModel _filter;
   FilterModel get filter => _filter;
 
   void setFilter(FilterModel filter) {
     _filter = filter;
+    setGeneralFilter(filter);
     notifyListeners();
   }
 
@@ -176,6 +179,7 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   Future likeVacancyAction() async {
     if (vacancies.last.isFavourite) return;
     try {
+      vacancies.last = vacancies.last.copyWith(isFavourite: true);
       await _cardService.starVacancy(vacancies.last.id);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -294,6 +298,11 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
     if (_isLoadingMore || _isLastPage) return;
     _isLoadingMore = true;
     _page += 1;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _vacancies = [];
+    }
     try {
       List<VacancyModel> data =
           (await _cardService.getActualVacancyList(_page, _filter))

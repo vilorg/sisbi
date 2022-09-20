@@ -14,12 +14,13 @@ import 'package:sisbi/ui/widgets/show_contacts.dart';
 import 'widgets/respond_resume_bottom_sheet.dart';
 
 class ResumesSwitcherViewModel extends ChangeNotifier {
-  ResumesSwitcherViewModel(this.context) {
+  ResumesSwitcherViewModel(this.context, this._filter, this.setGeneralFilter) {
     resetCards();
   }
 
   final BuildContext context;
   final CardEmployerService _cardService = CardEmployerService();
+  final Function(FilterModel) setGeneralFilter;
 
   List<UserDataModel> _resumes = [];
   List<UserDataModel> get resumes => _resumes;
@@ -34,10 +35,11 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   bool _isLoadingMore = false;
 
   UserDataModel? _lastVacancy;
-  FilterModel _filter = FilterModel.deffault();
+  FilterModel _filter;
   FilterModel get filter => _filter;
 
   void setFilter(FilterModel filter) {
+    setGeneralFilter(filter);
     _filter = filter;
     notifyListeners();
   }
@@ -134,6 +136,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
   Future likeResumeAction() async {
     if (resumes.last.isFavourite) return;
     try {
+      resumes.last = resumes.last.copyWith(isFavourite: true);
       await _cardService.starResume(resumes.last.id);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -223,7 +226,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
     _lastVacancy = _resumes.last;
     _resumes.removeLast();
     resetPosition();
-    if (_resumes.length <= 4) await _loadMoreVacancies();
+    if (_resumes.length <= 4) await _loadMoreResumes();
   }
 
   Future resetLast() async {
@@ -293,10 +296,10 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> _loadMoreVacancies() async {
+  Future<void> _loadMoreResumes() async {
     if (_isLoadingMore || _isLastPage) return;
     _isLoadingMore = true;
-    _page += 1;
+    _page++;
     try {
       List<UserDataModel> data =
           (await _cardService.getActualResumeList(_page, _filter))

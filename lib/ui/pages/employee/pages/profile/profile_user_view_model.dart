@@ -9,6 +9,7 @@ import 'package:sisbi/domain/services/profile_user_service.dart';
 import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/models/user_data_model.dart';
+import 'package:sisbi/ui/widgets/about_page.dart';
 import 'package:sisbi/ui/widgets/profile/city_profile_page.dart';
 import 'package:sisbi/ui/widgets/profile/email_profile_user.dart';
 
@@ -19,6 +20,7 @@ class _ViewModelState {
   final DateTime? birthday;
   final String email;
   final ObjectId? city;
+  final String about;
 
   _ViewModelState({
     this.name = "",
@@ -27,6 +29,7 @@ class _ViewModelState {
     this.birthday,
     this.email = "",
     this.city,
+    this.about = "",
   });
 
   _ViewModelState copyWith({
@@ -36,6 +39,7 @@ class _ViewModelState {
     DateTime? birthday,
     String? email,
     ObjectId? city,
+    String? about,
   }) {
     return _ViewModelState(
       name: name ?? this.name,
@@ -44,6 +48,7 @@ class _ViewModelState {
       birthday: birthday ?? this.birthday,
       email: email ?? this.email,
       city: city ?? this.city,
+      about: about ?? this.about,
     );
   }
 }
@@ -63,7 +68,7 @@ class ProfileUserViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  bool _isFirst = false;
+  bool _isFirst = true;
   bool get isFirst => _isFirst;
 
   Future<void> pickAvatar() async {
@@ -352,6 +357,26 @@ class ProfileUserViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> saveAbout(String about) async {
+    try {
+      await _service.saveAbout(about, _token);
+      _init();
+    } catch (e) {
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ошибка загрузки",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+    }
+  }
+
   void openCityScreen() => Navigator.of(_context).push(
         MaterialPageRoute(
           builder: (context) => CityProfilePage.create(
@@ -369,6 +394,13 @@ class ProfileUserViewModel extends ChangeNotifier {
           ),
         ),
       );
+
+  void openAbout() => Navigator.of(_context).push(MaterialPageRoute(
+      builder: (context) => AboutPage(
+          onSave: saveAbout,
+          initAbout: _state.about,
+          isVacancy: false,
+          isEmployee: true)));
 
   void openGenroCard() {
     showModalBottomSheet(
@@ -576,10 +608,13 @@ class ProfileUserViewModel extends ChangeNotifier {
     _token = await _service.getUserToken();
     _userModel = await _service.getUserData(_token);
     _state = _state.copyWith(
+      name: _userModel!.firstName,
+      surname: _userModel!.surname,
       isMale: _userModel!.isMale,
       birthday: _userModel!.birthday,
       email: _userModel!.email,
       city: _userModel!.region,
+      about: _userModel!.about,
     );
     _isLoading = false;
     try {

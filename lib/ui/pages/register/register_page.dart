@@ -107,7 +107,7 @@ class RegisterPage extends StatelessWidget {
                   } else if (selectedIndex == 2) {
                     return null;
                   } else if (selectedIndex == 3) {
-                    model.validateEmail();
+                    model.validateEmail(false);
                     return null;
                   } else if (selectedIndex == 4 && !isUser) {
                     model.validateCompanyName();

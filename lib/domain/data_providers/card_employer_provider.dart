@@ -216,6 +216,8 @@ class CardEmployerDataProvider {
       about: _decoded['about'] ?? "",
       createdAt: _decoded['created_at'] as String,
       isFavourite: _decoded['is_favorite'] as bool,
+      shows: _decoded['shows'] as int? ?? 0,
+      views: _decoded['views'] as int? ?? 0,
     );
     // } catch (e) {
     //   print(e);

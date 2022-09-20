@@ -89,19 +89,7 @@ class RadioActionButton extends StatelessWidget {
     final Function(int?) onTap = radios.onTap;
     final List<String> titles = radios.titles;
 
-    List<Widget> data = [
-      const SizedBox(height: defaultPadding),
-      Container(
-        width: 50,
-        height: 10,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(borderRadius),
-          color: Colors.grey[300],
-        ),
-      ),
-      const SizedBox(height: defaultPadding / 2),
-      const Divider(),
-    ];
+    List<Widget> data = [];
 
     for (int i = 0; i < titles.length; i++) {
       data.add(_RadioTile(
@@ -114,10 +102,27 @@ class RadioActionButton extends StatelessWidget {
 
     return SizedBox(
       height: titles.length * 60 + 50,
-      child: SingleChildScrollView(
-        child: Column(
-          children: data,
-        ),
+      child: Column(
+        children: [
+          const SizedBox(height: defaultPadding),
+          Container(
+            width: 50,
+            height: 10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: Colors.grey[300],
+            ),
+          ),
+          const SizedBox(height: defaultPadding / 2),
+          const Divider(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: data,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -170,19 +175,7 @@ class CheckActionButton extends StatelessWidget {
 
     return StatefulBuilder(
       builder: (BuildContext context, setState) {
-        List<Widget> data = [
-          const SizedBox(height: defaultPadding),
-          Container(
-            width: 50,
-            height: 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              color: Colors.grey[300],
-            ),
-          ),
-          const SizedBox(height: defaultPadding / 2),
-          const Divider(),
-        ];
+        List<Widget> data = [];
 
         for (int i = 0; i < titles.length; i++) {
           bool value = values.contains(titles[i]);
@@ -221,10 +214,27 @@ class CheckActionButton extends StatelessWidget {
 
         return SizedBox(
           height: checks.titles.length * 60 + 120,
-          child: SingleChildScrollView(
-            child: Column(
-              children: data,
-            ),
+          child: Column(
+            children: [
+              const SizedBox(height: defaultPadding),
+              Container(
+                width: 50,
+                height: 10,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  color: Colors.grey[300],
+                ),
+              ),
+              const SizedBox(height: defaultPadding / 2),
+              const Divider(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: data,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -273,19 +283,7 @@ class SwitchActionButton extends StatelessWidget {
 
     return StatefulBuilder(
       builder: (BuildContext context, setState) {
-        List<Widget> data = [
-          const SizedBox(height: defaultPadding),
-          Container(
-            width: 50,
-            height: 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(borderRadius),
-              color: Colors.grey[300],
-            ),
-          ),
-          const SizedBox(height: defaultPadding / 2),
-          const Divider(),
-        ];
+        List<Widget> data = [];
 
         for (int i = 0; i < titles.length; i++) {
           bool value = values[i];
@@ -320,10 +318,27 @@ class SwitchActionButton extends StatelessWidget {
 
         return SizedBox(
           height: switchs.titles.length * 60 + 120,
-          child: SingleChildScrollView(
-            child: Column(
-              children: data,
-            ),
+          child: Column(
+            children: [
+              const SizedBox(height: defaultPadding),
+              Container(
+                width: 50,
+                height: 10,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  color: Colors.grey[300],
+                ),
+              ),
+              const SizedBox(height: defaultPadding / 2),
+              const Divider(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: data,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

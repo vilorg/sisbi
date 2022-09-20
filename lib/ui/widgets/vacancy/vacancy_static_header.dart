@@ -100,7 +100,7 @@ class VacancyStaticHeader extends StatelessWidget {
                                 alignment: Alignment.center,
                               )
                             : Image.asset(
-                                "assets/images/avatar.png",
+                                "assets/images/logo.png",
                                 width: 24,
                                 alignment: Alignment.center,
                               ),

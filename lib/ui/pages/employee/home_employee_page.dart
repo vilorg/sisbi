@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/domain/services/auth_service.dart';
+import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employee/pages/favourite/favourite_vacancy_page.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/profile_user_page.dart';
@@ -16,6 +17,18 @@ class _ViewModel extends ChangeNotifier {
 
   String _token = "";
   String get token => _token;
+
+  FilterModel _filter = FilterModel.deffault();
+  FilterModel get filter => _filter;
+
+  void setFilter(FilterModel filter) {
+    _filter = filter;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _token = _token;
+    }
+  }
 
   final AuthService _authService = AuthService();
 
@@ -50,7 +63,7 @@ class HomeEmployeePage extends StatelessWidget {
     int selectedIndex = model.selectedIndex;
 
     List<Widget> pages = [
-      VacanciesSwitcherPage.create(),
+      VacanciesSwitcherPage.create(model.filter, model.setFilter),
       FavouriteVacancyPage.create(),
       ChatPage.create(false),
       ProfileUserPage.create(),

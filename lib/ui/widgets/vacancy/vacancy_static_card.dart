@@ -45,7 +45,7 @@ class VacancyStaticCard extends StatelessWidget {
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
         title: Text(
-          "Просмотр резюме",
+          "Просмотр вакансии",
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: colorTextContrast,
                 fontWeight: FontWeight.w700,

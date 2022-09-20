@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/domain/data_providers/session_data_provider.dart';
+import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
 import 'package:sisbi/ui/pages/employer/pages/favourite/favourite_resume_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/profile_employer_page.dart';
@@ -33,6 +34,18 @@ class _ViewModel extends ChangeNotifier {
 
   String _token = "";
   String get token => _token;
+
+  FilterModel _filter = FilterModel.deffault();
+  FilterModel get filter => _filter;
+
+  void setFilter(FilterModel filter) {
+    _filter = filter;
+    try {
+      notifyListeners();
+    } catch (e) {
+      _token = _token;
+    }
+  }
 
   _ViewModel() {
     _init();
@@ -67,7 +80,7 @@ class HomeEmployerPage extends StatelessWidget {
     int selectedIndex = state.selectedIndex;
 
     List<Widget> pages = [
-      ResumesSwitcherPage.create(),
+      ResumesSwitcherPage.create(model.filter, model.setFilter),
       FavouriteResumePage.create(),
       ChatPage.create(true),
       ProfileEmployerPage.create(),

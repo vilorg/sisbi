@@ -37,6 +37,9 @@ class ProfileUserService {
   Future<void> saveCity(ObjectId city, String token) async =>
       await _profileProvider.saveCity(city, token);
 
+  Future<void> saveAbout(String about, String token) async =>
+      await _profileProvider.saveAbout(about, token);
+
   Future<void> saveCareer(
           String vacancy, int coast, int jobCategoryId, String token) async =>
       await _profileProvider.saveCareer(vacancy, coast, jobCategoryId, token);

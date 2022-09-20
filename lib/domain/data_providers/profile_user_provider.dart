@@ -115,6 +115,21 @@ class ProfileUserProvider {
     if (response.statusCode != 200) throw Exception();
   }
 
+  Future<void> saveAbout(String about, String token) async {
+    Uri uri = Uri.parse(getUserUri);
+    var response = await http.put(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "user": {
+            "about": about,
+          }
+        }));
+    if (response.statusCode != 200) throw Exception();
+  }
+
   Future<void> saveCareer(
       String vacancy, int coast, int jobCategoryId, String token) async {
     Uri uri = Uri.parse(getUserUri);

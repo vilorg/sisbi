@@ -34,12 +34,12 @@ class CardUserDataProvider {
     }
     if (filter.typeEmployments != []) {
       for (var value in filter.typeEmployments) {
-        params.add("q[type_employments_id_in][]=${value.id}");
+        params.add("q[type_employments_id_in][]=${value.id + 1}");
       }
     }
     if (filter.schedules != []) {
       for (var value in filter.schedules) {
-        params.add("q[schedules_id_in][]=${value.id}");
+        params.add("q[schedules_id_in][]=${value.id + 1}");
       }
     }
     params.add("page=$page");
@@ -210,6 +210,8 @@ class CardUserDataProvider {
       about: _decoded['about'] ?? "",
       createdAt: _decoded['created_at'] as String,
       isFavourite: _decoded['is_favorite'] as bool? ?? false,
+      shows: _decoded['shows'] as int? ?? 0,
+      views: _decoded['views'] as int? ?? 0,
     );
     // } catch (e) {
     //   print(e);

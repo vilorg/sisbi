@@ -8,7 +8,7 @@ import 'package:sisbi/domain/services/profile_employer_service.dart';
 import 'package:sisbi/models/employer_data_model.dart';
 import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/models/vacancy_model.dart';
-import 'package:sisbi/ui/pages/employer/pages/profile/widgets/about_employer_page.dart';
+import 'package:sisbi/ui/widgets/about_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/widgets/personal_data_employer.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 import 'package:sisbi/ui/widgets/profile/email_profile_user.dart';
@@ -124,7 +124,7 @@ class ProfileEmployerViewModel extends ChangeNotifier {
 
   void openAboutScreen() => Navigator.of(_context).push(
         MaterialPageRoute(
-          builder: (context) => AboutEmployerPage(
+          builder: (context) => AboutPage(
             initAbout: _state.about,
             onSave: (String about) {
               _state = _state.copyWith(about: about);
@@ -132,6 +132,7 @@ class ProfileEmployerViewModel extends ChangeNotifier {
               _saveAbout();
             },
             isVacancy: false,
+            isEmployee: false,
           ),
         ),
       );

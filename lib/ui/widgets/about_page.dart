@@ -3,22 +3,24 @@ import 'package:flutter/material.dart';
 
 import 'package:sisbi/constants.dart';
 
-class AboutEmployerPage extends StatefulWidget {
+class AboutPage extends StatefulWidget {
   final Function(String) onSave;
   final String initAbout;
   final bool isVacancy;
-  const AboutEmployerPage({
+  final bool isEmployee;
+  const AboutPage({
     Key? key,
     required this.onSave,
     required this.initAbout,
     required this.isVacancy,
+    required this.isEmployee,
   }) : super(key: key);
 
   @override
-  State<AboutEmployerPage> createState() => _AboutEmployerPageState();
+  State<AboutPage> createState() => _AboutPageState();
 }
 
-class _AboutEmployerPageState extends State<AboutEmployerPage> {
+class _AboutPageState extends State<AboutPage> {
   final TextEditingController controller = TextEditingController();
   @override
   void initState() {
@@ -31,7 +33,11 @@ class _AboutEmployerPageState extends State<AboutEmployerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.isVacancy ? "Описание вакансии" : "Описание организации",
+          widget.isEmployee
+              ? "О себе"
+              : widget.isVacancy
+                  ? "Описание вакансии"
+                  : "Описание организации",
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: colorTextContrast,
                 fontWeight: FontWeight.w700,
@@ -84,9 +90,11 @@ class _AboutEmployerPageState extends State<AboutEmployerPage> {
                     maxLines: 15,
                     style: Theme.of(context).textTheme.bodyText1,
                     decoration: InputDecoration(
-                        hintText: widget.isVacancy
-                            ? "Описание вакансии"
-                            : "Описание организации"),
+                        hintText: widget.isEmployee
+                            ? "Расскажите о себе"
+                            : widget.isVacancy
+                                ? "Описание вакансии"
+                                : "Описание организации"),
                     controller: controller,
                   ),
                 ),

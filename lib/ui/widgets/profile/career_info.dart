@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 
 import 'package:sisbi/domain/services/profile_user_service.dart';
 import 'package:sisbi/models/object_id.dart';
+import 'package:sisbi/ui/widgets/profile/field_of_activity_select_page.dart';
 
 class _ViewModel extends ChangeNotifier {
   final ObjectId initJobCategory;
@@ -261,30 +263,102 @@ class CareerInfo extends StatelessWidget {
                         onChanged: (s) => model.refreshVacancies(),
                       ),
                       const SizedBox(height: defaultPadding),
+                      // !isLoadingjobCategories
+                      //     ? DropdownButton<String>(
+                      //         isExpanded: true,
+                      //         value: jobCategory!.value,
+                      //         elevation: 16,
+                      //         style: Theme.of(context).textTheme.bodyText1,
+                      //         onChanged: (String? newValue) {
+                      //           ObjectId val = jobCategories.firstWhere(
+                      //               (element) => element.value == newValue);
+                      //           model.onJobCategoryTap(val);
+                      //         },
+                      //         items: jobCategories
+                      //             .map((e) => e.value)
+                      //             .map<DropdownMenuItem<String>>(
+                      //                 (String value) {
+                      //           return DropdownMenuItem<String>(
+                      //             value: value,
+                      //             child: Text(value),
+                      //           );
+                      //         }).toList()
+                      //           ..add(const DropdownMenuItem<String>(
+                      //             value: "",
+                      //             child: Text(""),
+                      //           )),
+                      //       )
+                      //     : const CircularProgressIndicator(
+                      //         color: colorAccentDarkBlue),
                       !isLoadingjobCategories
-                          ? DropdownButton<String>(
-                              isExpanded: true,
-                              value: jobCategory!.value,
-                              elevation: 16,
-                              style: Theme.of(context).textTheme.bodyText1,
-                              onChanged: (String? newValue) {
-                                ObjectId val = jobCategories.firstWhere(
-                                    (element) => element.value == newValue);
-                                model.onJobCategoryTap(val);
-                              },
-                              items: jobCategories
-                                  .map((e) => e.value)
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList()
-                                ..add(const DropdownMenuItem<String>(
-                                  value: "",
-                                  child: Text(""),
-                                )),
+                          ? GestureDetector(
+                              onTap: () => Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
+                                      FieldOfActivitySelectPage(
+                                          fieldsOfActivity: jobCategories,
+                                          setFieldOfActivity:
+                                              model.onJobCategoryTap),
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    const begin = Offset(1.0, 0.0);
+                                    const end = Offset.zero;
+                                    const curve = Curves.ease;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                  },
+                                ),
+                              ),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: colorInput, width: 2),
+                                  borderRadius:
+                                      BorderRadius.circular(borderRadius),
+                                ),
+                                padding:
+                                    const EdgeInsets.all(defaultButtonPadding),
+                                child: Row(
+                                  children: jobCategory == null ||
+                                          jobCategory.value == ""
+                                      ? [
+                                          SvgPicture.asset(
+                                              "assets/icons/add.svg"),
+                                          const SizedBox(
+                                              width: defaultPadding / 2),
+                                          Text(
+                                            "Добавить сферу деятельности",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .copyWith(
+                                                  color: colorText,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ]
+                                      : [
+                                          Text(
+                                            jobCategory.value,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .copyWith(
+                                                  color: colorText,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ],
+                                ),
+                              ),
                             )
                           : const CircularProgressIndicator(
                               color: colorAccentDarkBlue),

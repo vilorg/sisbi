@@ -111,6 +111,7 @@ class VacancyEmployerProvider {
 
   Future<void> updateVacancy(
       int chatId, VacancyState state, bool isAvatar, String token) async {
+    print(123);
     String phone = state.phone;
     phone = phone.replaceAll(" │ ", "");
     phone = phone.replaceAll("-", "");
@@ -135,6 +136,7 @@ class VacancyEmployerProvider {
         }
       }),
     );
+    print(123);
     if (_response1.statusCode != 200) throw Exception();
 
     if (!isAvatar) {

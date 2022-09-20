@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
+import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/ui/inherited_widgets/vacacy_inherited_widget.dart';
 import 'package:sisbi/ui/widgets/search/search_page.dart';
@@ -14,8 +15,10 @@ import 'resumes_switcher_view_model.dart';
 class ResumesSwitcherPage extends StatelessWidget {
   const ResumesSwitcherPage({Key? key}) : super(key: key);
 
-  static Widget create() => ChangeNotifierProvider(
-        create: (context) => ResumesSwitcherViewModel(context),
+  static Widget create(FilterModel filter, Function(FilterModel) setFilter) =>
+      ChangeNotifierProvider(
+        create: (context) =>
+            ResumesSwitcherViewModel(context, filter, setFilter),
         child: const ResumesSwitcherPage(),
       );
 

@@ -217,6 +217,7 @@ class RegisterViewModel extends ChangeNotifier {
 
   void setEmail(String value) {
     _state = _state.copyWith(email: value);
+    validateEmail(true);
     notifyListeners();
   }
 
@@ -225,7 +226,7 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void validateEmail() {
+  void validateEmail(bool isEdit) {
     var email = _state.email;
     bool emailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -233,8 +234,11 @@ class RegisterViewModel extends ChangeNotifier {
     if (!emailValid) {
       _state = _state.copyWith(emailError: "Введите корректную почту");
       return notifyListeners();
+    } else {
+      _state = _state.copyWith(emailError: "");
+      notifyListeners();
     }
-    return nextPage();
+    isEdit ? null : nextPage();
   }
 
   void setIsMale(bool isMale) {
