@@ -8,16 +8,16 @@ import 'package:sisbi/models/filter_model.dart';
 import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/inherited_widgets/home_inherited_widget.dart';
+import 'package:sisbi/ui/widgets/show_contacts.dart';
 
 import 'widgets/respond_vacancy_bottom_sheet.dart';
-import '../../../../widgets/show_contacts.dart';
 
 enum CardStatus { like, dislike }
 
 class VacanciesSwitcherViewModel extends ChangeNotifier {
   VacanciesSwitcherViewModel(
       this.context, this._filter, this.setGeneralFilter) {
-    resetCards();
+    init();
   }
 
   final BuildContext context;
@@ -251,15 +251,15 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   Future<void> init() async {
     _isLoading = true;
     try {
-      _userData = await _cardService.getUserGraph();
-      _filter = _filter.copyWith(
-        coast: _userData.coast,
-        expierence: _userData.experience,
-        post: _userData.post,
-        region: _userData.region,
-        schedules: _userData.schedules,
-        typeEmployments: _userData.typeEmployments,
-      );
+      _userData = await _cardService.getUserData();
+      // _filter = _filter.copyWith(
+      //   coast: _userData.coast,
+      //   expierence: _userData.experience,
+      //   post: _userData.post,
+      //   region: _userData.region,
+      //   schedules: _userData.schedules,
+      //   typeEmployments: _userData.typeEmployments,
+      // );
       await resetCards();
     } catch (e) {
       Navigator.of(context).pushNamedAndRemoveUntil(
@@ -349,6 +349,22 @@ class VacanciesSwitcherViewModel extends ChangeNotifier {
   }
 
   Future<void> sendMessage(BuildContext curContext, String text) async {
+    if (_userData.isModetate) {
+      Navigator.pop(curContext);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ваше резюме еще не прошло модерацию",
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+      return;
+    }
     try {
       await _cardService.respondVacancy(vacancies.last.id, text);
       Navigator.pop(curContext);

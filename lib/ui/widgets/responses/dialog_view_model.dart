@@ -81,6 +81,7 @@ class DialogViewModel extends ChangeNotifier {
                   isSeen: isOnline,
                   createdAt: DateFormat('yyyy-MM-ddTHH:mm:ss').parse(
                       (a['message']['created_at'] as String).substring(0, 19)),
+                  isReponse: a['message']['response'] == "response",
                 ));
           }
           notifyListeners();

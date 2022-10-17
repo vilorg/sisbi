@@ -35,22 +35,21 @@ class AuthService {
   Future<List<String>> getPosts(String s) async =>
       await _authApiProvider.getPosts(s);
 
-  Future<void> saveUser({
-    required bool isUser,
-    required String firstName,
-    required String surName,
-    required String skills,
-    required String email,
-    required bool isMale,
-    required String comanyName,
-    required DateTime birthDay,
-    required int experience,
-    required List<int> typeEmployments,
-    required List<int> schedules,
-  }) async {
+  Future<void> saveUser(
+      {required bool isUser,
+      required String firstName,
+      required String surName,
+      required String skills,
+      required String email,
+      required bool isMale,
+      required String comanyName,
+      required DateTime birthDay,
+      required int experience,
+      required List<int> typeEmployments,
+      required List<int> schedules}) async {
     String token = await _sessionDataProvider.getToken();
     await _authApiProvider.saveUser(token, isUser, firstName, surName,
-        comanyName, email, birthDay, isMale, experience);
+        comanyName, email, birthDay, isMale, experience, skills);
     if (isUser) {
       await _authApiProvider.saveSchedules(token, schedules);
       await _authApiProvider.saveTypeEmployments(token, typeEmployments);

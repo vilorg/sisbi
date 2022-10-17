@@ -127,7 +127,7 @@ class ResumeUser extends StatelessWidget {
                                       ),
                                 ),
                                 Text(
-                                  user.views.toString(),
+                                  user.shows.toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
@@ -152,7 +152,7 @@ class ResumeUser extends StatelessWidget {
                                     ),
                               ),
                               Text(
-                                user.shows.toString(),
+                                user.views.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1!

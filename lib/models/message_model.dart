@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:intl/intl.dart';
 
 class MessageModel {
@@ -7,11 +8,13 @@ class MessageModel {
   final bool isUser;
   final bool isSeen;
   final DateTime createdAt;
+  final bool isReponse;
   MessageModel({
     required this.content,
     required this.isUser,
     required this.isSeen,
     required this.createdAt,
+    required this.isReponse,
   });
 
   MessageModel copyWith({
@@ -19,12 +22,14 @@ class MessageModel {
     bool? isUser,
     bool? isSeen,
     DateTime? createdAt,
+    bool? isReponse,
   }) {
     return MessageModel(
       content: content ?? this.content,
       isUser: isUser ?? this.isUser,
       isSeen: isSeen ?? this.isSeen,
       createdAt: createdAt ?? this.createdAt,
+      isReponse: isReponse ?? this.isReponse,
     );
   }
 
@@ -44,6 +49,7 @@ class MessageModel {
       isSeen: map['seen'] as bool,
       createdAt: DateFormat('yyyy-MM-ddTHH:mm:ss')
           .parse((map['created_at'] as String).substring(0, 19)),
+      isReponse: map['type_message'] == "response",
     );
   }
 

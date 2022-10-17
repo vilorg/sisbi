@@ -20,6 +20,7 @@ class Message extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool _isSelf = isUser == message.isUser;
+    final bool isReponse = message.isReponse;
     const Radius _radius = Radius.circular(defaultPadding);
 
     return Align(
@@ -46,11 +47,28 @@ class Message extends StatelessWidget {
                   maxWidth: MediaQuery.of(context).size.width * 0.75 -
                       2 * defaultPadding),
               padding: const EdgeInsets.all(defaultPadding),
-              child: Text(
-                message.content,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: _isSelf ? colorTextContrast : colorText,
-                    ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  isReponse
+                      ? Text(
+                          "Отклик на вакансию",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(
+                                color: _isSelf ? colorTextContrast : colorText,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        )
+                      : const SizedBox(),
+                  Text(
+                    message.content,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          color: _isSelf ? colorTextContrast : colorText,
+                        ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: defaultPadding / 8),

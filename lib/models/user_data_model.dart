@@ -34,6 +34,7 @@ class UserDataModel {
   final bool isFavourite;
   final int views;
   final int shows;
+  final bool isModetate;
   UserDataModel({
     required this.id,
     required this.firstName,
@@ -61,6 +62,7 @@ class UserDataModel {
     required this.isFavourite,
     required this.views,
     required this.shows,
+    required this.isModetate,
   });
 
   UserDataModel copyWith({
@@ -90,6 +92,7 @@ class UserDataModel {
     bool? isFavourite,
     int? views,
     int? shows,
+    bool? isModetate,
   }) {
     return UserDataModel(
       id: id ?? this.id,
@@ -118,12 +121,13 @@ class UserDataModel {
       isFavourite: isFavourite ?? this.isFavourite,
       views: views ?? this.views,
       shows: shows ?? this.shows,
+      isModetate: isModetate ?? this.isModetate,
     );
   }
 
   @override
   String toString() {
-    return 'UserDataModel(id: $id, firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove, about: $about, createdAt: $createdAt, isFavourite: $isFavourite, views: $views, shows: $shows)';
+    return 'UserDataModel(id: $id, firstName: $firstName, surname: $surname, isMale: $isMale, avatar: $avatar, birthday: $birthday, coast: $coast, phone: $phone, email: $email, jobCategory: $jobCategory, region: $region, post: $post, drivingLicence: $drivingLicence, education: $education, previusJob: $previusJob, experience: $experience, schedules: $schedules, typeEmployments: $typeEmployments, skills: $skills, readyMission: $readyMission, readyMove: $readyMove, about: $about, createdAt: $createdAt, isFavourite: $isFavourite, views: $views, shows: $shows, isModetate: $isModetate)';
   }
 
   static UserDataModel deffault() => UserDataModel(
@@ -153,6 +157,7 @@ class UserDataModel {
         isFavourite: false,
         shows: 0,
         views: 0,
+        isModetate: false,
       );
 
   factory UserDataModel.fromMap(Map<String, dynamic> map) {
@@ -234,6 +239,7 @@ class UserDataModel {
       isFavourite: map['is_favorite'] as bool,
       shows: map['shows'] as int? ?? 0,
       views: map['views'] as int? ?? 0,
+      isModetate: (map['state'] as String?) != "state",
     );
   }
 
@@ -269,7 +275,8 @@ class UserDataModel {
         other.createdAt == createdAt &&
         other.isFavourite == isFavourite &&
         other.views == views &&
-        other.shows == shows;
+        other.shows == shows &&
+        other.isModetate == isModetate;
   }
 
   @override
@@ -299,6 +306,7 @@ class UserDataModel {
         createdAt.hashCode ^
         isFavourite.hashCode ^
         views.hashCode ^
-        shows.hashCode;
+        shows.hashCode ^
+        isModetate.hashCode;
   }
 }

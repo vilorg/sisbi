@@ -160,7 +160,7 @@ class CardUserDataProvider {
     }
 
     ObjectId jobCategory = const ObjectId(0, "");
-    if (_decoded[''] != null) {
+    if (_decoded['job_category'] != null) {
       jobCategory = ObjectId(
           _decoded['job_category']['id'], _decoded['job_category']['name']);
     }
@@ -212,6 +212,7 @@ class CardUserDataProvider {
       isFavourite: _decoded['is_favorite'] as bool? ?? false,
       shows: _decoded['shows'] as int? ?? 0,
       views: _decoded['views'] as int? ?? 0,
+      isModetate: (_decoded['state'] as String?) == "moderating",
     );
     // } catch (e) {
     //   print(e);

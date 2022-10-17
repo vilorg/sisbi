@@ -346,15 +346,20 @@ class CareerInfo extends StatelessWidget {
                                           ),
                                         ]
                                       : [
-                                          Text(
-                                            jobCategory.value,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .copyWith(
-                                                  color: colorText,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                          Expanded(
+                                            child: Text(
+                                              jobCategory.value,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .copyWith(
+                                                    color: colorText,
+                                                    fontWeight: FontWeight.w600,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                              softWrap: true,
+                                            ),
                                           ),
                                         ],
                                 ),

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/domain/services/card_employee_service.dart';
 import 'package:sisbi/models/enum_classes.dart';
+import 'package:sisbi/models/user_data_model.dart';
 import 'package:sisbi/models/vacancy_model.dart';
 import 'package:sisbi/ui/widgets/vacancy/vacancy_static_card.dart';
 
@@ -22,9 +23,12 @@ class _ViewModel extends ChangeNotifier {
   List<VacancyModel> _vacancies = [];
   List<VacancyModel> get vacancies => _vacancies;
 
+  UserDataModel _userData = UserDataModel.deffault();
+
   Future<void> _init() async {
     try {
       _vacancies = await _cardService.getFavouriteVacancyList();
+      _userData = await _cardService.getUserData();
     } catch (e) {
       Navigator.of(_context)
           .pushNamedAndRemoveUntil(NameRoutes.login, (route) => false);
@@ -51,6 +55,22 @@ class _ViewModel extends ChangeNotifier {
 
   Future<void> sendMessage(
       BuildContext newContext, String text, int vacancyId) async {
+    if (_userData.isModetate) {
+      Navigator.pop(newContext);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentRed,
+          content: Text(
+            "Ваше резюме еще не прошло модерацию",
+            style: Theme.of(_context).textTheme.bodyText1!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w700,
+                ),
+          ),
+        ),
+      );
+      return;
+    }
     try {
       await _cardService.respondVacancy(vacancyId, text);
       Navigator.pop(newContext);

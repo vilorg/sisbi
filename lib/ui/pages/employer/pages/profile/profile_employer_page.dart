@@ -12,6 +12,7 @@ import 'package:sisbi/ui/widgets/about_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/widgets/personal_data_employer.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
 import 'package:sisbi/ui/widgets/profile/email_profile_user.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/company_profile.dart';
 
@@ -255,7 +256,9 @@ class ProfileEmployerPage extends StatelessWidget {
                     title: "Написать разработчикам",
                     asset: "assets/icons/arrow_forward.svg",
                     isRed: false,
-                    onTap: () {},
+                    onTap: () {
+                      launchUrl(Uri.parse('mailto:sisbi.rec@gmail.com'));
+                    },
                   ),
                   TileData(
                     title: "Выйти из аккаунта",

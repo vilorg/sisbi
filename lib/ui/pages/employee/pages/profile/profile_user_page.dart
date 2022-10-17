@@ -6,6 +6,7 @@ import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/ui/pages/employee/pages/profile/widgets/resume_user.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'profile_user_view_model.dart';
 import 'widgets/personal_data_user.dart';
@@ -59,7 +60,9 @@ class ProfileUserPage extends StatelessWidget {
                     title: "Написать разработчикам",
                     asset: "assets/icons/arrow_forward.svg",
                     isRed: false,
-                    onTap: () {},
+                    onTap: () {
+                      launchUrl(Uri.parse('mailto:sisbi.rec@gmail.com'));
+                    },
                   ),
                   TileData(
                     title: "Выйти из аккаунта",

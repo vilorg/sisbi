@@ -195,9 +195,9 @@ class ProfileUserViewModel extends ChangeNotifier {
   }
 
   Future<void> saveCareer(
-      String vacancy, int coast, ObjectId jobCategoryId) async {
+      String vacancy, int coast, ObjectId jobCategory) async {
     try {
-      await _service.saveCareer(vacancy, coast, jobCategoryId.id, _token);
+      await _service.saveCareer(vacancy, coast, jobCategory.id, _token);
       _init();
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(

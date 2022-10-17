@@ -218,6 +218,7 @@ class CardEmployerDataProvider {
       isFavourite: _decoded['is_favorite'] as bool,
       shows: _decoded['shows'] as int? ?? 0,
       views: _decoded['views'] as int? ?? 0,
+      isModetate: (_decoded['state'] as String?) == "moderating",
     );
     // } catch (e) {
     //   print(e);

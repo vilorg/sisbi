@@ -115,16 +115,16 @@ class AuthApiProvider {
   }
 
   Future<void> saveUser(
-    String token,
-    bool isUser,
-    String firstName,
-    String surName,
-    String comanyName,
-    String email,
-    DateTime birthDay,
-    bool isMale,
-    int experience,
-  ) async {
+      String token,
+      bool isUser,
+      String firstName,
+      String surName,
+      String comanyName,
+      String email,
+      DateTime birthDay,
+      bool isMale,
+      int experience,
+      String previousJob) async {
     Uri uri;
     if (isUser) {
       uri = Uri.parse(getUserUri);
@@ -135,6 +135,7 @@ class AuthApiProvider {
         body: isUser
             ? jsonEncode({
                 "user": {
+                  "previous_job": previousJob,
                   "first_name": firstName,
                   "surname": surName,
                   "birthday": DateFormat("dd.MM.yyyy").format(birthDay),
@@ -153,26 +154,35 @@ class AuthApiProvider {
 
     if (response.statusCode != 200 ||
         jsonDecode(response.body)["result_code"] != "ok") throw Exception();
+    print(jsonDecode(response.body));
     return;
   }
 
   Future<void> saveSchedules(String token, List<int> schedules) async {
+    for (int i = 0; i < schedules.length; i++) {
+      schedules[i] += 1;
+    }
     Uri uri = Uri.parse(setSchedulesUri);
-    await http
-        .put(uri, body: jsonEncode({"schedules": "$schedules"}), headers: {
+    final response = await http
+        .put(uri, body: jsonEncode({"schedules": schedules}), headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     });
+    if (response.statusCode != 200) throw Exception();
   }
 
   Future<void> saveTypeEmployments(
       String token, List<int> typeEmployments) async {
+    for (int i = 0; i < typeEmployments.length; i++) {
+      typeEmployments[i] += 1;
+    }
     Uri uri = Uri.parse(getAddTypeEmploymentsUri);
-    await http.put(uri,
-        body: jsonEncode({"type_employments": "$typeEmployments"}),
+    final response = await http.put(uri,
+        body: jsonEncode({"type_employments": typeEmployments}),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         });
+    if (response.statusCode != 200) throw Exception();
   }
 }

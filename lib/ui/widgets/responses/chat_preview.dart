@@ -79,6 +79,17 @@ class ChatPreview extends StatelessWidget {
     Widget avatar = Image.asset("assets/images/avatar.png");
     if (avatarString.isNotEmpty) avatar = Image.network(avatarString);
 
+    String previewText = (isUser != model.isEmployerLastMessage ? "Вы: " : "") +
+        model.lastMessage;
+
+    previewText = previewText.split("\n").length > 1
+        ? previewText.split("\n")[0] + " ..."
+        : previewText;
+
+    previewText = previewText.length > 30
+        ? previewText.substring(0, 30) + "..."
+        : previewText;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -129,8 +140,8 @@ class ChatPreview extends StatelessWidget {
                 ),
                 const SizedBox(height: defaultPadding),
                 Text(
-                  (isUser != model.isEmployerLastMessage ? "Вы: " : "") +
-                      model.lastMessage,
+                  previewText,
+                  maxLines: 1,
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         color: colorTextSecondary,
                       ),
