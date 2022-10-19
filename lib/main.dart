@@ -43,11 +43,12 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             color: colorAccentDarkBlue,
             elevation: 0,
+            centerTitle: false,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               // onSurface: colorButton,
-              primary: colorButton,
+              backgroundColor: colorButton,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   borderRadius,

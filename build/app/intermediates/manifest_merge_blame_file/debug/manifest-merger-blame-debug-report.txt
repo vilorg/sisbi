@@ -1,0 +1,126 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.sisbi"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+9        android:targetSdkVersion="31" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:3:5-66
+14-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:3:22-64
+15
+16    <queries>
+16-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:4:5-15:15
+17
+18        <!-- If your app checks for SMS support -->
+19        <intent>
+19-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:6:9-9:18
+20            <action android:name="android.intent.action.VIEW" />
+20-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:7:13-65
+20-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:7:21-62
+21
+22            <data android:scheme="mailto" />
+22-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:8:13-45
+22-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:8:19-42
+23        </intent>
+24        <!-- If your app checks for call support -->
+25        <intent>
+25-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:11:9-14:18
+26            <action android:name="android.intent.action.VIEW" />
+26-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:7:13-65
+26-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:7:21-62
+27
+28            <data android:scheme="tel" />
+28-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:8:13-45
+28-->/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/AndroidManifest.xml:8:19-42
+29        </intent>
+30    </queries>
+31
+32    <application
+33        android:name="android.app.Application"
+34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+34-->[androidx.core:core:1.8.0] /Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+35        android:debuggable="true"
+36        android:icon="@mipmap/ic_launcher"
+37        android:label="sisbi" >
+38        <activity
+39            android:name="com.example.sisbi.MainActivity"
+40            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+41            android:exported="true"
+42            android:hardwareAccelerated="true"
+43            android:launchMode="singleTop"
+44            android:theme="@style/LaunchTheme"
+45            android:windowSoftInputMode="adjustResize" >
+46
+47            <!--
+48                 Specifies an Android theme to apply to this Activity as soon as
+49                 the Android process has started. This theme is visible to the user
+50                 while the Flutter UI initializes. After that, this theme continues
+51                 to determine the Window background behind the Flutter UI.
+52            -->
+53            <meta-data
+54                android:name="io.flutter.embedding.android.NormalTheme"
+55                android:resource="@style/NormalTheme" />
+56
+57            <intent-filter>
+58                <action android:name="android.intent.action.MAIN" />
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+61            </intent-filter>
+62        </activity>
+63        <!--
+64             Don't delete the meta-data below.
+65             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+66        -->
+67        <meta-data
+68            android:name="flutterEmbedding"
+69            android:value="2" />
+70
+71        <provider
+71-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-16:20
+72            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+72-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-82
+73            android:authorities="com.example.sisbi.flutter.image_provider"
+73-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-74
+74            android:exported="false"
+74-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-37
+75            android:grantUriPermissions="true" >
+75-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-47
+76            <meta-data
+76-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-15:75
+77                android:name="android.support.FILE_PROVIDER_PATHS"
+77-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:17-67
+78                android:resource="@xml/flutter_image_picker_file_paths" />
+78-->[:image_picker_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:17-72
+79        </provider>
+80
+81        <activity
+81-->[:url_launcher_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:8:9-11:74
+82            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+82-->[:url_launcher_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:13-74
+83            android:exported="false"
+83-->[:url_launcher_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:13-37
+84            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+84-->[:url_launcher_android] /Users/vilorg/Documents/Development/Projects/sisbi/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-71
+85
+86        <uses-library
+86-->[androidx.window:window:1.0.0-beta04] /Users/vilorg/.gradle/caches/transforms-3/0da12618099e668acdf10de5072b161f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+87            android:name="androidx.window.extensions"
+87-->[androidx.window:window:1.0.0-beta04] /Users/vilorg/.gradle/caches/transforms-3/0da12618099e668acdf10de5072b161f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+88            android:required="false" />
+88-->[androidx.window:window:1.0.0-beta04] /Users/vilorg/.gradle/caches/transforms-3/0da12618099e668acdf10de5072b161f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+89        <uses-library
+89-->[androidx.window:window:1.0.0-beta04] /Users/vilorg/.gradle/caches/transforms-3/0da12618099e668acdf10de5072b161f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+90            android:name="androidx.window.sidecar"
+90-->[androidx.window:window:1.0.0-beta04] /Users/vilorg/.gradle/caches/transforms-3/0da12618099e668acdf10de5072b161f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+91            android:required="false" />
+91-->[androidx.window:window:1.0.0-beta04] /Users/vilorg/.gradle/caches/transforms-3/0da12618099e668acdf10de5072b161f/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+92    </application>
+93
+94</manifest>

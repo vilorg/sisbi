@@ -384,7 +384,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
         SnackBar(
           backgroundColor: colorAccentRed,
           content: Text(
-            "Вы уже откликались на это резюме!",
+            "Вы уже приглашали этого соискателя!",
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   color: colorTextContrast,
                   fontWeight: FontWeight.w700,

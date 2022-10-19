@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/release/drawable/notification_bg_low.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/release/drawable/notification_icon_background.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/release/drawable/notification_tile_bg.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/release/drawable/notification_bg.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_bg.xml"
+    }
+]

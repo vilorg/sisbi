@@ -1,0 +1,4 @@
+#Tue Oct 18 11:54:22 YEKT 2022
+base.0=/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

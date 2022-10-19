@@ -131,20 +131,46 @@ class ChatPreview extends StatelessWidget {
                     signStatus,
                   ],
                 ),
-                const SizedBox(height: defaultPadding),
-                Text(
-                  model.title,
-                  style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-                const SizedBox(height: defaultPadding),
-                Text(
-                  previewText,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: colorTextSecondary,
-                      ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: defaultPadding),
+                        Text(
+                          model.title,
+                          style:
+                              Theme.of(context).textTheme.subtitle2!.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                        const SizedBox(height: defaultPadding),
+                        Text(
+                          previewText,
+                          maxLines: 1,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: colorTextSecondary,
+                                  ),
+                        ),
+                      ],
+                    ),
+                    !model.isSeen && isUser == model.isEmployerLastMessage
+                        ? CircleAvatar(
+                            backgroundColor: colorAccentRed,
+                            radius: 10,
+                            child: Text(
+                              "!",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(color: colorTextContrast),
+                            ),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
               ],
             ),

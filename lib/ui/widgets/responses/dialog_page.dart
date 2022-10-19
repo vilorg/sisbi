@@ -95,23 +95,26 @@ class DialogPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: colorAccentDarkBlue,
         appBar: AppBar(
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: colorTextContrast,
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              Text(
-                parthnerName,
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: colorTextContrast,
-                    ),
-              ),
-            ],
+          centerTitle: false,
+          title: Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                        color: colorTextContrast,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+                Text(
+                  parthnerName,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: colorTextContrast,
+                      ),
+                ),
+              ],
+            ),
           ),
           actions: [
             IconButton(
@@ -129,97 +132,100 @@ class DialogPage extends StatelessWidget {
           ),
           child: Container(
             color: Colors.white,
-            child: Column(
-              children: [
-                Expanded(
-                  child: !isLoading
-                      ? ListView(
-                          physics: const BouncingScrollPhysics(),
-                          controller: scrollController,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: defaultPadding),
-                          children: data,
-                          reverse: true,
-                        )
-                      : const Center(
-                          child: CircularProgressIndicator(
-                            color: colorAccentDarkBlue,
-                          ),
-                        ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(26, 26, 26, 0.02),
-                        blurRadius: 15,
-                        offset: Offset(0, -1),
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(defaultPadding / 2),
-                  child: !isUser && chat.responseState == ResponseState.created
-                      ? Column(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: model.accept,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(
-                                      defaultButtonPadding / 2),
-                                  child: Text(
-                                    "Пригласить на работу",
-                                    style: Theme.of(context).textTheme.button,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: defaultPadding / 2),
-                            SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-                                onPressed: model.decline,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(
-                                      defaultButtonPadding / 2),
-                                  child: Text(
-                                    "Отказать",
-                                    style: Theme.of(context).textTheme.button,
-                                  ),
-                                ),
-                                style: Theme.of(context)
-                                    .elevatedButtonTheme
-                                    .style!
-                                    .copyWith(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              colorAccentRed),
-                                    ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : TextField(
-                          controller: textController,
-                          onSubmitted: model.sendMessage,
-                          maxLines: 1,
-                          cursorColor: colorAccentDarkBlue,
-                          decoration: const InputDecoration(
-                            hintText: " Сообщение",
-                            contentPadding: EdgeInsets.symmetric(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: !isLoading
+                        ? ListView(
+                            physics: const BouncingScrollPhysics(),
+                            controller: scrollController,
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: defaultPadding),
-                            border: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            focusedErrorBorder: InputBorder.none,
-                            fillColor: Colors.white,
+                            children: data,
+                            reverse: true,
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(
+                              color: colorAccentDarkBlue,
+                            ),
                           ),
-                          style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromRGBO(26, 26, 26, 0.02),
+                          blurRadius: 15,
+                          offset: Offset(0, -1),
                         ),
-                ),
-              ],
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(defaultPadding / 2),
+                    child: !isUser &&
+                            chat.responseState == ResponseState.created
+                        ? Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: model.accept,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(
+                                        defaultButtonPadding / 2),
+                                    child: Text(
+                                      "Пригласить на работу",
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: defaultPadding / 2),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: model.decline,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(
+                                        defaultButtonPadding / 2),
+                                    child: Text(
+                                      "Отказать",
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
+                                  ),
+                                  style: Theme.of(context)
+                                      .elevatedButtonTheme
+                                      .style!
+                                      .copyWith(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                colorAccentRed),
+                                      ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : TextField(
+                            controller: textController,
+                            onSubmitted: model.sendMessage,
+                            maxLines: 1,
+                            cursorColor: colorAccentDarkBlue,
+                            decoration: const InputDecoration(
+                              hintText: " Сообщение",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: defaultPadding),
+                              border: InputBorder.none,
+                              errorBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              focusedErrorBorder: InputBorder.none,
+                              fillColor: Colors.white,
+                            ),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

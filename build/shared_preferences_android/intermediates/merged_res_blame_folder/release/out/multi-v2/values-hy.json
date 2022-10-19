@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/shared_preferences_android/intermediates/merged_res/release/values-hy/values-hy.xml",
+            "map": [
+                {
+                    "source": "/Users/vilorg/.gradle/caches/transforms-3/11167983d2cf0407b644cf9f2af8f4e4/transformed/core-1.6.0/res/values-hy/values-hy.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/shared_preferences_android/intermediates/incremental/mergeReleaseResources/merged.dir/values-hy/values-hy.xml",
+            "map": [
+                {
+                    "source": "/Users/vilorg/.gradle/caches/transforms-3/11167983d2cf0407b644cf9f2af8f4e4/transformed/core-1.6.0/res/values-hy/values-hy.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

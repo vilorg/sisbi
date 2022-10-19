@@ -78,44 +78,41 @@ class HomeEmployeePage extends StatelessWidget {
         timeDifference: timeDifference,
         token: model.token,
       ),
-      bottomNavigationBar: SizedBox(
-        height: 60,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: model.setSelectedIndex,
-          currentIndex: selectedIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: selectedIndex == 0
-                  ? SvgPicture.asset("assets/icons/navigation_bar_vacancy.svg")
-                  : SvgPicture.asset(
-                      "assets/icons/navigation_bar_vacancy_un.svg"),
-              label: "Вакансии",
-            ),
-            BottomNavigationBarItem(
-              icon: selectedIndex == 1
-                  ? SvgPicture.asset(
-                      "assets/icons/navigation_bar_favourite.svg")
-                  : SvgPicture.asset(
-                      "assets/icons/navigation_bar_favourite_un.svg"),
-              label: "Избранное",
-            ),
-            BottomNavigationBarItem(
-              icon: selectedIndex == 2
-                  ? SvgPicture.asset("assets/icons/navigation_bar_response.svg")
-                  : SvgPicture.asset(
-                      "assets/icons/navigation_bar_response_un.svg"),
-              label: "Отклики",
-            ),
-            BottomNavigationBarItem(
-              icon: selectedIndex == 3
-                  ? SvgPicture.asset("assets/icons/navigation_bar_profile.svg")
-                  : SvgPicture.asset(
-                      "assets/icons/navigation_bar_profile_un.svg"),
-              label: "Профиль",
-            ),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        onTap: model.setSelectedIndex,
+        currentIndex: selectedIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: selectedIndex == 0
+                ? SvgPicture.asset("assets/icons/navigation_bar_vacancy.svg")
+                : SvgPicture.asset(
+                    "assets/icons/navigation_bar_vacancy_un.svg"),
+            label: "Вакансии",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedIndex == 1
+                ? SvgPicture.asset(
+                    "assets/icons/navigation_bar_favourite.svg")
+                : SvgPicture.asset(
+                    "assets/icons/navigation_bar_favourite_un.svg"),
+            label: "Избранное",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedIndex == 2
+                ? SvgPicture.asset("assets/icons/navigation_bar_response.svg")
+                : SvgPicture.asset(
+                    "assets/icons/navigation_bar_response_un.svg"),
+            label: "Отклики",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedIndex == 3
+                ? SvgPicture.asset("assets/icons/navigation_bar_profile.svg")
+                : SvgPicture.asset(
+                    "assets/icons/navigation_bar_profile_un.svg"),
+            label: "Профиль",
+          ),
+        ],
       ),
     );
   }

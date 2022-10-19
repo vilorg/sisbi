@@ -87,7 +87,7 @@ class VacancyStaticCard extends StatelessWidget {
                       ),
                       const SizedBox(height: defaultPadding),
                       Text(
-                        title,
+                        "Описание вакансии",
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                               fontWeight: FontWeight.w700,
                             ),

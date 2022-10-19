@@ -247,7 +247,7 @@ class ProfileEmployerPage extends StatelessWidget {
               builder: (context) => ActionButton(
                 tiles: [
                   TileData(
-                    title: "Полтика",
+                    title: "Политика",
                     asset: "assets/icons/arrow_forward.svg",
                     isRed: false,
                     onTap: () {},

@@ -56,8 +56,17 @@ class PostSearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<_ViewModel>(context);
     final isLoading = model.isLoading;
-    final List<String> dataList = model.dataList;
+    List<String> dataList = model.dataList;
     final TextEditingController controller = model.controller;
+
+    if (dataList.isEmpty) {
+      dataList = [
+        "Дизайнер",
+        "Программист",
+        "Маркетолог",
+        "Менеджер по персоналу",
+      ];
+    }
 
     return Scaffold(
         backgroundColor: colorAccentDarkBlue,

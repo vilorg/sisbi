@@ -92,7 +92,7 @@ class _RegisterCodeState extends State<RegisterCode> {
                             _isResent = true;
                             setState(() {});
                           } catch (e) {
-                            model.previousPage();
+                            // model.previousPage();
                           }
                         }
                       : null,

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/debug/layout/custom_dialog.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/debug/layout/notification_action.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/debug/layout/notification_template_icon_group.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/debug/layout/notification_action_tombstone.xml",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_action_tombstone.xml"
+    }
+]

@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-v31/values-v31.xml",
+            "map": [
+                {
+                    "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/values-v31/styles.xml",
+                    "from": {
+                        "startLines": "3,-1",
+                        "startColumns": "4,-1",
+                        "startOffsets": "173,-1",
+                        "endLines": "9,-1",
+                        "endColumns": "12,-1",
+                        "endOffsets": "621,-1"
+                    },
+                    "to": {
+                        "startLines": "2,9",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,508",
+                        "endLines": "8,11",
+                        "endColumns": "12,12",
+                        "endOffsets": "503,672"
+                    }
+                }
+            ]
+        }
+    ]
+}

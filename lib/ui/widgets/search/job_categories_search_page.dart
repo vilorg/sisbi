@@ -133,6 +133,14 @@ class JobCategoriesSearchPage extends StatelessWidget {
                                       alignment: Alignment.centerLeft,
                                       child: Checkbox(
                                           activeColor: colorAccentDarkBlue,
+                                          shape: RoundedRectangleBorder(
+                                              side: const BorderSide(
+                                                color: Color.fromRGBO(
+                                                    224, 225, 230, 1),
+                                                width: 1.5,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6)),
                                           value: value,
                                           onChanged: (s) => model.onTap(
                                               ObjectId(

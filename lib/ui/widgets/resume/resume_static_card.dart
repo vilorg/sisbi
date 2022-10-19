@@ -45,6 +45,7 @@ class ResumeStaticCard extends StatelessWidget {
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
+        
         title: Text(
           "Просмотр резюме",
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
@@ -88,7 +89,7 @@ class ResumeStaticCard extends StatelessWidget {
                       ),
                       const SizedBox(height: defaultPadding),
                       Text(
-                        title,
+                        "Описание резюме",
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                               fontWeight: FontWeight.w700,
                             ),

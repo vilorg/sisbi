@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_native_splash/intermediates/merged_res/release/values-ur/values-ur.xml",
+            "map": [
+                {
+                    "source": "/Users/vilorg/.gradle/caches/transforms-3/11167983d2cf0407b644cf9f2af8f4e4/transformed/core-1.6.0/res/values-ur/values-ur.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_native_splash/intermediates/incremental/mergeReleaseResources/merged.dir/values-ur/values-ur.xml",
+            "map": [
+                {
+                    "source": "/Users/vilorg/.gradle/caches/transforms-3/11167983d2cf0407b644cf9f2af8f4e4/transformed/core-1.6.0/res/values-ur/values-ur.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

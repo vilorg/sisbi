@@ -85,7 +85,7 @@ class ResumeSwitcherCard extends StatelessWidget {
                     ),
                     const SizedBox(height: defaultPadding),
                     Text(
-                      resume.previusJob,
+                      "Описание резюме",
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             fontWeight: FontWeight.w700,
                           ),

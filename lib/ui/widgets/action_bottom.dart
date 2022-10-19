@@ -101,7 +101,7 @@ class RadioActionButton extends StatelessWidget {
     }
 
     return SizedBox(
-      height: titles.length * 60 + 50,
+      height: titles.length * 60 + 50 + MediaQuery.of(context).padding.bottom,
       child: Column(
         children: [
           const SizedBox(height: defaultPadding),
@@ -193,27 +193,29 @@ class CheckActionButton extends StatelessWidget {
           ));
         }
 
-        data.add(Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(defaultButtonPadding),
-                  child: Text(
-                    "Сохранить",
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                ),
-                onPressed: () {
-                  checks.onTap(values);
-                  Navigator.of(context).pop();
-                }),
-          ),
-        ));
+        // data.add(Padding(
+        //   padding: const EdgeInsets.all(defaultPadding),
+        //   child: SizedBox(
+        //     width: double.infinity,
+        //     child: ElevatedButton(
+        //         child: Padding(
+        //           padding: const EdgeInsets.all(defaultButtonPadding),
+        //           child: Text(
+        //             "Сохранить",
+        //             style: Theme.of(context).textTheme.button,
+        //           ),
+        //         ),
+        //         onPressed: () {
+        //           checks.onTap(values);
+        //           Navigator.of(context).pop();
+        //         }),
+        //   ),
+        // ));
 
         return SizedBox(
-          height: checks.titles.length * 60 + 120,
+          height: checks.titles.length * 60 +
+              120 +
+              MediaQuery.of(context).padding.bottom,
           child: Column(
             children: [
               const SizedBox(height: defaultPadding),
@@ -234,6 +236,27 @@ class CheckActionButton extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      child: Padding(
+                        padding: const EdgeInsets.all(defaultButtonPadding),
+                        child: Text(
+                          "Сохранить",
+                          style: Theme.of(context).textTheme.button,
+                        ),
+                      ),
+                      onPressed: () {
+                        checks.onTap(values);
+                        Navigator.of(context).pop();
+                      }),
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom,
+              )
             ],
           ),
         );
@@ -257,6 +280,13 @@ class _CheckTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
+      activeColor: colorAccentDarkBlue,
+      checkboxShape: RoundedRectangleBorder(
+          side: const BorderSide(
+            color: Color.fromRGBO(224, 225, 230, 1),
+            width: 1.5,
+          ),
+          borderRadius: BorderRadius.circular(6)),
       title: Text(
         title,
         style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -317,7 +347,9 @@ class SwitchActionButton extends StatelessWidget {
         ));
 
         return SizedBox(
-          height: switchs.titles.length * 60 + 120,
+          height: switchs.titles.length * 60 +
+              120 +
+              MediaQuery.of(context).padding.bottom,
           child: Column(
             children: [
               const SizedBox(height: defaultPadding),

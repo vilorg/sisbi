@@ -85,7 +85,7 @@ class VacancySwitcherCard extends StatelessWidget {
                     ),
                     const SizedBox(height: defaultPadding),
                     Text(
-                      vacancy.title,
+                      "Описание вакансии",
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             fontWeight: FontWeight.w700,
                           ),
