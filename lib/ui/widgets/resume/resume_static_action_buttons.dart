@@ -43,7 +43,7 @@ class ResumeStaticActionButtons extends StatelessWidget {
                     SnackBar(
                       backgroundColor: colorAccentRed,
                       content: Text(
-                        "У вас нет действующий вакансий!",
+                        "У вас нет действующих вакансий!",
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               color: colorTextContrast,
                               fontWeight: FontWeight.w700,

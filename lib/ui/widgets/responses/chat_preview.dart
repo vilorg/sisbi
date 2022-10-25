@@ -77,7 +77,9 @@ class ChatPreview extends StatelessWidget {
 
     String avatarString = isUser ? model.employerAvatar : model.userAvatar;
     Widget avatar = Image.asset("assets/images/avatar.png");
-    if (avatarString.isNotEmpty) avatar = Image.network(avatarString);
+    if (avatarString.isNotEmpty) {
+      avatar = Image.network(avatarString, fit: BoxFit.cover);
+    }
 
     String previewText = (isUser != model.isEmployerLastMessage ? "Вы: " : "") +
         model.lastMessage;

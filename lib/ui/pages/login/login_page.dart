@@ -19,7 +19,7 @@ class _ViewModelState {
   _ViewModelAuthButtonState get authButtonState {
     if (isAuthInProcess) {
       return _ViewModelAuthButtonState.authProcess;
-    } else if (phone.isNotEmpty && phone.length == 18 && textError.isEmpty) {
+    } else if (phone.isNotEmpty && phone.length == 13 && textError.isEmpty) {
       return _ViewModelAuthButtonState.canSubmit;
     } else {
       return _ViewModelAuthButtonState.disable;

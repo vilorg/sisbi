@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:sisbi/constants.dart';
@@ -156,8 +157,8 @@ class DialogPage extends StatelessWidget {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: Color.fromRGBO(26, 26, 26, 0.02),
-                          blurRadius: 15,
+                          color: Color.fromRGBO(26, 26, 26, 0.05),
+                          blurRadius: 30,
                           offset: Offset(0, -1),
                         ),
                       ],
@@ -206,22 +207,47 @@ class DialogPage extends StatelessWidget {
                               ),
                             ],
                           )
-                        : TextField(
-                            controller: textController,
-                            onSubmitted: model.sendMessage,
-                            maxLines: 1,
-                            cursorColor: colorAccentDarkBlue,
-                            decoration: const InputDecoration(
-                              hintText: " Сообщение",
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: defaultPadding),
-                              border: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              focusedErrorBorder: InputBorder.none,
-                              fillColor: Colors.white,
-                            ),
-                            style: Theme.of(context).textTheme.bodyText1,
+                        : Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: textController,
+                                  onSubmitted: model.sendMessage,
+                                  maxLines: 1,
+                                  cursorColor: colorAccentDarkBlue,
+                                  decoration: const InputDecoration(
+                                    hintText: " Сообщение",
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: defaultPadding),
+                                    border: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    focusedErrorBorder: InputBorder.none,
+                                    fillColor: Colors.white,
+                                  ),
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: InkWell(
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: colorAccentLightBlue,
+                                        shape: BoxShape.circle),
+                                    child: Center(
+                                        child: SvgPicture.asset(
+                                      "assets/icons/send.svg",
+                                      width: 20,
+                                    )),
+                                  ),
+                                  onTap: () {
+                                    model.sendMessage(textController.text);
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                   ),
                 ],

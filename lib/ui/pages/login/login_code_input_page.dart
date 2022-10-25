@@ -122,14 +122,14 @@ class _LoginCodeInputPageState extends State<LoginCodeInputPage> {
   Widget build(BuildContext context) {
     var phone = context.read<_ViewModel>().phone;
 
-    var textPhone = phone.split('')[0] +
+    var textPhone = "7" +
+        phone.split('')[0] +
         phone.split('')[1] +
         phone.split('')[5] +
         phone.split('')[6] +
-        phone.split('')[7] +
         "*****" +
-        phone.split('')[16] +
-        phone.split('')[17];
+        phone.split('')[11] +
+        phone.split('')[12];
 
     var model = context.read<_ViewModel>();
     var state = context.select((_ViewModel model) => model.state);

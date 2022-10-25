@@ -252,14 +252,14 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
     _isLoading = true;
     try {
       _userData = await _cardService.getUserGraph();
-      _filter = _filter.copyWith(
-        coast: _userData.coast,
-        expierence: _userData.experience,
-        post: _userData.post,
-        region: _userData.region,
-        schedules: _userData.schedules,
-        typeEmployments: _userData.typeEmployments,
-      );
+      // _filter = _filter.copyWith(
+      //   coast: _userData.coast,
+      //   expierence: _userData.experience,
+      //   post: _userData.post,
+      //   region: _userData.region,
+      //   schedules: _userData.schedules,
+      //   typeEmployments: _userData.typeEmployments,
+      // );
       await resetCards();
     } catch (e) {
       Navigator.of(context).pushNamedAndRemoveUntil(
@@ -338,7 +338,7 @@ class ResumesSwitcherViewModel extends ChangeNotifier {
         SnackBar(
           backgroundColor: colorAccentRed,
           content: Text(
-            "У вас нет действующий вакансий!",
+            "У вас нет действующих вакансий!",
             style: Theme.of(context).textTheme.bodyText1!.copyWith(
                   color: colorTextContrast,
                   fontWeight: FontWeight.w700,

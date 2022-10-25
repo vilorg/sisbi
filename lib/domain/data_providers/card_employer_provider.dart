@@ -41,6 +41,12 @@ class CardEmployerDataProvider {
         params.add("q[schedules_id_in][]=${value.id}");
       }
     }
+    if (filter.isMan && !filter.isWoman) {
+      params.add("q[gender_eq]=0");
+    }
+    if (filter.isWoman && !filter.isMan) {
+      params.add("q[gender_eq]=1");
+    }
     params.add("page=$page");
     params.add("limit=7");
 

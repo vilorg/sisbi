@@ -39,31 +39,28 @@ class _ContactsEmployerPageState extends State<ContactsEmployerPage> {
     bool isEmailError = !RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(emailController.text);
-    bool isPhoneError = phoneController.text.length != 18;
+    bool isPhoneError = phoneController.text.length != 13;
     bool isFullNameError = fullNameController.text.length < 7;
 
-    VoidCallback? onTap() {
-      if (isPhoneError && isEmailError && isFullNameError) {
-        return () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: colorAccentRed,
-              content: Text(
-                "Заполните корректно данные!",
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                      color: colorTextContrast,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
+    void onTap() {
+      if (isPhoneError || isEmailError || isFullNameError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: colorAccentRed,
+            content: Text(
+              "Заполните корректно данные!",
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                    color: colorTextContrast,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
-          );
-        };
+          ),
+        );
+        return;
       } else {
-        return () {
-          widget.setContacts(fullNameController.text, phoneController.text,
-              emailController.text);
-          Navigator.of(context).pop();
-        };
+        widget.setContacts(fullNameController.text, phoneController.text,
+            emailController.text);
+        Navigator.of(context).pop();
       }
     }
 
@@ -78,7 +75,7 @@ class _ContactsEmployerPageState extends State<ContactsEmployerPage> {
         ),
         actions: [
           TextButton(
-            onPressed: onTap(),
+            onPressed: onTap,
             child: Text(
               "Сохранить",
               style: Theme.of(context).textTheme.button,
@@ -106,43 +103,85 @@ class _ContactsEmployerPageState extends State<ContactsEmployerPage> {
                       onChanged: (s) => setState(() {}),
                     ),
                     const SizedBox(height: defaultPadding),
-                    TextField(
-                      cursorColor: colorText,
-                      cursorWidth: 1,
-                      controller: phoneController,
-                      decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(defaultPadding * 0.8),
-                          child: SvgPicture.asset(
-                              "assets/icons/login_phone.svg",
-                              color: colorText),
+                    Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 58,
+                          decoration: BoxDecoration(
+                              color: colorInput,
+                              borderRadius:
+                                  BorderRadius.circular(borderRadius)),
                         ),
-                        suffixIcon: phoneController.text != ""
-                            ? InkWell(
-                                onTap: () {
-                                  phoneController.clear();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(
-                                      defaultPadding * 0.8),
-                                  child: SvgPicture.asset(
-                                      "assets/icons/login_clear.svg",
-                                      color: colorAccentLightBlue),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(width: defaultPadding),
+                            SizedBox(
+                              height: 58,
+                              child: SvgPicture.asset(
+                                "assets/icons/login_phone.svg",
+                                color: colorText,
+                                height: 25,
+                              ),
+                            ),
+                            const SizedBox(width: defaultPadding / 4),
+                            SizedBox(
+                              height: 58,
+                              child: Center(
+                                child: Text(
+                                  "+7 │ ",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(
+                                        color: colorText,
+                                      ),
                                 ),
-                              )
-                            : null,
-                        hintText: "+7 │ Номер телефона",
-                        errorStyle:
-                            Theme.of(context).textTheme.bodyText2!.copyWith(
-                                  color: colorInputError,
+                              ),
+                            ),
+                            Expanded(
+                              child: TextField(
+                                cursorColor: colorText,
+                                cursorWidth: 1,
+                                controller: phoneController,
+                                decoration: InputDecoration(
+                                  suffixIcon: phoneController.text != ""
+                                      ? InkWell(
+                                          onTap: () {
+                                            phoneController.clear();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(
+                                                defaultPadding * 0.8),
+                                            child: SvgPicture.asset(
+                                                "assets/icons/login_clear.svg",
+                                                color: colorAccentLightBlue),
+                                          ),
+                                        )
+                                      : null,
+                                  hintText: "Номер телефона",
+                                  errorStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .copyWith(
+                                        color: colorInputError,
+                                      ),
                                 ),
-                      ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [phoneMask],
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: colorText,
-                          ),
-                      onChanged: (s) => setState(() {}),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [phoneMask],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(
+                                      color: colorText,
+                                    ),
+                                onChanged: (s) => setState(() {}),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     const SizedBox(height: defaultPadding),
                     TextField(

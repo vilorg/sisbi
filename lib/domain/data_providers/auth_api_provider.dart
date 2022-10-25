@@ -26,7 +26,7 @@ class AuthApiProvider {
     }
     final response = await http.post(uri,
         body: jsonEncode({
-          isEmployer ? "employer" : "user": {"phone": phone}
+          isEmployer ? "employer" : "user": {"phone": "7" + phone}
         }),
         headers: {"Content-Type": "application/json"});
 
@@ -56,7 +56,7 @@ class AuthApiProvider {
       uri = Uri.parse(getSmsUserUri);
     }
     final response = await http.post(uri,
-        body: jsonEncode({"phone": phone}),
+        body: jsonEncode({"phone": "7" + phone}),
         headers: {"Content-Type": "application/json"});
     if (response.statusCode != 200 && response.statusCode != 422) {
       throw AuthFetchDataError();
@@ -85,7 +85,7 @@ class AuthApiProvider {
 
     final response = await http.post(uri,
         body: jsonEncode({
-          "auth": {"phone": phone, "sms_pin": smsCode}
+          "auth": {"phone": "7" + phone, "sms_pin": smsCode}
         }),
         headers: {"Content-Type": "application/json"});
     if (response.statusCode == 404) {

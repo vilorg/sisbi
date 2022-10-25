@@ -162,7 +162,7 @@ class RegisterViewModel extends ChangeNotifier {
 
   void onSubmitPhoneButton() async {
     var phone = _state.phone;
-    if (phone.length != 18) {
+    if (phone.length != 13) {
       _state = _state.copyWith(phoneError: "Введите корректный номер телефона");
       return notifyListeners();
     }

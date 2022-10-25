@@ -241,6 +241,11 @@ class CareerInfo extends StatelessWidget {
                       ...data,
                       const SizedBox(height: defaultPadding),
                       TextField(
+                        onTap: () {
+                          coastController.text.length == 1
+                              ? coastController.text = ""
+                              : null;
+                        },
                         controller: coastController,
                         decoration: InputDecoration(
                             hintText: "Ожидаемая зарплата",

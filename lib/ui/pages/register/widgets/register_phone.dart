@@ -43,52 +43,94 @@ class RegisterPhone extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: defaultPadding),
-                TextFormField(
-                  cursorColor: colorText,
-                  cursorWidth: 1,
-                  controller: model.controller,
-                  decoration: InputDecoration(
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(defaultPadding * 0.8),
-                      child: SvgPicture.asset(
-                        "assets/icons/login_phone.svg",
-                        color: state.phoneError.isEmpty
-                            ? colorText
-                            : colorInputError,
-                      ),
+                Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 58,
+                      decoration: BoxDecoration(
+                          color: colorInput,
+                          borderRadius: BorderRadius.circular(borderRadius)),
                     ),
-                    suffixIcon: state.phone != ""
-                        ? InkWell(
-                            onTap: () {
-                              model.clearPhone();
-                              model.controller.clear();
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.all(defaultPadding * 0.8),
-                              child: SvgPicture.asset(
-                                  "assets/icons/login_clear.svg",
-                                  color: state.phoneError.isEmpty
-                                      ? colorAccentLightBlue
-                                      : colorInputError),
-                            ),
-                          )
-                        : null,
-                    hintText: "+7 │ Номер телефона",
-                    errorText:
-                        state.phoneError.isEmpty ? null : state.phoneError,
-                    errorStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          color: colorInputError,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(width: defaultPadding),
+                        SizedBox(
+                          height: 58,
+                          child: SvgPicture.asset(
+                            "assets/icons/login_phone.svg",
+                            color: state.phoneError.isEmpty
+                                ? colorText
+                                : colorInputError,
+                            height: 25,
+                          ),
                         ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [phoneMask],
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: state.phoneError.isEmpty
-                            ? colorText
-                            : colorInputError,
-                      ),
-                  onChanged: model.setPhone,
+                        const SizedBox(width: defaultPadding / 4),
+                        SizedBox(
+                          height: 58,
+                          child: Center(
+                            child: Text(
+                              "+7 │ ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                    color: state.phoneError.isEmpty
+                                        ? colorText
+                                        : colorInputError,
+                                  ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            cursorColor: colorText,
+                            cursorWidth: 1,
+                            controller: model.controller,
+                            decoration: InputDecoration(
+                              suffixIcon: state.phone != ""
+                                  ? InkWell(
+                                      onTap: () {
+                                        model.clearPhone();
+                                        model.controller.clear();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(
+                                            defaultPadding * 0.8),
+                                        child: SvgPicture.asset(
+                                            "assets/icons/login_clear.svg",
+                                            color: state.phoneError.isEmpty
+                                                ? colorAccentLightBlue
+                                                : colorInputError),
+                                      ),
+                                    )
+                                  : null,
+                              hintText: "Номер телефона",
+                              errorText: state.phoneError.isEmpty
+                                  ? null
+                                  : state.phoneError,
+                              errorStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                    color: colorInputError,
+                                  ),
+                            ),
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [phoneMask],
+                            style:
+                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                      color: state.phoneError.isEmpty
+                                          ? colorText
+                                          : colorInputError,
+                                    ),
+                            onChanged: model.setPhone,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -13,7 +13,7 @@ import 'widgets/actions_message.dart';
 
 class DialogViewModel extends ChangeNotifier {
   final BuildContext _context;
-  final ChatPreviewModel chat;
+  ChatPreviewModel chat;
   final bool isUser;
   final VoidCallback onClose;
   DialogViewModel(this._context, this.chat, this.isUser, this.onClose) {
@@ -191,8 +191,21 @@ class DialogViewModel extends ChangeNotifier {
   Future<void> accept() async {
     try {
       await _service.actionUser(true, chat.responseId, _token!);
-      onClose();
-      Navigator.of(_context).pop();
+
+      chat = chat.copyWith(responseState: ResponseState.accepted);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentGreen,
+          content: Text(
+            "Успех!",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+      notifyListeners();
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
         SnackBar(
@@ -212,8 +225,21 @@ class DialogViewModel extends ChangeNotifier {
   Future<void> decline() async {
     try {
       await _service.actionUser(false, chat.responseId, _token!);
-      onClose();
-      Navigator.of(_context).pop();
+
+      chat = chat.copyWith(responseState: ResponseState.declined);
+      ScaffoldMessenger.of(_context).showSnackBar(
+        SnackBar(
+          backgroundColor: colorAccentGreen,
+          content: Text(
+            "Успех!",
+            style: Theme.of(_context).textTheme.subtitle2!.copyWith(
+                  color: colorTextContrast,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      );
+      notifyListeners();
     } catch (e) {
       ScaffoldMessenger.of(_context).showSnackBar(
         SnackBar(

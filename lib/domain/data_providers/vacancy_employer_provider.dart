@@ -31,8 +31,8 @@ class VacancyEmployerProvider {
 
   Future<void> saveVacancy(VacancyState state, String token) async {
     String phone = state.phone;
-    phone = phone.replaceAll(" │ ", "");
     phone = phone.replaceAll("-", "");
+    phone = "8" + phone;
 
     final _response1 = await http.post(
       Uri.parse(getEmployerVacanciesUri),
@@ -46,7 +46,7 @@ class VacancyEmployerProvider {
           'description': state.description,
           'job_category_id': state.jobCategory.id,
           'full_name': state.fullName,
-          'phone': phone,
+          'phone': '7' + phone,
           'email': state.email,
           'experience': state.expierence.name,
           'salary': state.coast,

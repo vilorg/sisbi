@@ -10,6 +10,7 @@ import 'package:sisbi/models/object_id.dart';
 import 'package:sisbi/ui/pages/employee/pages/vacancy/vacancuies_switcher_view_model.dart';
 import 'package:sisbi/ui/pages/employer/pages/resume/resumes_switcher_view_model.dart';
 import 'package:sisbi/ui/widgets/search/post_search_page.dart';
+import 'package:sisbi/ui/widgets/search/widgets/wrap_ismale_tabs.dart';
 import 'package:sisbi/ui/widgets/select_wrap_card.dart';
 
 import 'coast_search_page.dart';
@@ -36,6 +37,8 @@ class SearchViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  bool get isEmployer => employerModel != null;
 
   void setRegion(ObjectId value) {
     _filter = _filter.copyWith(region: value);
@@ -69,7 +72,11 @@ class SearchViewModel extends ChangeNotifier {
     } else {
       _filter = _filter.copyWith(expierence: expierence);
     }
-    // _isUser ? userModel!.setFilter(_filter) : employerModel!.setFilter(_filter);
+    notifyListeners();
+  }
+
+  void setMale(bool isMan, bool isWooman) {
+    _filter = _filter.copyWith(isMan: isMan, isWoman: isWooman);
     notifyListeners();
   }
 
@@ -142,12 +149,13 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final SearchViewModel model = Provider.of<SearchViewModel>(context);
     final bool isLoading = model.isLoading;
+    final bool isEmployer = model.isEmployer;
 
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
         title: Text(
-          "Поиск по вакансиям",
+          isEmployer ? "Поиск по резюме" : "Поиск по вакансиям",
           style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: colorTextContrast,
                 fontWeight: FontWeight.w700,
@@ -255,80 +263,10 @@ class SearchPage extends StatelessWidget {
                           : null,
                     ),
                     FieldsOfActivityTabs(model: model),
-                    // WrapTabs(
-                    //   title: "Опыт работы",
-                    //   variants: Expierence.values
-                    //       .map((e) => getExpierenceString(e))
-                    //       .toList(),
-                    //   values: Expierence.values.map((e) {
-                    //     return false;
-                    //     // return e == state.expierence;
-                    //   }).toList(),
-                    //   // const [false, false, false, false, false],
-                    //   // setValue: (int i) => model.setState(
-                    //   //   expierence: getExpierenceFromInt(i - 1),
-                    //   // ),
-                    //   setValue: (i) {},
-                    // ),
-                    // WrapTabs(
-                    //   title: "Тип занятости",
-                    //   variants: getTypeEmploymentsString()
-                    //       .map((e) => e.value)
-                    //       .toList(),
-                    //   values: getTypeEmploymentsString()
-                    //       .map((e) => false
-                    //           //  state.typeEmployments
-                    //           //     .map((e) => e.id)
-                    //           //     .toList()
-                    //           //     .contains(e.id)
-                    //           )
-                    //       .toList(),
-                    //   setValue: (int i) {
-                    //     ObjectId typeEmployment = getTypeEmploymentFromInt(i);
-                    //     // List<ObjectId> newTypeEmployments =
-                    //     // state.typeEmployments;
-                    //     List<ObjectId> typeEmployments = [];
-                    //     // for (ObjectId typeEmp in newTypeEmployments) {
-                    //     //   typeEmployments.add(typeEmp);
-                    //     // }
-                    //     // if (newTypeEmployments.contains(typeEmployment)) {
-                    //     //   typeEmployments.remove(typeEmployment);
-                    //     // } else {
-                    //     //   typeEmployments.add(typeEmployment);
-                    //     // }
-                    //     // model.setState(typeEmployments: typeEmployments);
-                    //   },
-                    // ),
-                    // WrapTabs(
-                    //   title: "График работы",
-                    //   variants:
-                    //       getSchedulesString().map((e) => e.value).toList(),
-                    //   values: getSchedulesString()
-                    //       .map(
-                    //         (e) => false,
-                    //         // state.schedules
-                    //         //     .map((e) => e.id)
-                    //         //     .toList()
-                    //         //     .contains(e.id)
-                    //       )
-                    //       .toList(),
-                    //   setValue: (int i) {
-                    //     ObjectId schedule = getSchedulesFromInt(i);
-                    //     // List<ObjectId> newSchedules = state.schedules;
-                    //     // List<ObjectId> schedules = [];
-
-                    //     // for (ObjectId sched in newSchedules) {
-                    //     //   schedules.add(sched);
-                    //     // }
-
-                    //     // if (newSchedules.contains(schedule)) {
-                    //     //   schedules.remove(schedule);
-                    //     // } else {
-                    //     //   schedules.add(schedule);
-                    //     // }
-                    //     // model.setState(schedules: schedules);
-                    //   },
-                    // ),
+                    isEmployer
+                        ? WrapIsMaleTabs(model: model)
+                        : const SizedBox(),
+                    SizedBox(height: isEmployer ? defaultPadding : 0),
                     WrapExpierenceTabs(model: model),
                     const SizedBox(height: defaultPadding),
                     WrapTypeEmploymentsTabs(model: model),

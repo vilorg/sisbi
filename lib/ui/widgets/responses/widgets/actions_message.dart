@@ -62,7 +62,7 @@ class ActionsMessage extends StatelessWidget {
                           : ResumeStaticCard(
                               createdAt: chat.createdAt,
                               title: chat.title,
-                              description: chat.description,
+                              description: chat.userAbout,
                               avatar: chat.userAvatar,
                               salary: chat.salary,
                               name: "${chat.userFirstName} ${chat.userSurname}",

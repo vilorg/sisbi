@@ -32,6 +32,7 @@ class ChatPreviewModel {
   final String userEmail;
   final Expierence userExpierence;
   final ObjectId region;
+  final String userAbout;
 
   final String avatar;
   final ResponseState responseState;
@@ -62,6 +63,7 @@ class ChatPreviewModel {
     required this.userEmail,
     required this.userExpierence,
     required this.region,
+    required this.userAbout,
     required this.avatar,
     required this.responseState,
     required this.isInvite,
@@ -92,6 +94,7 @@ class ChatPreviewModel {
     String? userEmail,
     Expierence? userExpierence,
     ObjectId? region,
+    String? userAbout,
     String? avatar,
     ResponseState? responseState,
     bool? isInvite,
@@ -122,6 +125,7 @@ class ChatPreviewModel {
       userEmail: userEmail ?? this.userEmail,
       userExpierence: userExpierence ?? this.userExpierence,
       region: region ?? this.region,
+      userAbout: userAbout ?? this.userAbout,
       avatar: avatar ?? this.avatar,
       responseState: responseState ?? this.responseState,
       isInvite: isInvite ?? this.isInvite,
@@ -210,6 +214,7 @@ class ChatPreviewModel {
           element.toString() ==
           "Expierence." +
               (map['vacancy']["experience"] as String? ?? "notChosed")),
+      userAbout: map['user']['about'] as String? ?? "",
     );
   }
 

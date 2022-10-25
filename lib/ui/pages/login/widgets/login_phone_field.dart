@@ -27,47 +27,83 @@ class _LoginPhoneFieldState extends State<LoginPhoneField> {
 
     if (widget.textError != "") textError = widget.textError;
 
-    return TextFormField(
-      cursorColor: colorText,
-      cursorWidth: 1,
-      controller: _controller,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(defaultPadding * 0.8),
-          child: SvgPicture.asset(
-            "assets/icons/login_phone.svg",
-            color: widget.textError.isEmpty ? colorText : colorInputError,
-          ),
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 58,
+          decoration: BoxDecoration(
+              color: colorInput,
+              borderRadius: BorderRadius.circular(borderRadius)),
         ),
-        suffixIcon: widget.isValue
-            ? InkWell(
-                onTap: () {
-                  widget.model.clearPhone();
-                  _controller.clear();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(defaultPadding * 0.8),
-                  child: SvgPicture.asset(
-                    "assets/icons/login_clear.svg",
-                    color: widget.textError.isEmpty
-                        ? colorAccentLightBlue
-                        : colorInputError,
-                  ),
-                ),
-              )
-            : null,
-        hintText: "+7 │ Номер телефона",
-        errorText: textError,
-        errorStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
-              color: colorInputError,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: defaultPadding),
+            SizedBox(
+              height: 58,
+              child: SvgPicture.asset(
+                "assets/icons/login_phone.svg",
+                color: widget.textError.isEmpty ? colorText : colorInputError,
+                height: 25,
+              ),
             ),
-      ),
-      keyboardType: TextInputType.number,
-      inputFormatters: [phoneMask],
-      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-            color: widget.textError.isEmpty ? colorText : colorInputError,
-          ),
-      onChanged: widget.model.setPhone,
+            const SizedBox(width: defaultPadding / 4),
+            SizedBox(
+              height: 58,
+              child: Center(
+                child: Text(
+                  "+7 │ ",
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        color: widget.textError.isEmpty
+                            ? colorText
+                            : colorInputError,
+                      ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: TextFormField(
+                cursorColor: colorText,
+                cursorWidth: 1,
+                controller: _controller,
+                decoration: InputDecoration(
+                  suffixIcon: widget.isValue
+                      ? InkWell(
+                          onTap: () {
+                            widget.model.clearPhone();
+                            _controller.clear();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(defaultPadding * 0.8),
+                            child: SvgPicture.asset(
+                              "assets/icons/login_clear.svg",
+                              color: widget.textError.isEmpty
+                                  ? colorAccentLightBlue
+                                  : colorInputError,
+                            ),
+                          ),
+                        )
+                      : null,
+                  hintText: "Номер телефона",
+                  errorText: textError,
+                  errorStyle: Theme.of(context).textTheme.bodyText2!.copyWith(
+                        color: colorInputError,
+                      ),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [phoneMask],
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: widget.textError.isEmpty
+                          ? colorText
+                          : colorInputError,
+                    ),
+                onChanged: widget.model.setPhone,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

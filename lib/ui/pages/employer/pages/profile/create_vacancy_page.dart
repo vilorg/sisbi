@@ -157,7 +157,7 @@ class _ViewModel extends ChangeNotifier {
         SnackBar(
           backgroundColor: colorAccentRed,
           content: Text(
-            "Заполните данные полностью!",
+            "Произошла ошибка!",
             style: Theme.of(_context).textTheme.subtitle2!.copyWith(
                   color: colorTextContrast,
                   fontWeight: FontWeight.w600,
@@ -266,6 +266,7 @@ class CreateVacancyPage extends StatelessWidget {
           File(state.pathAvatar),
           width: 132,
           height: 132,
+          fit: BoxFit.cover,
         ),
       );
     }

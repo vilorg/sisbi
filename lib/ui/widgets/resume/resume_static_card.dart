@@ -82,7 +82,7 @@ class ResumeStaticCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Вакансия опубликована $date',
+                        'Резюме опубликовано $date',
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               color: colorTextSecondary,
                             ),

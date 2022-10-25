@@ -52,7 +52,7 @@ const double borderRadiusPage = 24.0;
 
 // mask Fomatter
 final TextInputFormatter phoneMask = MaskTextInputFormatter(
-  mask: '+7 │ ###-###-##-##',
+  mask: '###-###-##-##',
   filter: {"#": RegExp(r'[0-9]')},
   type: MaskAutoCompletionType.lazy,
 );
