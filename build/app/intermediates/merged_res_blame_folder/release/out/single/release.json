@@ -20,72 +20,40 @@
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notification_bg_normal.9.png"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xxxhdpi_android12splash.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-xxxhdpi/android12splash.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xxhdpi_android12splash.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-xxhdpi/android12splash.png"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_launch_background.xml.flat",
         "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable/launch_background.xml"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v21_notification_action.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v21/notification_action.xml"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-v21_background.png.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-v21/background.png"
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi_android12splash.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-mdpi/android12splash.png"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout_notification_template_part_chronometer.xml.flat",
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_background.png.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable/background.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/xml_flutter_image_picker_file_paths.xml.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/packaged_res/release/xml/flutter_image_picker_file_paths.xml"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v21_notification_template_icon_group.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v21/notification_template_icon_group.xml"
-    },
-    {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi-v4_notify_panel_notification_icon_bg.png.flat",
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_bg_low.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_bg_low.xml"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi-v4_notification_bg_normal_pressed.9.png.flat",
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi-v4_notification_bg_normal.9.png.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-mdpi-v4/notification_bg_normal.9.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v21_notification_template_custom_big.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v21/notification_template_custom_big.xml"
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_bg_low.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_bg_low.xml"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-mdpi_ic_launcher.png.flat",
         "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout_custom_dialog.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/custom_dialog.xml"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_bg.xml.flat",
@@ -100,20 +68,12 @@
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
-    },
-    {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-hdpi_ic_launcher.png.flat",
         "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi_splash.png.flat",
         "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-mdpi/splash.png"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v16_notification_template_custom_big.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v16/notification_template_custom_big.xml"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi_splash.png.flat",
@@ -124,36 +84,104 @@
         "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-v21/launch_background.xml"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout_notification_template_icon_group.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_template_icon_group.xml"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_tile_bg.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_tile_bg.xml"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
-    },
-    {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout_notification_action.xml.flat",
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_action.xml"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-xhdpi-v4/notification_bg_low_normal.9.png"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xxhdpi_splash.png.flat",
         "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-xxhdpi/splash.png"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi-v4_notification_bg_low_normal.9.png.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xhdpi-v4_notification_bg_low_normal.9.png.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-xhdpi-v4/notification_bg_low_normal.9.png"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat",
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_icon_background.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xhdpi_splash.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-xhdpi/splash.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v21_notification_action.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-v21_background.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-v21/background.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_background.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable/background.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/xml_flutter_image_picker_file_paths.xml.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/packaged_res/release/xml/flutter_image_picker_file_paths.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi_android12splash.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-hdpi/android12splash.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v21_notification_template_icon_group.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi-v4_notification_bg_low_pressed.9.png.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-mdpi-v4_notification_bg_normal.9.png.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-mdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v21_notification_template_custom_big.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout_custom_dialog.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xhdpi_android12splash.png.flat",
+        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-xhdpi/android12splash.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout-v16_notification_template_custom_big.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout-v16/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/layout_notification_template_icon_group.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi-v4_notification_bg_normal_pressed.9.png.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_tile_bg.xml.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-hdpi-v4_notification_bg_low_normal.9.png.flat",
+        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
     },
     {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xhdpi-v4_notify_panel_notification_icon_bg.png.flat",
@@ -172,15 +200,7 @@
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
     },
     {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable_notification_icon_background.xml.flat",
-        "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable/notification_icon_background.xml"
-    },
-    {
         "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-v21_notification_action_background.xml.flat",
         "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/drawable-v21/notification_action_background.xml"
-    },
-    {
-        "merged": "/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/merged_res/release/drawable-xhdpi_splash.png.flat",
-        "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/drawable-xhdpi/splash.png"
     }
 ]

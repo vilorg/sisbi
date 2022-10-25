@@ -1576,6 +1576,7 @@ Marking attr:primaryActivityName:2130771989 used because its prefix matches stri
 Marking xml:flutter_image_picker_file_paths:2131492864 used because its prefix matches string pool constant flutter
 Marking color:androidx_core_ripple_material_light:2130837504 used because its prefix matches string pool constant android
 Marking color:androidx_core_secondary_text_default_material_light:2130837505 used because its prefix matches string pool constant android
+Marking drawable:android12splash:2130968576 used because its prefix matches string pool constant android
 Marking id:androidx_window_activity_scope:2131034150 used because its prefix matches string pool constant android
 Marking attr:android_colorBackground:-1 used because its prefix matches string pool constant android
 Marking attr:android_color:-1 used because its prefix matches string pool constant android
@@ -1614,33 +1615,33 @@ Marking id:action_text:2131034148 used because its prefix matches string pool co
 Marking id:actions:2131034149 used because its prefix matches string pool constant action
 Marking id:text:2131034184 used because its prefix matches string pool constant text
 Marking id:text2:2131034185 used because its prefix matches string pool constant text
-Marking drawable:background:2130968576 used because its prefix matches string pool constant background
+Marking drawable:background:2130968577 used because its prefix matches string pool constant background
 Marking attr:activityAction:2130771968 used because its prefix matches string pool constant activity
 Marking attr:activityName:2130771969 used because its prefix matches string pool constant activity
-Marking drawable:launch_background:2130968577 used because its prefix matches string pool constant launch
+Marking drawable:launch_background:2130968578 used because its prefix matches string pool constant launch
 Marking id:line1:2131034160 used because its prefix matches string pool constant line
 Marking id:line3:2131034161 used because its prefix matches string pool constant line
 Resource Reference Graph:
 color:notification_action_color_filter:2130837506 => [color:androidx_core_secondary_text_default_material_light:2130837505]
 dimen:notification_media_narrow_margin:2130903054 => [dimen:notification_content_margin_start:2130903050]
-drawable:launch_background:2130968577 => [drawable:background:2130968576, drawable:splash:2130968590]
-drawable:notification_action_background:2130968578 => [color:androidx_core_ripple_material_light:2130837504, dimen:compat_button_inset_vertical_material:2130903041, dimen:compat_button_inset_horizontal_material:2130903040, dimen:compat_control_corner_material:2130903044, dimen:compat_button_padding_vertical_material:2130903043, dimen:compat_button_padding_horizontal_material:2130903042]
-drawable:notification_bg:2130968579 => [drawable:notification_bg_normal_pressed:2130968584, drawable:notification_bg_normal:2130968583]
-drawable:notification_bg_low:2130968580 => [drawable:notification_bg_low_pressed:2130968582, drawable:notification_bg_low_normal:2130968581]
-drawable:notification_icon_background:2130968585 => [color:notification_icon_bg_color:2130837507]
-drawable:notification_tile_bg:2130968588 => [drawable:notify_panel_notification_icon_bg:2130968589]
+drawable:launch_background:2130968578 => [drawable:background:2130968577, drawable:splash:2130968591]
+drawable:notification_action_background:2130968579 => [color:androidx_core_ripple_material_light:2130837504, dimen:compat_button_inset_vertical_material:2130903041, dimen:compat_button_inset_horizontal_material:2130903040, dimen:compat_control_corner_material:2130903044, dimen:compat_button_padding_vertical_material:2130903043, dimen:compat_button_padding_horizontal_material:2130903042]
+drawable:notification_bg:2130968580 => [drawable:notification_bg_normal_pressed:2130968585, drawable:notification_bg_normal:2130968584]
+drawable:notification_bg_low:2130968581 => [drawable:notification_bg_low_pressed:2130968583, drawable:notification_bg_low_normal:2130968582]
+drawable:notification_icon_background:2130968586 => [color:notification_icon_bg_color:2130837507]
+drawable:notification_tile_bg:2130968589 => [drawable:notify_panel_notification_icon_bg:2130968590]
 layout:notification_action:2131165185 => [style:Widget_Compat_NotificationActionContainer:2131361799, dimen:notification_action_icon_size:2130903047, style:Widget_Compat_NotificationActionText:2131361800]
 layout:notification_action_tombstone:2131165186 => [style:Widget_Compat_NotificationActionContainer:2131361799, dimen:notification_action_icon_size:2130903047, style:Widget_Compat_NotificationActionText:2131361800]
 layout:notification_template_custom_big:2131165187 => [dimen:notification_large_icon_height:2130903051, dimen:notification_large_icon_width:2130903052, layout:notification_template_icon_group:2131165188, dimen:notification_right_side_padding_top:2130903056, layout:notification_template_part_time:2131165190, layout:notification_template_part_chronometer:2131165189, style:TextAppearance_Compat_Notification_Info:2131361795, dimen:notification_main_column_padding_top:2130903053, dimen:notification_content_margin_start:2130903050]
 layout:notification_template_icon_group:2131165188 => [dimen:notification_large_icon_height:2130903051, dimen:notification_large_icon_width:2130903052, dimen:notification_big_circle_margin:2130903049, dimen:notification_right_icon_size:2130903055]
 layout:notification_template_part_chronometer:2131165189 => [style:TextAppearance_Compat_Notification_Time:2131361797]
 layout:notification_template_part_time:2131165190 => [style:TextAppearance_Compat_Notification_Time:2131361797]
-style:LaunchTheme:2131361792 => [drawable:launch_background:2130968577]
+style:LaunchTheme:2131361792 => [drawable:launch_background:2130968578, drawable:android12splash:2130968576]
 style:NormalTheme:2131361793 => [attr:android_colorBackground:-1]
 style:TextAppearance_Compat_Notification_Info:2131361795 => [style:TextAppearance_Compat_Notification:2131361794, style:TextAppearance_Compat:-1, style:TextAppearance:-1]
 style:TextAppearance_Compat_Notification_Line2:2131361796 => [style:TextAppearance_Compat_Notification_Info:2131361795]
 style:TextAppearance_Compat_Notification_Time:2131361797 => [style:TextAppearance_Compat_Notification:2131361794, style:TextAppearance_Compat:-1, style:TextAppearance:-1]
-style:Widget_Compat_NotificationActionContainer:2131361799 => [drawable:notification_action_background:2130968578]
+style:Widget_Compat_NotificationActionContainer:2131361799 => [drawable:notification_action_background:2130968579]
 style:Widget_Compat_NotificationActionText:2131361800 => [color:androidx_core_secondary_text_default_material_light:2130837505, dimen:notification_action_text_size:2130903048]
 The root reachable resources are:
 attr:activityAction:2130771968,
@@ -1652,8 +1653,9 @@ attr:activityAction:2130771968,
    attr:shortcutMatchRequired:2130771993,
    color:androidx_core_ripple_material_light:2130837504,
    color:androidx_core_secondary_text_default_material_light:2130837505,
-   drawable:background:2130968576,
-   drawable:launch_background:2130968577,
+   drawable:android12splash:2130968576,
+   drawable:background:2130968577,
+   drawable:launch_background:2130968578,
    id:accessibility_action_clickable_span:2131034112,
    id:accessibility_custom_action_0:2131034113,
    id:accessibility_custom_action_1:2131034114,

@@ -6,20 +6,20 @@
                 {
                     "source": "/Users/vilorg/Documents/Development/Projects/sisbi/android/app/src/main/res/values-v31/styles.xml",
                     "from": {
-                        "startLines": "3,14",
+                        "startLines": "3,16",
                         "startColumns": "4,4",
-                        "startOffsets": "173,806",
-                        "endLines": "7,16",
+                        "startOffsets": "173,972",
+                        "endLines": "9,18",
                         "endColumns": "12,12",
-                        "endOffsets": "455,970"
+                        "endOffsets": "621,1136"
                     },
                     "to": {
-                        "startLines": "2,7",
+                        "startLines": "2,9",
                         "startColumns": "4,4",
-                        "startOffsets": "55,342",
-                        "endLines": "6,9",
+                        "startOffsets": "55,508",
+                        "endLines": "8,11",
                         "endColumns": "12,12",
-                        "endOffsets": "337,506"
+                        "endOffsets": "503,672"
                     }
                 }
             ]
