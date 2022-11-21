@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sisbi/constants.dart';
 import 'package:sisbi/models/chat_preview_model.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ContactsMessage extends StatelessWidget {
   const ContactsMessage({

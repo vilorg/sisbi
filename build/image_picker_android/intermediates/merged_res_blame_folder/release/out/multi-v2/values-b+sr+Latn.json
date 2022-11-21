@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/merged_res/release/values-b+sr+Latn/values-b+sr+Latn.xml",
+            "outputFile": "/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/image_picker_android/intermediates/merged_res/release/values-b+sr+Latn/values-b+sr+Latn.xml",
             "map": [
                 {
                     "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/values-b+sr+Latn/values-b+sr+Latn.xml",
@@ -16,7 +16,7 @@
             ]
         },
         {
-            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/intermediates/incremental/mergeReleaseResources/merged.dir/values-b+sr+Latn/values-b+sr+Latn.xml",
+            "outputFile": "/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/image_picker_android/intermediates/incremental/mergeReleaseResources/merged.dir/values-b+sr+Latn/values-b+sr+Latn.xml",
             "map": [
                 {
                     "source": "/Users/vilorg/.gradle/caches/transforms-3/cb8d951b117576b1b780e8ca59229cb4/transformed/core-1.8.0/res/values-b+sr+Latn/values-b+sr+Latn.xml",

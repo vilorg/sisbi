@@ -30,7 +30,7 @@ class _CodeInputFieldsState extends State<CodeInputFields> {
 
   @override
   Widget build(BuildContext context) {
-    final VoidCallback onTap = () {
+    onTap() {
       _firstController.text = "";
       _secondController.text = "";
       _thirdController.text = "";
@@ -41,7 +41,7 @@ class _CodeInputFieldsState extends State<CodeInputFields> {
       widget.setSmsValue(3, "");
       focusNode.requestFocus();
       setState(() {});
-    };
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: defaultPadding * 2),

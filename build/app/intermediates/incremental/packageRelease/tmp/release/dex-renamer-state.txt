@@ -1,4 +1,4 @@
-#Thu Oct 20 01:24:33 YEKT 2022
-base.0=/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+#Fri Nov 18 22:27:38 YEKT 2022
+base.0=/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

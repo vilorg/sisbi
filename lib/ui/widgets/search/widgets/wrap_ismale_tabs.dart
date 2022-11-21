@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sisbi/constants.dart';
-import 'package:sisbi/models/enum_classes.dart';
 import 'package:sisbi/ui/widgets/search/search_page.dart';
 
 class WrapIsMaleTabs extends StatelessWidget {

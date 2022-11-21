@@ -84,7 +84,7 @@ class DialogPage extends StatelessWidget {
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
-                          color: colorAccentDarkBlue)),
+                          color: colorAccentDarkBlue))
                 ],
               ),
             ),
@@ -97,25 +97,23 @@ class DialogPage extends StatelessWidget {
         backgroundColor: colorAccentDarkBlue,
         appBar: AppBar(
           centerTitle: false,
-          title: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        color: colorTextContrast,
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-                Text(
-                  parthnerName,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: colorTextContrast,
-                      ),
-                ),
-              ],
-            ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      color: colorTextContrast,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+              Text(
+                parthnerName,
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      color: colorTextContrast,
+                    ),
+              ),
+            ],
           ),
           actions: [
             IconButton(
@@ -154,15 +152,16 @@ class DialogPage extends StatelessWidget {
                   ),
                   Container(
                     decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromRGBO(26, 26, 26, 0.05),
-                          blurRadius: 30,
-                          offset: Offset(0, -1),
-                        ),
-                      ],
-                    ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(26, 26, 26, 0.04),
+                            blurRadius: 15,
+                            offset: Offset(0, -15),
+                          ),
+                        ],
+                        borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(borderRadiusPage))),
                     padding: const EdgeInsets.all(defaultPadding / 2),
                     child: !isUser &&
                             chat.responseState == ResponseState.created

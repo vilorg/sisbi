@@ -154,7 +154,6 @@ class AuthApiProvider {
 
     if (response.statusCode != 200 ||
         jsonDecode(response.body)["result_code"] != "ok") throw Exception();
-    print(jsonDecode(response.body));
     return;
   }
 

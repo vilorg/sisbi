@@ -8,6 +8,7 @@ import 'package:sisbi/domain/services/profile_employer_service.dart';
 import 'package:sisbi/models/employer_data_model.dart';
 import 'package:sisbi/models/tile_data.dart';
 import 'package:sisbi/models/vacancy_model.dart';
+// import 'package:sisbi/ui/pages/employer/pages/profile/widgets/rates.dart';
 import 'package:sisbi/ui/widgets/about_page.dart';
 import 'package:sisbi/ui/pages/employer/pages/profile/widgets/personal_data_employer.dart';
 import 'package:sisbi/ui/widgets/action_bottom.dart';
@@ -76,14 +77,14 @@ class ProfileEmployerViewModel extends ChangeNotifier {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  bool _isFirst = false;
-  bool get isFirst => _isFirst;
+  int _index = 1;
+  int get index => _index;
 
   List<VacancyModel> _vacancies = [];
   List<VacancyModel> get vacancies => _vacancies;
 
-  void setPage(bool isFirst) {
-    _isFirst = isFirst;
+  void setPage(int index) {
+    _index = index;
     try {
       notifyListeners();
     } catch (e) {
@@ -219,13 +220,17 @@ class ProfileEmployerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<ProfileEmployerViewModel>(context);
     final bool isLoading = model.isLoading;
-    final bool isFirst = model.isFirst;
+    final int index = model.index;
 
     return Scaffold(
       backgroundColor: colorAccentDarkBlue,
       appBar: AppBar(
         title: Text(
-          isFirst ? "Профиль компании" : "Мой профиль",
+          index == 0
+              ? "Профиль компании"
+              : index == 1
+                  ? "Мой профиль"
+                  : "Тарифы",
           style: Theme.of(context).textTheme.headline3!.copyWith(
                 color: colorTextContrast,
                 fontWeight: FontWeight.w700,
@@ -250,7 +255,10 @@ class ProfileEmployerPage extends StatelessWidget {
                     title: "Политика",
                     asset: "assets/icons/arrow_forward.svg",
                     isRed: false,
-                    onTap: () {},
+                    onTap: () {
+                      launchUrl(Uri.parse(
+                          'https://docs.google.com/document/d/1aD7MrigL5oqb7WN_-WuEZ0bCuk26jUCy/edit'));
+                    },
                   ),
                   TileData(
                     title: "Написать разработчикам",
@@ -279,8 +287,13 @@ class ProfileEmployerPage extends StatelessWidget {
             )
           : Column(
               children: [
-                _Header(isFirst: isFirst),
-                isFirst ? const CompanyProfile() : const PersonalDataEmployer(),
+                _Header(index: index),
+                index == 0
+                    ? const CompanyProfile()
+                    // : index == 1
+                    // ?
+                    : const PersonalDataEmployer()
+                // : const Rates(),
               ],
             ),
     );
@@ -288,10 +301,10 @@ class ProfileEmployerPage extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  final bool isFirst;
+  final int index;
   const _Header({
     Key? key,
-    required this.isFirst,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -304,15 +317,16 @@ class _Header extends StatelessWidget {
         children: [
           Expanded(
             child: TextButton(
-              onPressed: () => model.setPage(true),
+              onPressed: () => model.setPage(0),
               child: Text(
                 "Мои вакансии",
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: colorTextContrast,
-                      fontWeight: isFirst ? FontWeight.w600 : FontWeight.normal,
+                      fontWeight:
+                          index == 0 ? FontWeight.w600 : FontWeight.normal,
                     ),
               ),
-              style: isFirst
+              style: index == 0
                   ? Theme.of(context).textButtonTheme.style!.copyWith(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             colorAccentLightBlue),
@@ -327,16 +341,16 @@ class _Header extends StatelessWidget {
           const SizedBox(width: defaultPadding),
           Expanded(
             child: TextButton(
-              onPressed: () => model.setPage(false),
+              onPressed: () => model.setPage(1),
               child: Text(
                 "О компании",
                 style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: colorTextContrast,
                       fontWeight:
-                          !isFirst ? FontWeight.w600 : FontWeight.normal,
+                          index == 1 ? FontWeight.w600 : FontWeight.normal,
                     ),
               ),
-              style: !isFirst
+              style: index == 1
                   ? Theme.of(context).textButtonTheme.style!.copyWith(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             colorAccentLightBlue),
@@ -348,6 +362,30 @@ class _Header extends StatelessWidget {
                       ),
             ),
           ),
+          // const SizedBox(width: defaultPadding),
+          // Expanded(
+          //   child: TextButton(
+          //     onPressed: () => model.setPage(2),
+          //     child: Text(
+          //       "Тарифы",
+          //       style: Theme.of(context).textTheme.bodyText2!.copyWith(
+          //             color: colorTextContrast,
+          //             fontWeight:
+          //                 index == 2 ? FontWeight.w600 : FontWeight.normal,
+          //           ),
+          //     ),
+          //     style: index == 2
+          //         ? Theme.of(context).textButtonTheme.style!.copyWith(
+          //               backgroundColor: MaterialStateProperty.all<Color>(
+          //                   colorAccentLightBlue),
+          //             )
+          //         : Theme.of(context).textButtonTheme.style!.copyWith(
+          //               side: MaterialStateProperty.all<BorderSide>(
+          //                 const BorderSide(color: Colors.white, width: 1.5),
+          //               ),
+          //             ),
+          //   ),
+          // ),
         ],
       ),
     );

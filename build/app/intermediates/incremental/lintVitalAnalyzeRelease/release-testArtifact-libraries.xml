@@ -1,13 +1,13 @@
 <libraries>
   <library
-      name="__local_aars__:/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/flutter/release/libs.jar:unspecified@jar"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/flutter/release/libs.jar"
-      resolved="__local_aars__:/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/flutter/release/libs.jar:unspecified"/>
+      name="__local_aars__:/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/app/intermediates/flutter/release/libs.jar:unspecified@jar"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/app/intermediates/flutter/release/libs.jar"
+      resolved="__local_aars__:/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/app/intermediates/flutter/release/libs.jar:unspecified"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:shared_preferences_android::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/shared_preferences_android/.transforms/de530d7ddd4c630674648bec0db2fee2/transformed/out/jars/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:shared_preferences_android::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/shared_preferences_android/.transforms/cfd2c091ac021a99c12b9022353222d5/transformed/out/jars/classes.jar"
       resolved="io.flutter.plugins.sharedpreferences:shared_preferences_android:unspecified"
-      folder="/Users/vilorg/Documents/Development/Projects/sisbi/build/shared_preferences_android/.transforms/de530d7ddd4c630674648bec0db2fee2/transformed/out"
+      folder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/shared_preferences_android/.transforms/cfd2c091ac021a99c12b9022353222d5/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -17,10 +17,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:flutter_plugin_android_lifecycle::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_plugin_android_lifecycle/.transforms/113c121e5bdeafef6f3591d49bf06f6d/transformed/out/jars/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:flutter_plugin_android_lifecycle::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_plugin_android_lifecycle/.transforms/ab41698d959ef376f7d2e959f6071eb7/transformed/out/jars/classes.jar"
       resolved="io.flutter.plugins.flutter_plugin_android_lifecycle:flutter_plugin_android_lifecycle:unspecified"
-      folder="/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_plugin_android_lifecycle/.transforms/113c121e5bdeafef6f3591d49bf06f6d/transformed/out"
+      folder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_plugin_android_lifecycle/.transforms/ab41698d959ef376f7d2e959f6071eb7/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -30,10 +30,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:url_launcher_android::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/url_launcher_android/.transforms/c9d5d269ed3315115b38db8397cebab7/transformed/out/jars/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:url_launcher_android::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/url_launcher_android/.transforms/6f4306c526d87898404421c6fb4790aa/transformed/out/jars/classes.jar"
       resolved="io.flutter.plugins.urllauncher:url_launcher_android:unspecified"
-      folder="/Users/vilorg/Documents/Development/Projects/sisbi/build/url_launcher_android/.transforms/c9d5d269ed3315115b38db8397cebab7/transformed/out"
+      folder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/url_launcher_android/.transforms/6f4306c526d87898404421c6fb4790aa/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -43,10 +43,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:image_picker_android::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/.transforms/24f92d61a48e388b49841d91ab74b103/transformed/out/jars/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:image_picker_android::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/image_picker_android/.transforms/df6e3ee663081af7d0fe25b0dc99a1ef/transformed/out/jars/classes.jar"
       resolved="io.flutter.plugins.imagepicker:image_picker_android:unspecified"
-      folder="/Users/vilorg/Documents/Development/Projects/sisbi/build/image_picker_android/.transforms/24f92d61a48e388b49841d91ab74b103/transformed/out"
+      folder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/image_picker_android/.transforms/df6e3ee663081af7d0fe25b0dc99a1ef/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -56,10 +56,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:flutter_secure_storage::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_secure_storage/.transforms/61467229807dad515714a902d6c5d41d/transformed/out/jars/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:flutter_secure_storage::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_secure_storage/.transforms/53bff4655c7ad510c6a153471bb7ae09/transformed/out/jars/classes.jar"
       resolved="com.it_nomads.fluttersecurestorage:flutter_secure_storage:unspecified"
-      folder="/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_secure_storage/.transforms/61467229807dad515714a902d6c5d41d/transformed/out"
+      folder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_secure_storage/.transforms/53bff4655c7ad510c6a153471bb7ae09/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -69,10 +69,10 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:flutter_native_splash::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_native_splash/.transforms/96324b2c0d1e73593ad36a78c10415a1/transformed/out/jars/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:flutter_native_splash::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_native_splash/.transforms/fad23406546017485df2d153fe552164/transformed/out/jars/classes.jar"
       resolved="net.jonhanson.flutter_native_splash:flutter_native_splash:unspecified"
-      folder="/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_native_splash/.transforms/96324b2c0d1e73593ad36a78c10415a1/transformed/out"
+      folder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_native_splash/.transforms/fad23406546017485df2d153fe552164/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -418,7 +418,7 @@
       jars="/Users/vilorg/.gradle/caches/modules-2/files-2.1/com.google.guava/listenablefuture/1.0/c949a840a6acbc5268d088e47b04177bf90b3cad/listenablefuture-1.0.jar"
       resolved="com.google.guava:listenablefuture:1.0"/>
   <library
-      name="/Users/vilorg/Documents/Development/Projects/sisbi/android@@:app::release"
-      jars="/Users/vilorg/Documents/Development/Projects/sisbi/build/app/intermediates/app_classes/release/classes.jar"
+      name="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android@@:app::release"
+      jars="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/app/intermediates/app_classes/release/classes.jar"
       resolved="::"/>
 </libraries>

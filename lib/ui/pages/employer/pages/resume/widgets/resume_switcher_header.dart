@@ -20,7 +20,7 @@ class ResumeSwitcherHeader extends StatelessWidget {
       height: MediaQuery.of(context).size.height -
           HomeInheritedWidget.of(context)!.verticalPadding -
           VacancyInheritedWidget.of(context)!.appBarHeight -
-          60,
+          55,
       decoration: const BoxDecoration(
         color: colorAccentDarkBlue,
       ),
@@ -34,7 +34,7 @@ class ResumeSwitcherHeader extends StatelessWidget {
                   height: MediaQuery.of(context).size.height -
                       HomeInheritedWidget.of(context)!.verticalPadding -
                       VacancyInheritedWidget.of(context)!.appBarHeight -
-                      60,
+                      55,
                   alignment: Alignment.center,
                 )
               : Image.network(

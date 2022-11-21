@@ -1,11 +1,11 @@
 <lint-module
     format="1"
-    dir="/Users/vilorg/Documents/Development/Projects/sisbi/android/app"
+    dir="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/android/app"
     name=":app"
     type="APP"
     maven="android:app:"
     gradle="7.0.2"
-    buildFolder="/Users/vilorg/Documents/Development/Projects/sisbi/build/app"
+    buildFolder="/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/app"
     bootClassPath="/Users/vilorg/Library/Android/sdk/platforms/android-31/android.jar:/Users/vilorg/Library/Android/sdk/build-tools/30.0.2/core-lambda-stubs.jar"
     javaSourceLevel="1.8"
     compileTarget="android-31">

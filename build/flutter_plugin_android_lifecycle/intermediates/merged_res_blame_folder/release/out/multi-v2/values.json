@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_plugin_android_lifecycle/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml",
+            "outputFile": "/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/values/values.xml",
             "map": [
                 {
                     "source": "/Users/vilorg/.gradle/caches/transforms-3/11167983d2cf0407b644cf9f2af8f4e4/transformed/core-1.6.0/res/values/values.xml",
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "outputFile": "/Users/vilorg/Documents/Development/Projects/sisbi/build/flutter_plugin_android_lifecycle/intermediates/merged_res/release/values/values.xml",
+            "outputFile": "/Users/vilorg/Documents/Development/FlutterProjects/sisbi/build/flutter_plugin_android_lifecycle/intermediates/incremental/mergeReleaseResources/merged.dir/values/values.xml",
             "map": [
                 {
                     "source": "/Users/vilorg/.gradle/caches/transforms-3/11167983d2cf0407b644cf9f2af8f4e4/transformed/core-1.6.0/res/values/values.xml",
